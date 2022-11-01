@@ -1,0 +1,3 @@
+""" Requirements PIPs/Libraries"""
+
+tabulate ==> pip install tabulate 

@@ -1,8 +1,11 @@
 from tabulate import tabulate
 
+class Card :
+    def __init__(self, width_of_card) -> None:
+        self.width_of_card = width_of_card
 
 def card(*sentences) -> str:
-    width_of_card: int = 40
+    width_of_card: int = 38
     blank_line: str = "| " + (" " * (width_of_card + 2)) + "#" + "\n"
     top_line: str = " " + ("#" * (width_of_card + 2)) + "#" + "\n"
     text_line: str = ""
@@ -38,9 +41,6 @@ def card(*sentences) -> str:
 
 
 title_of_card = input("Title: ")
-
-print(card(title_of_card))
-"""
 discription_of_card = input("Discription: ")
 
 table = [
@@ -49,4 +49,4 @@ table = [
     [card(title_of_card,discription_of_card),card(title_of_card,discription_of_card),card(title_of_card,discription_of_card)]
 ]
 print(tabulate(table, tablefmt="double_grid", stralign="center", colalign=("center",)))
-"""
+

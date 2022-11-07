@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from colored import fg, bg, attr,stylize
 import csv
 
 class Card:
@@ -79,21 +80,49 @@ class Card:
 
 
 
-def get_headers (*headers: list[str]) -> list:
+def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str = '#000000') -> list:
     """ Asking for column names"""
-    print("Add one space between each column name")
     if bool(headers) == False:
+        print("Add one space between each column name")
         headers: str = input("Names of each column: ")
+    """ add colors to header"""
     header_names = [str(name) for name in headers.split(" ")]
+    while True:
+        q_add = input("Would like add colors to header?(Y/N)  ").lower()
+        if q_add in ["y","yes"]:
+            print("Please Enter the values in HEX like this '#000000'")
+            for index,h_name in enumerate(header_names):
+                while True:
+                    fore_color = input("Foreground color of Text:")
+                    if len(fore_color) != 7 and fore_color[0] != "#" :
+                        print("Please Enter a Right Value !!")
+                        continue
+                    else:
+                        color = fg(fore_color)
+                        break
+                while True:
+                    back_color = input("Background color of Text:")
+                    if len(back_color) != 7 and back_color[0] != "#" :
+                        print("Please Enter a Right Value !!")
+                        continue
+                    else:
+                        color += bg(back_color)
+                        break
+                header_names[index] = color + " " + h_name + " " + attr('reset')
+        elif q_add in ["n","no"]:
+            break
+        else:
+            print("Please Enter a Right Value !!")
+            continue
 
     return [header_names]
 
 def main():
 
-    card = Card()
+    #card = Card()
 
-    title_of_card = input("Title: ")
-    discription_of_card = input("Discription: ")
+    #title_of_card = input("Title: ")
+    #discription_of_card = input("Discription: ")
 
     table = get_headers()
 

@@ -1,5 +1,5 @@
 from tabulate import tabulate
-
+import csv
 
 class Card:
     def __init__(self, width_of_card: int = 38) -> None:
@@ -79,6 +79,14 @@ class Card:
 
 
 
+def get_headers (*headers: list[str]) -> list:
+    """ Asking for column names"""
+    print("Add one space between each column name")
+    if bool(headers) == False:
+        headers: str = input("Names of each column: ")
+    header_names = [str(name) for name in headers.split(" ")]
+
+    return [header_names]
 
 def main():
 
@@ -87,7 +95,7 @@ def main():
     title_of_card = input("Title: ")
     discription_of_card = input("Discription: ")
 
-    table = []
+    table = get_headers()
 
     print(
         tabulate(table, tablefmt="double_grid", stralign="center", colalign=("center",))

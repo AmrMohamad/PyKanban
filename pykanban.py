@@ -109,6 +109,7 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
                         color += bg(back_color)
                         break
                 header_names[index] = color + " " + h_name + " " + attr('reset')
+            break
         elif q_add in ["n","no"]:
             break
         else:

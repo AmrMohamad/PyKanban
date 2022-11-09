@@ -79,8 +79,6 @@ class Card:
     def __str__(self) -> str:
         return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}"
 
-
-
 def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str = '#000000') -> list:
     """ Asking for column names"""
     if bool(headers) == False:
@@ -118,6 +116,16 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
             continue
 
     return [header_names]
+
+def init_table (file_table_name:str) -> str:
+    if os.path.isfile(f"./data/{file_table_name}"):
+        return f"{file_table_name}"
+    else:
+        clearConsole()
+        print("It looks like you have not created that table before")
+        file = open(f"./data/{file_table_name}","w")
+        file.close()
+
 
 
 
@@ -157,8 +165,6 @@ def main():
         else:
             clearConsole()
             continue
-    
-    ...
 
 
 

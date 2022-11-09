@@ -1,6 +1,7 @@
 from tabulate import tabulate
 from colored import fg, bg, attr,stylize
 import csv
+import os
 
 class Card:
     def __init__(self, width_of_card: int = 38) -> None:
@@ -118,18 +119,46 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
 
     return [header_names]
 
+
+
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If computer is running windows use cls
+        command = 'cls'
+    os.system(command)
+
 def main():
+    clearConsole()
 
-    #card = Card()
+    print(fg('#fcdb03')+"""
+    
+                    
+        $$$$$$$\            $$\   $$\                     $$\                           
+        $$  __$$\           $$ | $$  |                    $$ |                          
+        $$ |  $$ |$$\   $$\ $$ |$$  /  $$$$$$\  $$$$$$$\  $$$$$$$\   $$$$$$\  $$$$$$$\  
+        $$$$$$$  |$$ |  $$ |$$$$$  /   \____$$\ $$  __$$\ $$  __$$\  \____$$\ $$  __$$\ 
+        $$  ____/ $$ |  $$ |$$  $$<    $$$$$$$ |$$ |  $$ |$$ |  $$ | $$$$$$$ |$$ |  $$ |
+        $$ |      $$ |  $$ |$$ |\$$\  $$  __$$ |$$ |  $$ |$$ |  $$ |$$  __$$ |$$ |  $$ |
+        $$ |      \$$$$$$$ |$$ | \$$\ \$$$$$$$ |$$ |  $$ |$$$$$$$  |\$$$$$$$ |$$ |  $$ |
+        \__|       \____$$ |\__|  \__| \_______|\__|  \__|\_______/  \_______|\__|  \__|
+                  $$\   $$ |                                                            
+                  \$$$$$$  |                                                            
+                   \______/                                                             
 
-    #title_of_card = input("Title: ")
-    #discription_of_card = input("Discription: ")
-
-    table = get_headers()
-
-    print(
-        tabulate(table, tablefmt="double_grid", stralign="center", colalign=("center",))
-    )
+    """+attr('reset'))
+    option_menu = ["View Tables","Create Table"]
+    while True:
+        print("Menu:")
+        for index,option in enumerate(option_menu):
+            print(" "+str(index + 1 )+" => "+option)
+        selected_option = int(input("Enter the number of option in menu: ")) - 1
+        if selected_option in range(len(option_menu)) :
+            break
+        else:
+            clearConsole()
+            continue
+    
+    ...
 
 
 

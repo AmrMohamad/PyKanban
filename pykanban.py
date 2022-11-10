@@ -139,7 +139,9 @@ def view_tables() -> list[str]:
     dir_path = f"{DATA_DIR}"
     tables_list =[]
     for path in os.scandir(dir_path):
-        if path.is_file():
+        if path.is_file() :
+            if path.name == ".DS_Store":
+                continue
             tables_list.append(path.name)
     return tables_list
     ...
@@ -189,12 +191,13 @@ def main():
                    \______/                                                             
 
     """+attr('reset'))
-    """select options"""
+
     while True:
         selected_option = menu()
         if selected_option == 0:
             clearConsole()
-            print(*view_tables())
+            for table in view_tables():
+                print(table)
             time.sleep(0.9)
             clearConsole()
             continue

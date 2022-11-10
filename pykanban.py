@@ -2,6 +2,11 @@ from tabulate import tabulate
 from colored import fg, bg, attr,stylize
 import csv
 import os
+import sys
+import time
+
+
+DATA_DIR = "./data/"
 
 class Card:
     def __init__(self, width_of_card: int = 38) -> None:
@@ -118,14 +123,41 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
     return [header_names]
 
 def init_table (file_table_name:str) -> str:
-    if os.path.isfile(f"./data/{file_table_name}"):
+    if os.path.isfile(f"{DATA_DIR}{file_table_name}"):
         return f"{file_table_name}"
     else:
         clearConsole()
-        print("It looks like you have not created that table before")
-        file = open(f"./data/{file_table_name}","w")
+        print("It looks like you have not created that table before\nIt will be created")
+        file = open(f"{DATA_DIR}{file_table_name}.csv","w")
         file.close()
+        f_name = file.name
+        if DATA_DIR in f_name:
+            f_name = f_name.replace(DATA_DIR,'')
+        return init_table(f_name)+'be Created'
 
+def view_tables() -> list[str]:
+    dir_path = f"{DATA_DIR}"
+    tables_list =[]
+    for path in os.scandir(dir_path):
+        if path.is_file():
+            tables_list.append(path.name)
+    return tables_list
+    ...
+
+
+def menu() -> int:
+    option_menu : list = ["View Tables","Create Table","Exit"]
+    while True: 
+        print("Menu:")
+        for index,option in enumerate(option_menu):
+            print(" "+str(index + 1 )+" => "+option)
+        selected_option : int = int(input("Enter the number of option in menu: ")) - 1
+        if selected_option in range(len(option_menu)) :
+            return selected_option
+        else:
+            clearConsole()
+            menu()
+    ...
 
 
 
@@ -134,6 +166,9 @@ def clearConsole():
     if os.name in ('nt', 'dos'):  # If computer is running windows use cls
         command = 'cls'
     os.system(command)
+
+
+
 
 def main():
     clearConsole()
@@ -154,17 +189,36 @@ def main():
                    \______/                                                             
 
     """+attr('reset'))
-    option_menu = ["View Tables","Create Table"]
+    """select options"""
     while True:
-        print("Menu:")
-        for index,option in enumerate(option_menu):
-            print(" "+str(index + 1 )+" => "+option)
-        selected_option = int(input("Enter the number of option in menu: ")) - 1
-        if selected_option in range(len(option_menu)) :
-            break
-        else:
+        selected_option = menu()
+        if selected_option == 0:
+            clearConsole()
+            print(*view_tables())
+            time.sleep(0.9)
             clearConsole()
             continue
+        elif selected_option == 1:
+            clearConsole()
+            asked_table_name : str = str(input("Name of New Table is: "))
+            print(init_table(asked_table_name))
+            time.sleep(0.9)
+            clearConsole()
+            continue
+        else:
+            clearConsole()
+            print("PyKanban will exit in")
+            t = 5
+            while t:
+                mins, secs = divmod(t, 60)
+                timer = '{:02d}:{:02d}'.format(mins, secs)
+                print(timer, end="\r")
+                time.sleep(1)
+                t -= 1
+            clearConsole()
+            sys.exit()
+
+
 
 
 

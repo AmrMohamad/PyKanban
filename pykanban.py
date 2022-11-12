@@ -1,5 +1,5 @@
 from tabulate import tabulate
-from colored import fg, bg, attr,stylize
+from colored import fg, bg, attr, stylize
 import csv
 import os
 import sys
@@ -7,6 +7,7 @@ import time
 
 
 DATA_DIR = "./data/"
+
 
 class Card:
     def __init__(self, width_of_card: int = 38) -> None:
@@ -84,8 +85,11 @@ class Card:
     def __str__(self) -> str:
         return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}"
 
-def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str = '#000000') -> list:
-    """ Asking for column names"""
+
+def get_headers(
+    *headers: list[str], fore_color: str = "#ffffff", back_color: str = "#000000"
+) -> list:
+    """Asking for column names"""
     if bool(headers) == False:
         print("Add one space between each column name")
         headers: str = input("Names of each column: ")
@@ -93,12 +97,12 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
     header_names = [str(name) for name in headers.split(" ")]
     while True:
         q_add = input("Would like add colors to header?(Y/N)  ").lower()
-        if q_add in ["y","yes"]:
+        if q_add in ["y", "yes"]:
             print("Please Enter the values in HEX like this '#000000'")
-            for index,h_name in enumerate(header_names):
+            for index, h_name in enumerate(header_names):
                 while True:
                     fore_color = input("Foreground color of Text:")
-                    if len(fore_color) != 7 and fore_color[0] != "#" :
+                    if len(fore_color) != 7 and fore_color[0] != "#":
                         print("Please Enter a Right Value !!")
                         continue
                     else:
@@ -106,15 +110,15 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
                         break
                 while True:
                     back_color = input("Background color of Text:")
-                    if len(back_color) != 7 and back_color[0] != "#" :
+                    if len(back_color) != 7 and back_color[0] != "#":
                         print("Please Enter a Right Value !!")
                         continue
                     else:
                         color += bg(back_color)
                         break
-                header_names[index] = color + " " + h_name + " " + attr('reset')
+                header_names[index] = color + " " + h_name + " " + attr("reset")
             break
-        elif q_add in ["n","no"]:
+        elif q_add in ["n", "no"]:
             break
         else:
             print("Please Enter a Right Value !!")
@@ -122,24 +126,32 @@ def get_headers (*headers : list[str],fore_color:str = '#ffffff',back_color:str 
 
     return [header_names]
 
-def init_table (file_table_name:str) -> str:
-    if os.path.isfile(f"{DATA_DIR}{file_table_name}"):
+
+def init_table(file_table_name: str) -> str:
+    if "." in file_table_name:
+        file_table_name, _ = file_table_name.split(".")
+    if os.path.isfile(f"{DATA_DIR}{file_table_name}.csv"):
         return f"{file_table_name}"
     else:
         clearConsole()
-        print("It looks like you have not created that table before\nIt will be created")
-        file = open(f"{DATA_DIR}{file_table_name}.csv","w")
+        """
+        print(
+            "It looks like you have not created that table before\nIt will be created"
+        )
+        """
+        file = open(f"{DATA_DIR}{file_table_name}.csv", "w")
         file.close()
         f_name = file.name
         if DATA_DIR in f_name:
-            f_name = f_name.replace(DATA_DIR,'')
-        return init_table(f_name)+'be Created'
+            f_name = f_name.replace(DATA_DIR, "")
+        return init_table(f_name)
+
 
 def view_tables() -> list[str]:
     dir_path = f"{DATA_DIR}"
-    tables_list =[]
+    tables_list = []
     for path in os.scandir(dir_path):
-        if path.is_file() :
+        if path.is_file():
             if path.name == ".DS_Store":
                 continue
             tables_list.append(path.name)
@@ -147,14 +159,22 @@ def view_tables() -> list[str]:
     ...
 
 
+def open_table(table_name: str) -> any:
+    #clearConsole()
+
+    ...
+
+def edit_table_mode (table_name: str) -> None:
+    ...
+
 def menu() -> int:
-    option_menu : list = ["View Tables","Create Table","Exit"]
-    while True: 
+    option_menu: list = ["View Tables", "Create Table", "Exit"]
+    while True:
         print("Menu:")
-        for index,option in enumerate(option_menu):
-            print(" "+str(index + 1 )+" => "+option)
-        selected_option : int = int(input("Enter the number of option in menu: ")) - 1
-        if selected_option in range(len(option_menu)) :
+        for index, option in enumerate(option_menu):
+            print(" " + str(index + 1) + " => " + option)
+        selected_option: int = int(input("Enter the number of option in menu: ")) - 1
+        if selected_option in range(len(option_menu)):
             return selected_option
         else:
             clearConsole()
@@ -162,20 +182,19 @@ def menu() -> int:
     ...
 
 
-
 def clearConsole():
-    command = 'clear'
-    if os.name in ('nt', 'dos'):  # If computer is running windows use cls
-        command = 'cls'
+    command = "clear"
+    if os.name in ("nt", "dos"):  # If computer is running windows use cls
+        command = "cls"
     os.system(command)
-
-
 
 
 def main():
     clearConsole()
 
-    print(fg('#fcdb03')+"""
+    print(
+        fg("#fcdb03")
+        + """
     
                     
         $$$$$$$\            $$\   $$\                     $$\                           
@@ -190,23 +209,32 @@ def main():
                   \$$$$$$  |                                                            
                    \______/                                                             
 
-    """+attr('reset'))
+    """
+        + attr("reset")
+    )
 
     while True:
         selected_option = menu()
+        # View Tables
         if selected_option == 0:
             clearConsole()
-            for table in view_tables():
-                print(table)
-            time.sleep(0.9)
+            tables_list: list[str] = view_tables()
+            for index, table_name in enumerate(tables_list):
+                print(f"{index + 1}: {table_name.replace('.csv', '')}")
+            selected_table: int = int(input("Enter Number of Table to Open: "))
+            print(tables_list)
+            open_table(tables_list[selected_table])
+            time.sleep(15)
             clearConsole()
             continue
+        # Create Table
         elif selected_option == 1:
             clearConsole()
-            asked_table_name : str = str(input("Name of New Table is: "))
-            print(init_table(asked_table_name))
-            time.sleep(0.9)
-            clearConsole()
+            asked_table_name: str = str(input("Name of New Table is: "))
+            edit_table_mode(init_table(asked_table_name))
+            #a function that run a 'Edit table mode'
+            
+            #clearConsole()
             continue
         else:
             clearConsole()
@@ -214,7 +242,7 @@ def main():
             t = 5
             while t:
                 mins, secs = divmod(t, 60)
-                timer = '{:02d}:{:02d}'.format(mins, secs)
+                timer = "{:02d}:{:02d}".format(mins, secs)
                 print(timer, end="\r")
                 time.sleep(1)
                 t -= 1
@@ -222,9 +250,5 @@ def main():
             sys.exit()
 
 
-
-
-
 if __name__ == "__main__":
     main()
-

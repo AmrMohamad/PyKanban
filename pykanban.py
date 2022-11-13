@@ -86,45 +86,23 @@ class Card:
         return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}"
 
 
-def get_headers(
-    *headers: list[str], fore_color: str = "#ffffff", back_color: str = "#000000"
-) -> list:
+def init_header(
+    header: str, fore_color: str = "#ffffff", back_color: str = "#000000"
+) -> str:
     """Asking for column names"""
-    if bool(headers) == False:
-        print("Add one space between each column name")
-        headers: str = input("Names of each column: ")
+    if bool(header) == False:
+        raise ValueError("The Maximum Number of stages is 5 and The Minimum Number is 3 \nPlease Check agian ")
+    
     """ add colors to header"""
-    header_names = [str(name) for name in headers.split(" ")]
-    while True:
-        q_add = input("Would like add colors to header?(Y/N)  ").lower()
-        if q_add in ["y", "yes"]:
-            print("Please Enter the values in HEX like this '#000000'")
-            for index, h_name in enumerate(header_names):
-                while True:
-                    fore_color = input("Foreground color of Text:")
-                    if len(fore_color) != 7 and fore_color[0] != "#":
-                        print("Please Enter a Right Value !!")
-                        continue
-                    else:
-                        color = fg(fore_color)
-                        break
-                while True:
-                    back_color = input("Background color of Text:")
-                    if len(back_color) != 7 and back_color[0] != "#":
-                        print("Please Enter a Right Value !!")
-                        continue
-                    else:
-                        color += bg(back_color)
-                        break
-                header_names[index] = color + " " + h_name + " " + attr("reset")
-            break
-        elif q_add in ["n", "no"]:
-            break
-        else:
-            print("Please Enter a Right Value !!")
-            continue
+    if len(fore_color) != 7 or fore_color[0] != "#":
+        raise ValueError("Please Enter a Right Value !!")
+    color = fg(fore_color)
+    
+    if len(back_color) != 7 or back_color[0] != "#":
+        raise ValueError("Please Enter a Right Value !!")
+    color += bg(back_color)
 
-    return [header_names]
+    return color + " " + header + " " + attr("reset")
 
 
 def init_table(file_table_name: str) -> str:
@@ -165,6 +143,7 @@ def open_table(table_name: str) -> any:
     ...
 
 def edit_table_mode (table_name: str) -> None:
+    
     ...
 
 def menu() -> int:

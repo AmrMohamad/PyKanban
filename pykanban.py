@@ -3,6 +3,7 @@ from colored import fg, bg, attr, stylize
 import csv
 import os
 import sys
+import re
 import time
 
 
@@ -89,18 +90,22 @@ class Card:
 def init_header(
     header: str, fore_color: str = "#ffffff", back_color: str = "#000000"
 ) -> str:
-    """Asking for column names"""
+    """Checking for column names it should be set"""
     if bool(header) == False:
-        raise ValueError("The Maximum Number of stages is 5 and The Minimum Number is 3 \nPlease Check agian ")
-    
-    """ add colors to header"""
-    if len(fore_color) != 7 or fore_color[0] != "#":
-        raise ValueError("Please Enter a Right Value !!")
-    color = fg(fore_color)
-    
-    if len(back_color) != 7 or back_color[0] != "#":
-        raise ValueError("Please Enter a Right Value !!")
-    color += bg(back_color)
+        raise ValueError(
+            "Please check, re-enter name of header maybe you missed one"
+        )
+
+    """ add colors to header and check if they correct in hex value or not"""
+    if f_color:=re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",fore_color):
+        color = fg(f_color.group(0))
+    else:
+        raise TypeError("Please Enter a Right Value !!\nOR Not a valid value in hex code of color")
+
+    if b_color:=re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",back_color):
+        color += bg(b_color.group(0))
+    else:
+        raise TypeError("Please Enter a Right Value !!\nOR Not a valid value in hex code of color")
 
     return color + " " + header + " " + attr("reset")
 
@@ -137,14 +142,10 @@ def view_tables() -> list[str]:
     ...
 
 
-def open_table(table_name: str) -> any:
-    #clearConsole()
-
+def open_table(table_name: str) -> str:
+    # clearConsole()
     ...
 
-def edit_table_mode (table_name: str) -> None:
-    
-    ...
 
 def menu() -> int:
     option_menu: list = ["View Tables", "Create Table", "Exit"]
@@ -210,10 +211,36 @@ def main():
         elif selected_option == 1:
             clearConsole()
             asked_table_name: str = str(input("Name of New Table is: "))
-            edit_table_mode(init_table(asked_table_name))
-            #a function that run a 'Edit table mode'
-            
-            #clearConsole()
+            with open(f"{init_table(asked_table_name)}.csv", "a") as table:
+                table_data: dict = {}
+                headers: list[str] = []
+                num_stages: int = 0
+                while True:
+                    n_s: int = int(input("Number of stages"))
+                    if 3 <= n_s <= 5:
+                        num_stages = n_s
+                        break
+                    else:
+                        print("The Maximum Stages is 5\nThe Minimum Stages is 3")
+                        time.sleep(4)
+                        continue
+                for _ in range(num_stages):
+                    while True:
+                        header: str = input("Names of column: ")
+                        fore_color: str = input("Foreground color of Text in HEX: ")
+                        back_color: str = input("Background color of Text in HEX: ")
+                        try:
+                            h = init_header(header, fore_color, back_color)
+                            break
+                        except (ValueError, TypeError) as e:
+                            print(e)
+                            continue
+                    headers.append(h)
+                
+                for header in headers:
+                    table_data[header]
+
+            # clearConsole()
             continue
         else:
             clearConsole()

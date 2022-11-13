@@ -236,10 +236,9 @@ def main():
                             print(e)
                             continue
                     headers.append(h)
-                
-                for header in headers:
-                    table_data[header]
-
+                for h in headers:
+                    for i in range(len(table)):
+                        table_data[h] = i
             # clearConsole()
             continue
         else:

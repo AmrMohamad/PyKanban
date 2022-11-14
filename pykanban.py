@@ -154,7 +154,14 @@ def menu() -> int:
         print("Menu:")
         for index, option in enumerate(option_menu):
             print(" " + str(index + 1) + " => " + option)
-        selected_option: int = int(input("Enter the number of option in menu: ")) - 1
+        try:
+            selected_option: int = int(input("Enter the number of option in menu: ")) - 1
+        except ValueError:
+            print("Please re-enter a number of menu list in right way as integer")
+            time.sleep(2)
+            clearConsole()
+            continue
+
         if selected_option in range(len(option_menu)):
             return selected_option
         else:
@@ -239,8 +246,9 @@ def main():
                     headers.append(h)
                 for h in headers:
                     for i in range(num_stages):
-                        table_data[h] = "n     " + str(i)
-
+                        table_data[h] = ["n     " + str(i)]
+                print(table_data)
+                time.sleep(40)
                 print(tabulate(table_data, headers="keys",tablefmt="double_grid",stralign='center'))
                 writer = csv.DictWriter(table,fieldnames=[key for key in table_data])
                 writer.writeheader()

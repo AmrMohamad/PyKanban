@@ -11,7 +11,7 @@ DATA_DIR = "./data/"
 
 
 class Card:
-    
+
     _width_of_card: int = 38
     _top_line: str = " " + ("#" * (_width_of_card + 2)) + "#" + "\n"
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
@@ -80,9 +80,11 @@ class Card:
                     + "  #"
                     + "\n"
                 )
+
     @classmethod
     def print_here(cls) -> str:
         return f"{cls._top_line}{cls._blank_line}{cls.text_line}{cls._blank_line}{cls._buttom_line}"
+
     """
     def __str__(self) -> str:
         return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}" """
@@ -93,20 +95,22 @@ def init_header(
 ) -> str:
     """Checking for column names it should be set"""
     if bool(header) == False:
-        raise ValueError(
-            "Please check, re-enter name of header maybe you missed one"
-        )
+        raise ValueError("Please check, re-enter name of header maybe you missed one")
 
     """ add colors to header and check if they correct in hex value or not"""
-    if f_color:=re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",fore_color):
+    if f_color := re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", fore_color):
         color = fg(f_color.group(0))
     else:
-        raise TypeError("Please Enter a Right Value !!\nOR Not a valid value in hex code of color")
+        raise TypeError(
+            "Please Enter a Right Value !!\nOR Not a valid value in hex code of color"
+        )
 
-    if b_color:=re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",back_color):
+    if b_color := re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", back_color):
         color += bg(b_color.group(0))
     else:
-        raise TypeError("Please Enter a Right Value !!\nOR Not a valid value in hex code of color")
+        raise TypeError(
+            "Please Enter a Right Value !!\nOR Not a valid value in hex code of color"
+        )
 
     return color + "    " + header + "    " + attr("reset")
 
@@ -144,8 +148,13 @@ def view_tables() -> list[str]:
 
 
 def open_table(table_name: str) -> str:
-    # clearConsole()
-    ...
+    clearConsole()
+    vt = []
+    with open(f"{DATA_DIR}{table_name}", "r") as vtable:
+        reader = csv.DictReader(vtable)
+        for row in reader:
+            vt.append(row)
+    return vt
 
 
 def menu() -> int:
@@ -155,7 +164,9 @@ def menu() -> int:
         for index, option in enumerate(option_menu):
             print(" " + str(index + 1) + " => " + option)
         try:
-            selected_option: int = int(input("Enter the number of option in menu: ")) - 1
+            selected_option: int = (
+                int(input("Enter the number of option in menu: ")) - 1
+            )
         except ValueError:
             print("Please re-enter a number of menu list in right way as integer")
             time.sleep(2)
@@ -209,9 +220,15 @@ def main():
             tables_list: list[str] = view_tables()
             for index, table_name in enumerate(tables_list):
                 print(f"{index + 1}: {table_name.replace('.csv', '')}")
-            selected_table: int = int(input("Enter Number of Table to Open: "))
-            print(tables_list)
-            open_table(tables_list[selected_table])
+            selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
+            print(
+                tabulate(
+                    open_table(tables_list[selected_table]),
+                    headers="keys",
+                    tablefmt="double_grid",
+                    stralign="center",
+                )
+            )
             time.sleep(15)
             clearConsole()
             continue
@@ -219,7 +236,9 @@ def main():
         elif selected_option == 1:
             clearConsole()
             asked_table_name: str = str(input("Name of New Table is: "))
-            with open(f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a",newline='') as table:
+            with open(
+                f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a", newline=""
+            ) as table:
                 table_data: dict = {}
                 headers: list[str] = []
                 num_stages: int = 0
@@ -246,8 +265,15 @@ def main():
                     headers.append(h)
                 for h in headers:
                     table_data[h] = ["test"]
-                print(tabulate(table_data, headers="keys",tablefmt="double_grid",stralign='center'))
-                writer = csv.DictWriter(table,fieldnames=headers)
+                print(
+                    tabulate(
+                        table_data,
+                        headers="keys",
+                        tablefmt="double_grid",
+                        stralign="center",
+                    )
+                )
+                writer = csv.DictWriter(table, fieldnames=headers)
                 writer.writeheader()
                 writer.writerow(table_data)
             # clearConsole()
@@ -264,6 +290,7 @@ def main():
                 t -= 1
             clearConsole()
             sys.exit()
+
 
 if __name__ == "__main__":
     main()

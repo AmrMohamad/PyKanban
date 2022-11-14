@@ -219,7 +219,7 @@ def main():
         elif selected_option == 1:
             clearConsole()
             asked_table_name: str = str(input("Name of New Table is: "))
-            with open(f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a") as table:
+            with open(f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a",newline='') as table:
                 table_data: dict = {}
                 headers: list[str] = []
                 num_stages: int = 0
@@ -245,17 +245,12 @@ def main():
                             continue
                     headers.append(h)
                 for h in headers:
-                    for i in range(num_stages):
-                        table_data[h] = ["n     " + str(i)]
-                print(table_data)
-                time.sleep(40)
+                    table_data[h] = ["test"]
                 print(tabulate(table_data, headers="keys",tablefmt="double_grid",stralign='center'))
-                writer = csv.DictWriter(table,fieldnames=[key for key in table_data])
+                writer = csv.DictWriter(table,fieldnames=headers)
                 writer.writeheader()
-                for header in table_data:
-                    writer.writerow({header:table_data[header]})
+                writer.writerow(table_data)
             # clearConsole()
-            time.sleep(25)
             continue
         else:
             clearConsole()
@@ -269,7 +264,6 @@ def main():
                 t -= 1
             clearConsole()
             sys.exit()
-
 
 if __name__ == "__main__":
     main()

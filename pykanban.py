@@ -11,20 +11,20 @@ DATA_DIR = "./data/"
 
 
 class Card:
-    def __init__(self, width_of_card: int = 38) -> None:
-        self.width_of_card: int = width_of_card
-        self._top_line: str = " " + ("#" * (width_of_card + 2)) + "#" + "\n"
-        self._blank_line: str = "| " + (" " * (width_of_card + 2)) + "#" + "\n"
-        self._buttom_line: str = " " + ("-" * (width_of_card + 2))
-        self.text_line: str = ""
+    
+    _width_of_card: int = 38
+    _top_line: str = " " + ("#" * (_width_of_card + 2)) + "#" + "\n"
+    _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
+    _buttom_line: str = " " + ("-" * (_width_of_card + 2))
+    text_line: str = ""
 
     @property
-    def width_of_card(self):
+    def width_of_card(cls):
         """Getter of width_of_card"""
-        return self._width_of_card
+        return cls._width_of_card
 
     @width_of_card.setter
-    def width_of_card(self, width_of_card):
+    def width_of_card(cls, width_of_card):
         """Setter of width_of_card
         Args:
             width_of_card (_int_): _setting the value of width_of_card_
@@ -32,25 +32,26 @@ class Card:
             ValueError: _The value of card width is out of range,The range is between 28 and 44_
         """
         if 28 <= width_of_card <= 44:
-            self._width_of_card = width_of_card
+            cls._width_of_card = width_of_card
         else:
             raise ValueError(
                 "The value of card width is out of range \n The range is between 28 and 44"
             )
 
     @property
-    def top_line(self):
-        return self._top_line
+    def top_line(cls):
+        return cls._top_line
 
     @property
-    def blank_line(self):
-        return self._blank_line
+    def blank_line(cls):
+        return cls._blank_line
 
     @property
-    def buttom_line(self):
-        return self._buttom_line
+    def buttom_line(cls):
+        return cls._buttom_line
 
-    def add_lines(self, *sentences) -> None:
+    @classmethod
+    def add_lines(cls, *sentences) -> None:
         for sentence in sentences:
             lines_per_sentence = [""]
             num_of_sentence_chars = len(sentence)
@@ -70,21 +71,21 @@ class Card:
             else:
                 raise ValueError("Maximum number of characters is 192 per line")
             for i in range(len(lines_per_sentence) - 1):
-                self.text_line += (
+                cls.text_line += (
                     "| "
                     + (
                         lines_per_sentence[i]
-                        + " " * (self.width_of_card - len(lines_per_sentence[i]))
+                        + " " * (cls._width_of_card - len(lines_per_sentence[i]))
                     )
                     + "  #"
                     + "\n"
                 )
-
-    def print_here(self) -> str:
-        return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}"
-
+    @classmethod
+    def print_here(cls) -> str:
+        return f"{cls._top_line}{cls._blank_line}{cls.text_line}{cls._blank_line}{cls._buttom_line}"
+    """
     def __str__(self) -> str:
-        return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}"
+        return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}" """
 
 
 def init_header(
@@ -107,7 +108,7 @@ def init_header(
     else:
         raise TypeError("Please Enter a Right Value !!\nOR Not a valid value in hex code of color")
 
-    return color + " " + header + " " + attr("reset")
+    return color + "    " + header + "    " + attr("reset")
 
 
 def init_table(file_table_name: str) -> str:
@@ -211,7 +212,7 @@ def main():
         elif selected_option == 1:
             clearConsole()
             asked_table_name: str = str(input("Name of New Table is: "))
-            with open(f"{init_table(asked_table_name)}.csv", "a") as table:
+            with open(f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a") as table:
                 table_data: dict = {}
                 headers: list[str] = []
                 num_stages: int = 0
@@ -237,9 +238,16 @@ def main():
                             continue
                     headers.append(h)
                 for h in headers:
-                    for i in range(len(table)):
-                        table_data[h] = i
+                    for i in range(num_stages):
+                        table_data[h] = "n     " + str(i)
+
+                print(tabulate(table_data, headers="keys",tablefmt="double_grid",stralign='center'))
+                writer = csv.DictWriter(table,fieldnames=[key for key in table_data])
+                writer.writeheader()
+                for header in table_data:
+                    writer.writerow({header:table_data[header]})
             # clearConsole()
+            time.sleep(25)
             continue
         else:
             clearConsole()

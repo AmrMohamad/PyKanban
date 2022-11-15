@@ -80,6 +80,7 @@ class Card:
                     + "  #"
                     + "\n"
                 )
+        return cls
 
     @classmethod
     def print_here(cls) -> str:
@@ -214,82 +215,84 @@ def main():
 
     while True:
         selected_option = menu()
-        # View Tables
-        if selected_option == 0:
-            clearConsole()
-            tables_list: list[str] = view_tables()
-            for index, table_name in enumerate(tables_list):
-                print(f"{index + 1}: {table_name.replace('.csv', '')}")
-            selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
-            print(
-                tabulate(
-                    open_table(tables_list[selected_table]),
-                    headers="keys",
-                    tablefmt="double_grid",
-                    stralign="center",
-                )
-            )
-            time.sleep(15)
-            clearConsole()
-            continue
-        # Create Table
-        elif selected_option == 1:
-            clearConsole()
-            asked_table_name: str = str(input("Name of New Table is: "))
-            with open(
-                f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a", newline=""
-            ) as table:
-                table_data: dict = {}
-                headers: list[str] = []
-                num_stages: int = 0
-                while True:
-                    n_s: int = int(input("Number of stages"))
-                    if 3 <= n_s <= 5:
-                        num_stages = n_s
-                        break
-                    else:
-                        print("The Maximum Stages is 5\nThe Minimum Stages is 3")
-                        time.sleep(4)
-                        continue
-                for _ in range(num_stages):
-                    while True:
-                        header: str = input("Names of column: ")
-                        fore_color: str = input("Foreground color of Text in HEX: ")
-                        back_color: str = input("Background color of Text in HEX: ")
-                        try:
-                            h = init_header(header, fore_color, back_color)
-                            break
-                        except (ValueError, TypeError) as e:
-                            print(e)
-                            continue
-                    headers.append(h)
-                for h in headers:
-                    table_data[h] = ["test"]
+        match selected_option:
+            # View Tables
+            case 0:
+                clearConsole()
+                tables_list: list[str] = view_tables()
+                for index, table_name in enumerate(tables_list):
+                    print(f"{index + 1}: {table_name.replace('.csv', '')}")
+                selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
                 print(
                     tabulate(
-                        table_data,
+                        open_table(tables_list[selected_table]),
                         headers="keys",
                         tablefmt="double_grid",
                         stralign="center",
                     )
                 )
-                writer = csv.DictWriter(table, fieldnames=headers)
-                writer.writeheader()
-                writer.writerow(table_data)
-            # clearConsole()
-            continue
-        else:
-            clearConsole()
-            print("PyKanban will exit in")
-            t = 5
-            while t:
-                mins, secs = divmod(t, 60)
-                timer = "{:02d}:{:02d}".format(mins, secs)
-                print(timer, end="\r")
-                time.sleep(1)
-                t -= 1
-            clearConsole()
-            sys.exit()
+                time.sleep(15)
+                clearConsole()
+                continue
+            # Create Table
+            case 1:
+                clearConsole()
+                asked_table_name: str = str(input("Name of New Table is: "))
+                with open(
+                    f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a", newline=""
+                ) as table:
+                    table_data: dict = {}
+                    headers: list[str] = []
+                    num_stages: int = 0
+                    while True:
+                        n_s: int = int(input("Number of stages"))
+                        if 3 <= n_s <= 5:
+                            num_stages = n_s
+                            break
+                        else:
+                            print("The Maximum Stages is 5\nThe Minimum Stages is 3")
+                            time.sleep(4)
+                            continue
+                    for _ in range(num_stages):
+                        while True:
+                            header: str = input("Names of column: ")
+                            fore_color: str = input("Foreground color of Text in HEX: ")
+                            back_color: str = input("Background color of Text in HEX: ")
+                            try:
+                                h = init_header(header, fore_color, back_color)
+                                break
+                            except (ValueError, TypeError) as e:
+                                print(e)
+                                continue
+                        headers.append(h)
+                    for h in headers:
+                        table_data[h] = ["test"]
+                    print(
+                        tabulate(
+                            table_data,
+                            headers="keys",
+                            tablefmt="double_grid",
+                            stralign="center",
+                        )
+                    )
+                    writer = csv.DictWriter(table, fieldnames=headers)
+                    writer.writeheader()
+                    writer.writerow(table_data)
+                # clearConsole()
+                continue
+            # Exit
+            case _:
+                clearConsole()
+                print("PyKanban will exit in")
+                t = 5
+                while t:
+                    mins, secs = divmod(t, 60)
+                    timer = "{:02d}:{:02d}".format(mins, secs)
+                    print(timer, end="\r")
+                    time.sleep(1)
+                    t -= 1
+                clearConsole()
+                sys.exit()
 
 
 if __name__ == "__main__":

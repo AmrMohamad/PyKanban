@@ -18,7 +18,7 @@ class Card:
     _buttom_line: str = " " + ("-" * (_width_of_card + 2))
     text_line: str = ""
     title: str = ''
-    sub_titles: list(str) = ''
+    sub_titles: list[str] = ''
 
     @property
     def width_of_card(cls):
@@ -63,7 +63,7 @@ class Card:
           raise ValueError('The Maximum No. of Characters for Title is 34')
 
     @classmethod
-    def add_sub_titles(cls, sub_titles:list(str)) -> None:
+    def add_sub_titles(cls, sub_titles:list[str]) -> None:
         e = ValueError('It should be there at lest 3 sub-titles and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)')
         if bool(sub_titles) == False:
             raise e

@@ -1,5 +1,5 @@
 from tabulate import tabulate
-from colored import fg, bg, attr, stylize
+from colored import fg, bg, attr
 import csv
 import os
 import sys
@@ -17,6 +17,8 @@ class Card:
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
     _buttom_line: str = " " + ("-" * (_width_of_card + 2))
     text_line: str = ""
+    title: str = ''
+    sub_titles: list(str) = ''
 
     @property
     def width_of_card(cls):
@@ -49,6 +51,31 @@ class Card:
     @property
     def buttom_line(cls):
         return cls._buttom_line
+
+    @classmethod
+    def add_title(cls, title:str) -> None:
+        e = ValueError('It should be there title\nWithout entering empty title (like just hit enter)')
+        if bool(title) == False:
+            raise e
+        if 0 < len(title) < 34 :
+            cls.title = title
+        else:
+          raise ValueError('The Maximum No. of Characters for Title is 34')
+
+    @classmethod
+    def add_sub_titles(cls, sub_titles:list(str)) -> None:
+        e = ValueError('It should be there at lest 3 sub-titles and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)')
+        if bool(sub_titles) == False:
+            raise e
+        for i in sub_titles:
+            if i == '':
+                raise e
+            else:
+                continue
+        if 3 <= sub_titles <= 5:
+            cls.sub_titles = sub_titles
+        else:
+          raise e
 
     @classmethod
     def add_lines(cls, *sentences) -> None:
@@ -148,7 +175,7 @@ def view_tables() -> list[str]:
     ...
 
 
-def open_table(table_name: str) -> str:
+def open_table(table_name: str) -> list:
     clearConsole()
     vt = []
     with open(f"{DATA_DIR}{table_name}", "r") as vtable:

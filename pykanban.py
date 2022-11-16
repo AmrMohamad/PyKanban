@@ -17,8 +17,8 @@ class Card:
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
     _buttom_line: str = " " + ("-" * (_width_of_card + 2))
     text_line: str = ""
-    title: str = ''
-    sub_titles: list[str] = ''
+    title: str = ""
+    sub_titles: list[str] = ""
 
     @property
     def width_of_card(cls):
@@ -53,22 +53,26 @@ class Card:
         return cls._buttom_line
 
     @classmethod
-    def add_title(cls, title:str) -> None:
-        e = ValueError('It should be there title\nWithout entering empty title (like just hit enter)')
+    def add_title(cls, title: str) -> None:
+        e = ValueError(
+            "It should be there title\nWithout entering empty title (like just hit enter)"
+        )
         if bool(title) == False:
             raise e
-        if 0 < len(title) < 34 :
+        if 0 < len(title) < 34:
             cls.title = title
         else:
-          raise ValueError('The Maximum No. of Characters for Title is 34')
+            raise ValueError("The Maximum No. of Characters for Title is 34")
 
     @classmethod
-    def add_sub_titles(cls, sub_titles:list[str]) -> None:
-        e = ValueError('It should be there at lest 3 sub-titles and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)')
+    def add_sub_titles(cls, sub_titles: list[str]) -> None:
+        e = ValueError(
+            "It should be there at lest 3 sub-titles and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)"
+        )
         if bool(sub_titles) == False:
             raise e
         for i in sub_titles:
-            if i == '':
+            if i == "":
                 raise e
             else:
                 continue
@@ -77,7 +81,7 @@ class Card:
                 cls.sub_titles[s_t] = ""
             return cls
         else:
-          raise e
+            raise e
 
     @classmethod
     def add_lines(cls, *e_sentences) -> None:
@@ -88,13 +92,15 @@ class Card:
         sentences = cls.sub_titles
         for key_sentence in sentences:
             lines_per_sentence = []
-            sentences[key_sentence] = (" "*len(key_sentence)) + sentences[key_sentence]
+            sentences[key_sentence] = (" " * len(key_sentence)) + sentences[
+                key_sentence
+            ]
             num_of_sentence_chars = len(sentences[key_sentence])
             start_line = 0
             end_line = 45
             if 0 < num_of_sentence_chars <= 244:
                 num_of_lines = int(round(num_of_sentence_chars / 45))
-                lines_per_sentence.append((key_sentence + ' :'))
+                lines_per_sentence.append((key_sentence + " :"))
                 lines_per_sentence.append("")
                 for index_line in range(num_of_lines + 1):
                     lines_per_sentence[index_line + 1] = sentences[key_sentence][

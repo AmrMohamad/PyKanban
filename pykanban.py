@@ -80,7 +80,12 @@ class Card:
           raise e
 
     @classmethod
-    def add_lines(cls, *sentences) -> None:
+    def add_lines(cls, *e_sentences) -> None:
+        i = 0
+        for t in cls.sub_titles:
+            cls.sub_titles[t] = e_sentences[i]
+            i += 1
+        sentences = cls.sub_titles
         for sentence in sentences:
             lines_per_sentence = [""]
             num_of_sentence_chars = len(sentence)

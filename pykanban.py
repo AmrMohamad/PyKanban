@@ -86,25 +86,26 @@ class Card:
             cls.sub_titles[t] = e_sentences[i]
             i += 1
         sentences = cls.sub_titles
-        for sentence in sentences:
-            lines_per_sentence = [""]
-            num_of_sentence_chars = len(sentence)
-            index_line = 0
+        for key_sentence in sentences:
+            lines_per_sentence = []
+            sentences[key_sentence] = (" "*len(key_sentence)) + sentences[key_sentence]
+            num_of_sentence_chars = len(sentences[key_sentence])
             start_line = 0
             end_line = 45
             if 0 < num_of_sentence_chars <= 244:
                 num_of_lines = int(round(num_of_sentence_chars / 45))
-                if num_of_lines == 0:
-                    num_of_lines = 1
-                while index_line in range(num_of_lines):
-                    lines_per_sentence[index_line] = sentence[start_line:end_line]
+                lines_per_sentence.append((key_sentence + ' :'))
+                lines_per_sentence.append("")
+                for index_line in range(num_of_lines + 1):
+                    lines_per_sentence[index_line + 1] = sentences[key_sentence][
+                        start_line:end_line
+                    ]
                     lines_per_sentence.append("")
                     start_line = end_line
                     end_line += 45
-                    index_line += 1
             else:
                 raise ValueError("Maximum number of characters is 192 per line")
-            for i in range(len(lines_per_sentence) - 1):
+            for i in range(len(lines_per_sentence)):
                 cls.text_line += (
                     "| "
                     + (

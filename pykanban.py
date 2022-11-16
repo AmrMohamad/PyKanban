@@ -72,8 +72,10 @@ class Card:
                 raise e
             else:
                 continue
-        if 3 <= sub_titles <= 5:
-            cls.sub_titles = sub_titles
+        if 3 <= len(sub_titles) <= 5:
+            for s_t in sub_titles:
+                cls.sub_titles[s_t] = ""
+            return cls
         else:
           raise e
 

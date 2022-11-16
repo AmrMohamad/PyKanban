@@ -12,7 +12,7 @@ DATA_DIR = "./data/"
 
 class Card:
 
-    _width_of_card: int = 38
+    _width_of_card: int = 46
     _top_line: str = " " + ("#" * (_width_of_card + 2)) + "#" + "\n"
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
     _buttom_line: str = " " + ("-" * (_width_of_card + 2))
@@ -33,7 +33,7 @@ class Card:
         Raises:
             ValueError: _The value of card width is out of range,The range is between 28 and 44_
         """
-        if 28 <= width_of_card <= 44:
+        if 28 <= width_of_card <= 48:
             cls._width_of_card = width_of_card
         else:
             raise ValueError(
@@ -84,16 +84,16 @@ class Card:
             num_of_sentence_chars = len(sentence)
             index_line = 0
             start_line = 0
-            end_line = 32
-            if 0 < num_of_sentence_chars <= 192:
-                num_of_lines = int(round(num_of_sentence_chars / 32))
+            end_line = 45
+            if 0 < num_of_sentence_chars <= 244:
+                num_of_lines = int(round(num_of_sentence_chars / 45))
                 if num_of_lines == 0:
                     num_of_lines = 1
                 while index_line in range(num_of_lines):
                     lines_per_sentence[index_line] = sentence[start_line:end_line]
                     lines_per_sentence.append("")
                     start_line = end_line
-                    end_line += 32
+                    end_line += 45
                     index_line += 1
             else:
                 raise ValueError("Maximum number of characters is 192 per line")

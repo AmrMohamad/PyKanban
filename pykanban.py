@@ -196,10 +196,11 @@ def open_table(table_name: str) -> list:
     vt = []
     with open(f"{DATA_DIR}{table_name}", "r") as vtable:
         reader = csv.DictReader(vtable)
-        vt = {h:[] for h in reader.fieldnames}
+        vt = {h: [] for h in reader.fieldnames}
         for row in reader:
-            for _,h_p in enumerate(reader.fieldnames):
-                vt[h_p].append((f'{row[h_p]}'.replace('\\n', '\n')))
+            for _, h_p in enumerate(reader.fieldnames):
+                f_data = row[h_p].replace("\\n", "\n")
+                vt[h_p].append(f_data)
     return vt
 
 
@@ -276,7 +277,7 @@ def main():
                         stralign="center",
                     )
                 )
-                time.sleep(15)
+                time.sleep(5)
                 clearConsole()
                 continue
             # Create Table
@@ -312,6 +313,7 @@ def main():
                         headers.append(h)
                     for h in headers:
                         cards = []
+                        print(f"for {h}")
                         while True:
                             try:
                                 num_of_cards = int(
@@ -356,9 +358,36 @@ def main():
                             stralign="center",
                         )
                     )
+                    time.sleep(5)
                     writer = csv.DictWriter(table, fieldnames=headers)
                     writer.writeheader()
-                    writer.writerow(table_data)
+                    longest_header_in_cards = 0
+                    counter_length = 0
+                    while counter_length != len(headers):
+                        try:
+                            if len(table_data[headers[counter_length]]) <= len(
+                                table_data[headers[counter_length + 1]]
+                            ):
+                                longest_header_in_cards = len(
+                                    table_data[headers[counter_length + 1]]
+                                )
+                                counter_length += 1
+                            else:
+                                counter_length += 1
+                                continue
+                        except IndexError:
+                            counter_length += 1
+                            pass
+                    for row in range(longest_header_in_cards):
+                        cards_in_row = {}
+                        for header_pointer in table_data:
+                            if row in range(len(table_data[header_pointer])):
+                                cards_in_row[header_pointer] = table_data[
+                                    header_pointer
+                                ][row]
+                            else:
+                                continue
+                        writer.writerow(cards_in_row)
                 # clearConsole()
                 continue
             # Exit

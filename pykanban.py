@@ -196,8 +196,10 @@ def open_table(table_name: str) -> list:
     vt = []
     with open(f"{DATA_DIR}{table_name}", "r") as vtable:
         reader = csv.DictReader(vtable)
+        vt = {h:[] for h in reader.fieldnames}
         for row in reader:
-            vt.append(row)
+            for _,h_p in enumerate(reader.fieldnames):
+                vt[h_p].append((f'{row[h_p]}'.replace('\\n', '\n')))
     return vt
 
 

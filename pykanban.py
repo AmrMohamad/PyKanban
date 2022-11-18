@@ -18,7 +18,7 @@ class Card:
     _buttom_line: str = " " + ("-" * (_width_of_card + 2))
     text_line: str = ""
     title: str = ""
-    sub_titles: list[str] = ""
+    sub_titles: dict[str] = {}
 
     @property
     def width_of_card(cls):
@@ -65,19 +65,20 @@ class Card:
             raise ValueError("The Maximum No. of Characters for Title is 34")
 
     @classmethod
-    def add_sub_titles(cls, sub_titles: list[str]) -> None:
+    def add_sub_titles(cls, sub_title: list[str]) -> None:
         e = ValueError(
             "It should be there at lest 3 sub-titles and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)"
         )
-        if bool(sub_titles) == False:
+        if bool(sub_title) == False:
             raise e
-        for i in sub_titles:
+        for i in sub_title:
             if i == "":
                 raise e
             else:
                 continue
-        if 3 <= len(sub_titles) <= 5:
-            for s_t in sub_titles:
+        cls.sub_titles = {}
+        if 3 <= len(sub_title) <= 5:
+            for s_t in sub_title:
                 cls.sub_titles[s_t] = ""
             return cls
         else:
@@ -111,6 +112,7 @@ class Card:
                     end_line += 45
             else:
                 raise ValueError("Maximum number of characters is 192 per line")
+            cls.text_line = ""
             for i in range(len(lines_per_sentence)):
                 cls.text_line += (
                     "| "
@@ -307,7 +309,43 @@ def main():
                                 continue
                         headers.append(h)
                     for h in headers:
-                        table_data[h] = ["test"]
+                        cards = []
+                        while True:
+                            try:
+                                num_of_cards = int(
+                                    input("How many cards do you want?  ")
+                                )
+                                break
+                            except ValueError:
+                                print(
+                                    "Please Enter the Number of Cards do you want in the right way\n only numbers like 1 2 3 ... etc"
+                                )
+                                continue
+                        for card_num in range(num_of_cards):
+                            print(
+                                "Enter the name of each sub-title, The maximum is 4 sub-titles !"
+                            )
+                            added_sub_titles: list[str] = []
+                            n_c = 0
+                            while n_c != 3:
+                                added_sub_titles.append(input("==> "))
+                                n_c += 1
+                            added_lines: list[str] = []
+                            print(
+                                "Enter the data of each sub-title, The maximum is 244 characters per paragraph !"
+                            )
+                            for _, s_title in enumerate(added_sub_titles):
+                                print(
+                                    "Do not hit enter for new line,\nWe handle it automatically"
+                                )
+                                print(f"For {s_title} :")
+                                added_lines.append(input(">>> "))
+                            cards.append(
+                                Card.add_sub_titles(added_sub_titles)
+                                .add_lines(*added_lines)
+                                .print_here()
+                            )
+                        table_data[h] = cards
                     print(
                         tabulate(
                             table_data,

@@ -53,14 +53,27 @@ class Card:
         return cls._buttom_line
 
     @classmethod
-    def add_title(cls, title: str) -> None:
+    def add_title(cls, added_title: str) -> None:
         e = ValueError(
             "It should be there title\nWithout entering empty title (like just hit enter)"
         )
-        if bool(title) == False:
+        if bool(added_title) == False:
             raise e
-        if 0 < len(title) < 34:
-            cls.title = title
+        cls.title = ""
+        if 0 < len(added_title) < 34:
+            padding_for_center_title = int((cls._width_of_card - len(added_title)) / 2)
+            added_title = (
+                "| "
+                + (
+                    padding_for_center_title * " "
+                    + added_title
+                    + padding_for_center_title * " "
+                )
+                + "  #"
+                + "\n"
+            )
+            cls.title = added_title
+            return cls
         else:
             raise ValueError("The Maximum No. of Characters for Title is 34")
 
@@ -127,7 +140,7 @@ class Card:
 
     @classmethod
     def print_here(cls) -> str:
-        return f"{cls._top_line}{cls._blank_line}{cls.text_line}{cls._blank_line}{cls._buttom_line}"
+        return f"{cls._top_line}{cls.title}{cls._blank_line}{cls.text_line}{cls._buttom_line}"
 
     """
     def __str__(self) -> str:
@@ -203,8 +216,10 @@ def open_table(table_name: str) -> list:
                 vt[h_p].append(f_data)
     return vt
 
+
 def move_card():
     ...
+
 
 def menu() -> int:
     option_menu: list = ["View Tables", "Create Table", "Exit"]
@@ -328,6 +343,8 @@ def main():
                                 )
                                 continue
                         for card_num in range(num_of_cards):
+                            print("Enter the Title of Card, It's one title only !")
+                            title_of_card = input("==> ")
                             print(
                                 "Enter the name of each sub-title, The maximum is 4 sub-titles !"
                             )
@@ -346,8 +363,10 @@ def main():
                                 )
                                 print(f"For {s_title} :")
                                 added_lines.append(input(">>> "))
+
                             cards.append(
-                                Card.add_sub_titles(added_sub_titles)
+                                Card.add_title(title_of_card)
+                                .add_sub_titles(added_sub_titles)
                                 .add_lines(*added_lines)
                                 .print_here()
                             )

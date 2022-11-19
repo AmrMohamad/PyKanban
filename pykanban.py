@@ -86,6 +86,7 @@ class Card:
 
     @classmethod
     def add_lines(cls, *e_sentences) -> None:
+        cls.text_line = ""
         i = 0
         for t in cls.sub_titles:
             cls.sub_titles[t] = e_sentences[i]
@@ -376,8 +377,7 @@ def main():
                                 counter_length += 1
                                 continue
                         except IndexError:
-                            counter_length += 1
-                            pass
+                            break
                     for row in range(longest_header_in_cards):
                         cards_in_row = {}
                         for header_pointer in table_data:

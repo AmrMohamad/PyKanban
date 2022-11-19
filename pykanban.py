@@ -113,7 +113,6 @@ class Card:
                     end_line += 45
             else:
                 raise ValueError("Maximum number of characters is 192 per line")
-            cls.text_line = ""
             for i in range(len(lines_per_sentence)):
                 cls.text_line += (
                     "| "
@@ -204,6 +203,8 @@ def open_table(table_name: str) -> list:
                 vt[h_p].append(f_data)
     return vt
 
+def move_card():
+    ...
 
 def menu() -> int:
     option_menu: list = ["View Tables", "Create Table", "Exit"]

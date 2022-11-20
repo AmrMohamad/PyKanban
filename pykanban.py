@@ -18,7 +18,7 @@ class Card:
     _buttom_line: str = " " + ("-" * (_width_of_card + 2))
     text_line: str = ""
     title: str = ""
-    sub_titles: dict[str] = {}
+    sub_titles: dict = {}
 
     @property
     def width_of_card(cls):
@@ -204,9 +204,9 @@ def view_tables() -> list[str]:
     ...
 
 
-def open_table(table_name: str) -> list:
+def open_table(table_name: str) -> dict:
     clearConsole()
-    vt = []
+    vt : dict = {}
     with open(f"{DATA_DIR}{table_name}", "r") as vtable:
         reader = csv.DictReader(vtable)
         vt = {h: [] for h in reader.fieldnames}
@@ -217,7 +217,8 @@ def open_table(table_name: str) -> list:
     return vt
 
 
-def move_card():
+def move_card(card_name:str,move_to)->str:
+    old_card_position: dict = {}
     ...
 
 

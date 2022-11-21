@@ -205,7 +205,6 @@ def view_tables() -> list[str]:
 
 
 def open_table(table_name: str) -> dict:
-    clearConsole()
     vt : dict = {}
     with open(f"{DATA_DIR}{table_name}", "r") as vtable:
         reader = csv.DictReader(vtable)
@@ -217,8 +216,15 @@ def open_table(table_name: str) -> dict:
     return vt
 
 
-def move_card(card_name:str,move_to)->str:
-    old_card_position: dict = {}
+def move_card(table_name_to_edit:str,card_name:str,move_to)->str:
+    old_card_table: dict = open_table(table_name_to_edit)
+
+    columns_name = list(old_card_table.keys())
+    table_file = open(f'{DATA_DIR}{table_name_to_edit}.csv','r')
+    reader = csv.reader(table_file)
+    for row in reader:
+        if card_name in row:
+            ...
     ...
 
 

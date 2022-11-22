@@ -265,8 +265,11 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
                 new_card_table[h_n].append(c)
             else:
                 continue
-    os.rename(f"{DATA_DIR}{table_name_to_edit}.csv",f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv")
-    with open(f'{DATA_DIR}{table_name_to_edit}.csv','w') as new_table :
+    os.rename(
+        f"{DATA_DIR}{table_name_to_edit}.csv",
+        f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv",
+    )
+    with open(f"{DATA_DIR}{table_name_to_edit}.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
         writer.writeheader()
         longest_header_in_cards = 0
@@ -296,7 +299,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
     if is_moved_right == "Moved":
         return is_moved_right
     else:
-        raise Exception(
+        raise ValueError(
             "the is not moved, please check if the card of column is right name"
         )
 
@@ -306,6 +309,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}.csv", "r"))
+    is_card_deleted: str = ''
     break_out_flag = False  # for break nested loops at once
     for row in reader:
         """for reading each row in file"""
@@ -315,6 +319,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 """Searching about the Card that we want to move to other column"""
                 old_card_table[columns_name[row.index(column)]].remove(column)
                 break_out_flag = True
+                is_card_deleted = 'Deleted'
                 break
             else:
                 continue
@@ -357,30 +362,49 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 else:
                     continue
             writer.writerow(cards_in_row)
+    
+    return is_card_deleted
 
 
-def menu() -> int:
-    option_menu: list = ["View Tables", "Create Table", "Exit"]
-    while True:
-        print("Menu:")
-        for index, option in enumerate(option_menu):
-            print(" " + str(index + 1) + " => " + option)
-        try:
-            selected_option: int = (
-                int(input("Enter the number of option in menu: ")) - 1
-            )
-        except ValueError:
-            print("Please re-enter a number of menu list in right way as integer")
-            time.sleep(2)
-            clearConsole()
-            continue
-
-        if selected_option in range(len(option_menu)):
-            return selected_option
-        else:
-            clearConsole()
-            menu()
-    ...
+def menu(type_menu:str) -> int:
+    match type_menu:
+        case 'main':
+            option_menu: list = ["View Tables", "Create Table", "Exit"]
+            while True:
+                print("Menu:")
+                for index, option in enumerate(option_menu):
+                    print(" " + str(index + 1) + " => " + option)
+                try:
+                    selected_option: int = (int(input("Enter the number of option in menu: ")) - 1)
+                except ValueError:
+                    print("Please re-enter a number of menu list in right way as integer")
+                    time.sleep(2)
+                    clearConsole()
+                    continue
+                if selected_option in range(len(option_menu)):
+                    return selected_option
+                else:
+                    clearConsole()
+                    menu('main')
+        case 'edit':
+            option_menu: list = ["Move a Crad", "Delete a Card", "Back to Main Screen"]
+            while True:
+                print("Options:")
+                for index, option in enumerate(option_menu):
+                    print(" " + str(index + 1) + " => " + option + ' ',end='')
+                print()
+                try:
+                    selected_option: int = (int(input("Enter the number of option: ")) - 1)
+                except ValueError:
+                    print("Please re-enter a number of option in right way as integer")
+                    time.sleep(2)
+                    #clearConsole()
+                    continue
+                if selected_option in range(len(option_menu)):
+                    return selected_option
+                else:
+                    clearConsole()
+                    menu('edit')
 
 
 def clearConsole():
@@ -415,7 +439,7 @@ def main():
     )
 
     while True:
-        selected_option = menu()
+        selected_option = menu('main')
         match selected_option:
             # View Tables
             case 0:
@@ -432,11 +456,31 @@ def main():
                         stralign="center",
                     )
                 )
-                time.sleep(5)
+                time.sleep(2)
                 print()
-
-                clearConsole()
-                continue
+                while True:
+                    selected_action = menu('edit')
+                    match selected_action:
+                        #Move a Crad
+                        case 0:
+                            while True:
+                                try:
+                                    name_of_card_to_move = input('Enter the Title of Card => ')
+                                    column_move_to = input('Which Column do you want to put the Card in? => ')
+                                    state = move_card(tables_list[selected_table],name_of_card_to_move,column_move_to)
+                                    if state == 'Moved':
+                                        print(f'{name_of_card_to_move} moved to {column_move_to} successfully')
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        #Delete a Card
+                        case 1:
+                            name_of_card_to_delete = input('Enter the Title of Card => ')
+                            
+                #clearConsole()
+                #continue
+                ...
             # Create Table
             case 1:
                 clearConsole()

@@ -5,6 +5,7 @@ import os
 import sys
 import re
 import time
+from datetime import datetime
 
 
 DATA_DIR = "./data/"
@@ -299,6 +300,64 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
         )
 
 
+def delete_card(table_name_to_edit: str, card_name: str) -> str:
+    old_card_table: dict = open_table(table_name_to_edit)
+    columns_name = list(old_card_table.keys())
+    new_card_table: dict = {header_name: [] for header_name in columns_name}
+    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}.csv", "r"))
+    break_out_flag = False  # for break nested loops at once
+    for row in reader:
+        """for reading each row in file"""
+        for column in row:
+            """for read each column in the row"""
+            if card_name in column:
+                """Searching about the Card that we want to move to other column"""
+                old_card_table[columns_name[row.index(column)]].remove(column)
+                break_out_flag = True
+                break
+            else:
+                continue
+        if break_out_flag:  # for break nested loops at once
+            break
+    for h_n in columns_name:
+        for c in old_card_table[h_n]:
+            if c != "":
+                new_card_table[h_n].append(c)
+            else:
+                continue
+    os.rename(
+        f"{DATA_DIR}{table_name_to_edit}.csv",
+        f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv",
+    )
+    with open(f"{DATA_DIR}{table_name_to_edit}.csv", "w") as new_table:
+        writer = csv.DictWriter(new_table, fieldnames=columns_name)
+        writer.writeheader()
+        longest_header_in_cards = 0
+        counter_length = 0
+        while counter_length != len(columns_name):
+            try:
+                if len(new_card_table[columns_name[counter_length]]) <= len(
+                    new_card_table[columns_name[counter_length + 1]]
+                ):
+                    longest_header_in_cards = len(
+                        new_card_table[columns_name[counter_length + 1]]
+                    )
+                    counter_length += 1
+                else:
+                    counter_length += 1
+                    continue
+            except IndexError:
+                break
+        for row in range(longest_header_in_cards):
+            cards_in_row = {}
+            for header_pointer in new_card_table:
+                if row in range(len(new_card_table[header_pointer])):
+                    cards_in_row[header_pointer] = new_card_table[header_pointer][row]
+                else:
+                    continue
+            writer.writerow(cards_in_row)
+
+
 def menu() -> int:
     option_menu: list = ["View Tables", "Create Table", "Exit"]
     while True:
@@ -373,6 +432,8 @@ def main():
                     )
                 )
                 time.sleep(5)
+                print()
+
                 clearConsole()
                 continue
             # Create Table

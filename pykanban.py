@@ -265,7 +265,8 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
                 new_card_table[h_n].append(c)
             else:
                 continue
-    with open(f"{DATA_DIR}{table_name_to_edit}-new.csv", "w") as new_table:
+    os.rename(f"{DATA_DIR}{table_name_to_edit}.csv",f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv")
+    with open(f'{DATA_DIR}{table_name_to_edit}.csv','w') as new_table :
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
         writer.writeheader()
         longest_header_in_cards = 0

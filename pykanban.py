@@ -375,41 +375,37 @@ def menu(type_menu:str) -> int:
     match type_menu:
         case 'main':
             option_menu: list = ["View Tables", "Create Table", "Exit"]
-            while True:
-                print("Menu:")
-                for index, option in enumerate(option_menu):
-                    print(" " + str(index + 1) + " => " + option)
-                try:
-                    selected_option: int = (int(input("Enter the number of option in menu: ")) - 1)
-                except ValueError:
-                    print("Please re-enter a number of menu list in right way as integer")
-                    time.sleep(2)
-                    clearConsole()
-                    continue
-                if selected_option in range(len(option_menu)):
-                    return selected_option
-                else:
-                    clearConsole()
-                    menu('main')
+            print("Menu:")
+            for index, option in enumerate(option_menu):
+                print(" " + str(index + 1) + " => " + option)
+            try:
+                selected_option: int = (int(input("Enter the number of option in menu: ")) - 1)
+            except ValueError:
+                print("Please re-enter a number of menu list in right way as integer")
+                time.sleep(2)
+                clearConsole()
+            if selected_option in range(len(option_menu)):
+                return selected_option
+            else:
+                clearConsole()
+                menu('main')
         case 'edit':
             option_menu: list = ["Move a Crad", "Delete a Card", "Back to Main Screen"]
-            while True:
-                print("Options:")
-                for index, option in enumerate(option_menu):
-                    print(" " + str(index + 1) + " => " + option + ' ',end='')
-                print()
-                try:
-                    selected_option: int = (int(input("Enter the number of option: ")) - 1)
-                except ValueError:
-                    print("Please re-enter a number of option in right way as integer")
-                    time.sleep(2)
-                    #clearConsole()
-                    continue
-                if selected_option in range(len(option_menu)):
-                    return selected_option
-                else:
-                    clearConsole()
-                    menu('edit')
+            print("Options:")
+            for index, option in enumerate(option_menu):
+                print(" " + str(index + 1) + " => " + option + ' ',end='')
+            print()
+            try:
+                selected_option: int = (int(input("Enter the number of option: ")) - 1)
+            except ValueError:
+                print("Please re-enter a number of option in right way as integer")
+                time.sleep(2)
+                #clearConsole()
+            if selected_option in range(len(option_menu)):
+                return selected_option
+            else:
+                clearConsole()
+                menu('edit')
 
 
 def clearConsole():
@@ -494,8 +490,8 @@ def main():
                         #Back to Main Screen
                         case 2:
                             clearConsole()
-                            menu('main')
                             break
+                main()
                 #clearConsole()
                 #continue
                 ...

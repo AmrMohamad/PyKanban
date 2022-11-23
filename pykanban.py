@@ -217,6 +217,17 @@ def open_table(table_name: str) -> dict:
     return vt
 
 
+def add_card(name_of_card: str, add_to_column_name: str, data_of_card: dict) -> str:
+    added_card = (
+        Card.add_title(title_of_card)
+        .add_sub_titles(added_sub_titles)
+        .add_lines(*added_lines)
+        .print_here()
+    )
+
+    ...
+
+
 def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
     old_card_table: dict = open_table(table_name_to_edit)
     card: str = ""
@@ -309,7 +320,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}.csv", "r"))
-    is_card_deleted: str = ''
+    is_card_deleted: str = ""
     break_out_flag = False  # for break nested loops at once
     for row in reader:
         """for reading each row in file"""
@@ -319,7 +330,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 """Searching about the Card that we want to move to other column"""
                 old_card_table[columns_name[row.index(column)]].remove(column)
                 break_out_flag = True
-                is_card_deleted = 'Deleted'
+                is_card_deleted = "Deleted"
                 break
             else:
                 continue
@@ -362,7 +373,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 else:
                     continue
             writer.writerow(cards_in_row)
-    
+
     if is_card_deleted == "Deleted":
         return is_card_deleted
     else:
@@ -371,15 +382,17 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
         )
 
 
-def menu(type_menu:str) -> int:
+def menu(type_menu: str) -> int:
     match type_menu:
-        case 'main':
+        case "main":
             option_menu: list = ["View Tables", "Create Table", "Exit"]
             print("Menu:")
             for index, option in enumerate(option_menu):
                 print(" " + str(index + 1) + " => " + option)
             try:
-                selected_option: int = (int(input("Enter the number of option in menu: ")) - 1)
+                selected_option: int = (
+                    int(input("Enter the number of option in menu: ")) - 1
+                )
             except ValueError:
                 print("Please re-enter a number of menu list in right way as integer")
                 time.sleep(2)
@@ -388,24 +401,24 @@ def menu(type_menu:str) -> int:
                 return selected_option
             else:
                 clearConsole()
-                menu('main')
-        case 'edit':
-            option_menu: list = ["Move a Crad", "Delete a Card", "Back to Main Screen"]
+                menu("main")
+        case "edit":
+            option_menu: list = ["Add a Card","Move a Crad", "Delete a Card", "Back to Main Screen"]
             print("Options:")
             for index, option in enumerate(option_menu):
-                print(" " + str(index + 1) + " => " + option + ' ',end='')
+                print(" " + str(index + 1) + " => " + option + " ", end="")
             print()
             try:
-                selected_option: int = (int(input("Enter the number of option: ")) - 1)
+                selected_option: int = int(input("Enter the number of option: ")) - 1
             except ValueError:
                 print("Please re-enter a number of option in right way as integer")
                 time.sleep(2)
-                #clearConsole()
+                # clearConsole()
             if selected_option in range(len(option_menu)):
                 return selected_option
             else:
                 clearConsole()
-                menu('edit')
+                menu("edit")
 
 
 def clearConsole():
@@ -440,15 +453,16 @@ def main():
     )
 
     while True:
-        selected_option = menu('main')
+        selected_option = menu("main")
         match selected_option:
             # View Tables
             case 0:
                 clearConsole()
-                tables_list: list[str] = [t.replace('.csv', '') for t in view_tables()]
+                tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
                 for index, table_name in enumerate(tables_list):
                     print(f"{index + 1}: {table_name}")
                 selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
+                clearConsole()
                 print(
                     tabulate(
                         open_table(tables_list[selected_table]),
@@ -460,41 +474,58 @@ def main():
                 time.sleep(2)
                 print()
                 while True:
-                    selected_action = menu('edit')
+                    selected_action = menu("edit")
                     match selected_action:
-                        #Move a Crad
+                        # Add a Crad
                         case 0:
-                            while True:
-                                try:
-                                    name_of_card_to_move = input('Enter the Title of Card => ')
-                                    column_move_to = input('Which Column do you want to put the Card in? => ')
-                                    state = move_card(tables_list[selected_table],name_of_card_to_move,column_move_to)
-                                    if state == 'Moved':
-                                        print(f'{name_of_card_to_move} moved to {column_move_to} successfully')
-                                    break
-                                except ValueError as e:
-                                    print(e)
-                                    continue
-                        #Delete a Card
+                            ...
+                        # Move a Crad
                         case 1:
                             while True:
                                 try:
-                                    name_of_card_to_delete = input('Enter the Title of Card => ')
-                                    state = delete_card(tables_list[selected_table],name_of_card_to_delete)
-                                    if state == 'Deleted':
-                                        print(f'{name_of_card_to_delete} Deleted Successfully')
+                                    name_of_card_to_move = input(
+                                        "Enter the Title of Card => "
+                                    )
+                                    column_move_to = input(
+                                        "Which Column do you want to put the Card in? => "
+                                    )
+                                    state = move_card(
+                                        tables_list[selected_table],
+                                        name_of_card_to_move,
+                                        column_move_to,
+                                    )
+                                    if state == "Moved":
+                                        print(
+                                            f"{name_of_card_to_move} moved to {column_move_to} successfully"
+                                        )
                                     break
                                 except ValueError as e:
                                     print(e)
                                     continue
-                        #Back to Main Screen
+                        # Delete a Card
                         case 2:
+                            while True:
+                                try:
+                                    name_of_card_to_delete = input(
+                                        "Enter the Title of Card => "
+                                    )
+                                    state = delete_card(
+                                        tables_list[selected_table],
+                                        name_of_card_to_delete,
+                                    )
+                                    if state == "Deleted":
+                                        print(
+                                            f"{name_of_card_to_delete} Deleted Successfully"
+                                        )
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        # Back to Main Screen
+                        case 3:
                             clearConsole()
                             break
                 main()
-                #clearConsole()
-                #continue
-                ...
             # Create Table
             case 1:
                 clearConsole()

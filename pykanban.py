@@ -207,7 +207,7 @@ def view_tables() -> list[str]:
 
 def open_table(table_name: str) -> dict:
     vt: dict = {}
-    with open(f"{DATA_DIR}{table_name}", "r") as vtable:
+    with open(f"{DATA_DIR}{table_name}.csv", "r") as vtable:
         reader = csv.DictReader(vtable)
         vt = {h: [] for h in reader.fieldnames}
         for row in reader:
@@ -300,7 +300,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
         return is_moved_right
     else:
         raise ValueError(
-            "the is not moved, please check if the card of column is right name"
+            "the card is not moved, please check if the card of column is right name"
         )
 
 
@@ -363,7 +363,12 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                     continue
             writer.writerow(cards_in_row)
     
-    return is_card_deleted
+    if is_card_deleted == "Deleted":
+        return is_card_deleted
+    else:
+        raise ValueError(
+            "the card is not deleted, please check if the card name is right"
+        )
 
 
 def menu(type_menu:str) -> int:
@@ -444,9 +449,9 @@ def main():
             # View Tables
             case 0:
                 clearConsole()
-                tables_list: list[str] = view_tables()
+                tables_list: list[str] = [t.replace('.csv', '') for t in view_tables()]
                 for index, table_name in enumerate(tables_list):
-                    print(f"{index + 1}: {table_name.replace('.csv', '')}")
+                    print(f"{index + 1}: {table_name}")
                 selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
                 print(
                     tabulate(
@@ -476,8 +481,21 @@ def main():
                                     continue
                         #Delete a Card
                         case 1:
-                            name_of_card_to_delete = input('Enter the Title of Card => ')
-                            
+                            while True:
+                                try:
+                                    name_of_card_to_delete = input('Enter the Title of Card => ')
+                                    state = delete_card(tables_list[selected_table],name_of_card_to_delete)
+                                    if state == 'Deleted':
+                                        print(f'{name_of_card_to_delete} Deleted Successfully')
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        #Back to Main Screen
+                        case 2:
+                            clearConsole()
+                            menu('main')
+                            break
                 #clearConsole()
                 #continue
                 ...

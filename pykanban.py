@@ -91,7 +91,7 @@ class Card:
             else:
                 continue
         cls.sub_titles = {}
-        if 3 <= len(sub_title) <= 5:
+        if 2 <= len(sub_title) <= 5:
             for s_t in sub_title:
                 cls.sub_titles[s_t] = ""
             return cls
@@ -478,6 +478,16 @@ def main():
                     match selected_action:
                         # Add a Crad
                         case 0:
+                            print("Enter the Title of Card, It's one title only !")
+                            title_of_added_card = input("==> ")
+                            print(
+                                "Enter the name of each sub-title, The maximum is 4 sub-titles !"
+                            )
+                            sub_titles_of_added_card: list[str] = []
+                            num_of_sub_titles = int(input('How many sub-titles do you want to add ? => '))
+                            if 2 <= num_of_sub_titles <= 5:
+                                ...
+                            add_card()
                             ...
                         # Move a Crad
                         case 1:

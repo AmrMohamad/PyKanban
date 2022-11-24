@@ -483,7 +483,6 @@ def main():
                             print(
                                 "Enter the name of each sub-title, The maximum is 4 sub-titles !"
                             )
-                            sub_titles_of_added_card: list[str] = []
                             while True:
                                 num_of_sub_titles = int(input('How many sub-titles do you want to add ? => '))
                                 if 1 <= num_of_sub_titles <= 5:
@@ -496,10 +495,22 @@ def main():
                                         print("It's more than maximum, the maximum is 5 sub-titles")
                                         continue
                             print("Enter the name of each sub-title")
+                            sub_titles_of_added_card: list[str] = []
                             for _ in range(num_of_sub_titles):
                                 sub_titles_of_added_card.append(input(" => "))
-                            add_card()
-                            
+                            print(
+                                "Enter the data of each sub-title, The maximum is 244 characters per paragraph !"
+                            )
+                            added_lines_of_added_card: list[str] = []
+                            for st in sub_titles_of_added_card:
+                                print(f"For {st} :")
+                                added_lines_of_added_card.append(input(">>> "))
+                            data_of_added_card: dict = {
+                                'sub_title':sub_titles_of_added_card,
+                                'lines_per_title':added_lines_of_added_card
+                            }
+                            add_to_column = input("Which Column do you want to put the Card in? =>")
+                            add_card(title_of_added_card,add_to_column,data_of_added_card)
                             ...
                         # Move a Crad
                         case 1:

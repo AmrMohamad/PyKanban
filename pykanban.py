@@ -499,6 +499,7 @@ def main():
                             for _ in range(num_of_sub_titles):
                                 sub_titles_of_added_card.append(input(" => "))
                             add_card()
+                            
                             ...
                         # Move a Crad
                         case 1:

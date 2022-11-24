@@ -403,7 +403,12 @@ def menu(type_menu: str) -> int:
                 clearConsole()
                 menu("main")
         case "edit":
-            option_menu: list = ["Add a Card","Move a Crad", "Delete a Card", "Back to Main Screen"]
+            option_menu: list = [
+                "Add a Card",
+                "Move a Crad",
+                "Delete a Card",
+                "Back to Main Screen",
+            ]
             print("Options:")
             for index, option in enumerate(option_menu):
                 print(" " + str(index + 1) + " => " + option + " ", end="")
@@ -484,15 +489,23 @@ def main():
                                 "Enter the name of each sub-title, The maximum is 4 sub-titles !"
                             )
                             while True:
-                                num_of_sub_titles = int(input('How many sub-titles do you want to add ? => '))
+                                num_of_sub_titles = int(
+                                    input(
+                                        "How many sub-titles do you want to add ? => "
+                                    )
+                                )
                                 if 1 <= num_of_sub_titles <= 5:
                                     break
                                 else:
                                     if num_of_sub_titles < 2:
-                                        print("It's less than minimum, at least 1 sub-title")
+                                        print(
+                                            "It's less than minimum, at least 1 sub-title"
+                                        )
                                         continue
                                     if num_of_sub_titles > 5:
-                                        print("It's more than maximum, the maximum is 5 sub-titles")
+                                        print(
+                                            "It's more than maximum, the maximum is 5 sub-titles"
+                                        )
                                         continue
                             print("Enter the name of each sub-title")
                             sub_titles_of_added_card: list[str] = []
@@ -506,11 +519,15 @@ def main():
                                 print(f"For {st} :")
                                 added_lines_of_added_card.append(input(">>> "))
                             data_of_added_card: dict = {
-                                'sub_title':sub_titles_of_added_card,
-                                'lines_per_title':added_lines_of_added_card
+                                "sub_title": sub_titles_of_added_card,
+                                "lines_per_title": added_lines_of_added_card,
                             }
-                            add_to_column = input("Which Column do you want to put the Card in? =>")
-                            add_card(title_of_added_card,add_to_column,data_of_added_card)
+                            add_to_column = input(
+                                "Which Column do you want to put the Card in? =>"
+                            )
+                            add_card(
+                                title_of_added_card, add_to_column, data_of_added_card
+                            )
                             ...
                         # Move a Crad
                         case 1:

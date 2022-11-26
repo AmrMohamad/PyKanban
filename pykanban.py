@@ -217,15 +217,72 @@ def open_table(table_name: str) -> dict:
     return vt
 
 
-def add_card(name_of_card: str, add_to_column_name: str, data_of_card: dict) -> str:
+def add_card(
+    table_name_to_edit: str = "",
+    name_of_card: str = "",
+    add_to_column_name: str = "",
+    sub_titles: list[str] = [],
+    lines_per_sub_title: list[str] = [],
+) -> str:
+
     added_card = (
-        Card.add_title(title_of_card)
-        .add_sub_titles(added_sub_titles)
-        .add_lines(*added_lines)
+        Card.add_title(name_of_card)
+        .add_sub_titles(sub_titles)
+        .add_lines(*lines_per_sub_title)
         .print_here()
     )
+    old_card_table: dict = open_table(table_name_to_edit)
+    columns_name = list(old_card_table.keys())
+    new_card_table: dict = {header_name: [] for header_name in columns_name}
+    c_exist = False
+    for cn in columns_name:
+        if add_to_column_name in cn:
+            old_card_table[cn].append(added_card)
+            c_exist = True
+            break
+        else:
+            continue
+    if c_exist == False:
+        raise ValueError("The Column name does not exist")
 
-    ...
+    for h_n in columns_name:
+        for c in old_card_table[h_n]:
+            if c != "":
+                new_card_table[h_n].append(c)
+            else:
+                continue
+
+    os.rename(
+        f"{DATA_DIR}{table_name_to_edit}.csv",
+        f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv",
+    )
+    with open(f"{DATA_DIR}{table_name_to_edit}.csv", "w") as new_table:
+        writer = csv.DictWriter(new_table, fieldnames=columns_name)
+        writer.writeheader()
+        longest_header_in_cards = 0
+        counter_length = 0
+        while counter_length != len(columns_name):
+            try:
+                if len(new_card_table[columns_name[counter_length]]) <= len(
+                    new_card_table[columns_name[counter_length + 1]]
+                ):
+                    longest_header_in_cards = len(
+                        new_card_table[columns_name[counter_length + 1]]
+                    )
+                    counter_length += 1
+                else:
+                    counter_length += 1
+                    continue
+            except IndexError:
+                break
+        for row in range(longest_header_in_cards):
+            cards_in_row = {}
+            for header_pointer in new_card_table:
+                if row in range(len(new_card_table[header_pointer])):
+                    cards_in_row[header_pointer] = new_card_table[header_pointer][row]
+                else:
+                    continue
+            writer.writerow(cards_in_row)
 
 
 def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
@@ -242,8 +299,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     """Adding headers for new table
     """
-    table_file = open(f"{DATA_DIR}{table_name_to_edit}.csv", "r")
-    reader = csv.reader(table_file)
+    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}.csv", "r"))
     is_moved_right: str = ""
     break_out_flag = False  # for break nested loops at once
     for row in reader:
@@ -519,14 +575,17 @@ def main():
                                 print(f"For {st} :")
                                 added_lines_of_added_card.append(input(">>> "))
                             data_of_added_card: dict = {
-                                "sub_title": sub_titles_of_added_card,
-                                "lines_per_title": added_lines_of_added_card,
+                                "sub_titles": sub_titles_of_added_card,
+                                "lines_per_sub_title": added_lines_of_added_card,
                             }
                             add_to_column = input(
                                 "Which Column do you want to put the Card in? =>"
                             )
                             add_card(
-                                title_of_added_card, add_to_column, data_of_added_card
+                                table_name_to_edit=tables_list[selected_table],
+                                name_of_card=title_of_added_card,
+                                add_to_column_name=add_to_column,
+                                **data_of_added_card,
                             )
                             ...
                         # Move a Crad

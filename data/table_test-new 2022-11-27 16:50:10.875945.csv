@@ -1,18 +1,18 @@
 [38;5;15m[48;5;0m    column1    [0m,[38;5;9m[48;5;12m    column2    [0m,[38;5;10m[48;5;13m    column3    [0m
 " #################################################
-|                     Card_1                      #
+|                     Card_2                      #
 |                                                 #
-| descriptoin :                                   #
-|            qwertyqwertyqwerty                   #
-|                                                 #
-|                                                 #
-| Commnet :                                       #
-|        qwertyqwertyqwertyqwertyqwertyqwerty     #
-|                                                 #
-|                                                 #
-| Notes :                                         #
+| Title :                                         #
 |      qwertyqwertyqwertyqwertyqwertyqwerty       #
 |                                                 #
+|                                                 #
+| Description :                                   #
+|            qwertyqwertyqwertyqwertyqwertyqwer   #
+| ty                                              #
+|                                                 #
+| Comment :                                       #
+|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #
+| ertyqwertyqwerty                                #
 |                                                 #
  ------------------------------------------------"," #################################################
 |                     Card_3                      #
@@ -29,8 +29,7 @@
 |      qwertyqwertyqwertyqwertyqwertyqwerty       #
 |                                                 #
 |                                                 #
- ------------------------------------------------",
-" #################################################
+ ------------------------------------------------"," #################################################
 |                     Card_4                      #
 |                                                 #
 | des :                                           #
@@ -42,6 +41,22 @@
 |                                                 #
 | notes :                                         #
 |      qwertyqwertyqwerty                         #
+|                                                 #
+|                                                 #
+ ------------------------------------------------"
+" #################################################
+|                     Card_1                      #
+|                                                 #
+| descriptoin :                                   #
+|            qwertyqwertyqwerty                   #
+|                                                 #
+|                                                 #
+| Commnet :                                       #
+|        qwertyqwertyqwertyqwertyqwertyqwerty     #
+|                                                 #
+|                                                 #
+| Notes :                                         #
+|      qwertyqwertyqwertyqwertyqwertyqwerty       #
 |                                                 #
 |                                                 #
  ------------------------------------------------"," #################################################
@@ -59,19 +74,3 @@
 |                                                 #
 |                                                 #
  ------------------------------------------------",
-" #################################################
-|                     Card_2                      #
-|                                                 #
-| Title :                                         #
-|      qwertyqwertyqwertyqwertyqwertyqwerty       #
-|                                                 #
-|                                                 #
-| Description :                                   #
-|            qwertyqwertyqwertyqwertyqwertyqwer   #
-| ty                                              #
-|                                                 #
-| Comment :                                       #
-|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #
-| ertyqwertyqwerty                                #
-|                                                 #
- ------------------------------------------------",,

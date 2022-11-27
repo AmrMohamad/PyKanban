@@ -54,7 +54,7 @@ class Card:
         return cls._buttom_line
 
     @classmethod
-    def add_title(cls, added_title: str) -> None:
+    def add_title(cls, added_title: str) -> any:
         e = ValueError(
             "It should be there title\nWithout entering empty title (like just hit enter)"
         )
@@ -99,7 +99,7 @@ class Card:
             raise e
 
     @classmethod
-    def add_lines(cls, *e_sentences) -> None:
+    def add_lines(cls, *e_sentences) -> any:
         cls.text_line = ""
         i = 0
         for t in cls.sub_titles:
@@ -211,7 +211,7 @@ def open_table(table_name: str) -> dict:
         reader = csv.DictReader(vtable)
         vt = {h: [] for h in reader.fieldnames}
         for row in reader:
-            for _, h_p in enumerate(reader.fieldnames):
+            for h_p in reader.fieldnames:
                 f_data = row[h_p].replace("\\n", "\n")
                 vt[h_p].append(f_data)
     return vt
@@ -235,9 +235,11 @@ def add_card(
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     c_exist = False
+    is_card_added = ''
     for cn in columns_name:
         if add_to_column_name in cn:
             old_card_table[cn].append(added_card)
+            is_card_added = 'Added'
             c_exist = True
             break
         else:
@@ -273,6 +275,9 @@ def add_card(
                 else:
                     continue
             writer.writerow(cards_in_row)
+    if is_card_added != 'Added':
+        raise ValueError('Please check of Name of card and Name of Table')
+    return is_card_added
 
 
 def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
@@ -336,11 +341,11 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
             else:
                 continue
 
-        for row in range(longest_header_in_cards):
+        for row_num in range(longest_header_in_cards):
             cards_in_row = {}
             for header_pointer in new_card_table:
-                if row in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][row]
+                if row_num in range(len(new_card_table[header_pointer])):
+                    cards_in_row[header_pointer] = new_card_table[header_pointer][row_num]
                 else:
                     continue
             writer.writerow(cards_in_row)
@@ -392,11 +397,11 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 longest_header_in_cards = len(new_card_table[c])
             else:
                 continue
-        for row in range(longest_header_in_cards):
+        for row_num in range(longest_header_in_cards):
             cards_in_row = {}
             for header_pointer in new_card_table:
-                if row in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][row]
+                if row_num in range(len(new_card_table[header_pointer])):
+                    cards_in_row[header_pointer] = new_card_table[header_pointer][row_num]
                 else:
                     continue
             writer.writerow(cards_in_row)
@@ -412,42 +417,42 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
 def menu(type_menu: str) -> int:
     match type_menu:
         case "main":
-            option_menu: list = ["View Tables", "Create Table", "Exit"]
+            option_menu_main: list = ["View Tables", "Create Table", "Exit"]
             print("Menu:")
-            for index, option in enumerate(option_menu):
+            for index, option in enumerate(option_menu_main):
                 print(" " + str(index + 1) + " => " + option)
             try:
-                selected_option: int = (
+                selected_option_menu_main: int = (
                     int(input("Enter the number of option in menu: ")) - 1
                 )
             except ValueError:
                 print("Please re-enter a number of menu list in right way as integer")
                 time.sleep(2)
                 clearConsole()
-            if selected_option in range(len(option_menu)):
-                return selected_option
+            if selected_option_menu_main in range(len(option_menu_main)):
+                return selected_option_menu_main
             else:
                 clearConsole()
                 menu("main")
         case "edit":
-            option_menu: list = [
+            option_menu_edit: list = [
                 "Add a Card",
                 "Move a Crad",
                 "Delete a Card",
                 "Back to Main Screen",
             ]
             print("Options:")
-            for index, option in enumerate(option_menu):
+            for index, option in enumerate(option_menu_edit):
                 print(" " + str(index + 1) + " => " + option + " ", end="")
             print()
             try:
-                selected_option: int = int(input("Enter the number of option: ")) - 1
+                selected_option_menu_edit: int = int(input("Enter the number of option: ")) - 1
             except ValueError:
                 print("Please re-enter a number of option in right way as integer")
                 time.sleep(2)
                 # clearConsole()
-            if selected_option in range(len(option_menu)):
-                return selected_option
+            if selected_option_menu_edit in range(len(option_menu_edit)):
+                return selected_option_menu_edit
             else:
                 clearConsole()
                 menu("edit")

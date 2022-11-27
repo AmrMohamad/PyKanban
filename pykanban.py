@@ -340,7 +340,14 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
         writer.writeheader()
         longest_header_in_cards = 0
-        counter_length = 0
+        #counter_length = 0
+        for c in columns_name:
+            if longest_header_in_cards < len(new_card_table[c]):
+                longest_header_in_cards = len(new_card_table[c])
+            else:
+                continue
+            ...
+        """
         while counter_length != len(columns_name):
             try:
                 if len(new_card_table[columns_name[counter_length]]) <= len(
@@ -355,6 +362,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
                     continue
             except IndexError:
                 break
+        """
         for row in range(longest_header_in_cards):
             cards_in_row = {}
             for header_pointer in new_card_table:
@@ -587,7 +595,6 @@ def main():
                                 add_to_column_name=add_to_column,
                                 **data_of_added_card,
                             )
-                            ...
                         # Move a Crad
                         case 1:
                             while True:
@@ -634,6 +641,15 @@ def main():
                         case 3:
                             clearConsole()
                             break
+                    clearConsole()
+                    print(
+                        tabulate(
+                            open_table(tables_list[selected_table]),
+                            headers="keys",
+                            tablefmt="double_grid",
+                            stralign="center",
+                        )
+                    )
                 main()
             # Create Table
             case 1:

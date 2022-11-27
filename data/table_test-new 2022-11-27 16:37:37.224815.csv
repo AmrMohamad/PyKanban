@@ -29,22 +29,8 @@
 |      qwertyqwertyqwertyqwertyqwertyqwerty       #
 |                                                 #
 |                                                 #
- ------------------------------------------------"," #################################################
-|                     Card_4                      #
-|                                                 #
-| des :                                           #
-|    qwertyqwertyqwerty                           #
-|                                                 #
-| comment :                                       #
-|        qwertyqwertyqwertyqwertyqwertyqwerty     #
-|                                                 #
-|                                                 #
-| notes :                                         #
-|      qwertyqwertyqwerty                         #
-|                                                 #
-|                                                 #
- ------------------------------------------------"
-,," #################################################
+ ------------------------------------------------",
+" #################################################
 |                     Card_5                      #
 |                                                 #
 | des :                                           #
@@ -58,17 +44,34 @@
 |      qwertyqwertyqwerty                         #
 |                                                 #
 |                                                 #
- ------------------------------------------------"
-,," #################################################
-|                     Card_6                      #
+ ------------------------------------------------"," #################################################
+|                     Card_2                      #
 |                                                 #
-| tit :                                           #
-|    qwertyqwertyqwerty                           #
+| Title :                                         #
+|      qwertyqwertyqwertyqwertyqwertyqwerty       #
+|                                                 #
+|                                                 #
+| Description :                                   #
+|            qwertyqwertyqwertyqwertyqwertyqwer   #
+| ty                                              #
+|                                                 #
+| Comment :                                       #
+|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #
+| ertyqwertyqwerty                                #
+|                                                 #
+ ------------------------------------------------",
+" #################################################
+|                     Card_4                      #
 |                                                 #
 | des :                                           #
 |    qwertyqwertyqwerty                           #
 |                                                 #
-| com :                                           #
-|    qwertyqwertyqwerty                           #
+| comment :                                       #
+|        qwertyqwertyqwertyqwertyqwertyqwerty     #
 |                                                 #
- ------------------------------------------------"
+|                                                 #
+| notes :                                         #
+|      qwertyqwertyqwerty                         #
+|                                                 #
+|                                                 #
+ ------------------------------------------------",,

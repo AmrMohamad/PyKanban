@@ -143,10 +143,6 @@ class Card:
     def print_here(cls) -> str:
         return f"{cls._top_line}{cls.title}{cls._blank_line}{cls.text_line}{cls._buttom_line}"
 
-    """
-    def __str__(self) -> str:
-        return f"{self._top_line}{self._blank_line}{self.text_line}{self._blank_line}{self._buttom_line}" """
-
 
 def init_header(
     header: str, fore_color: str = "#ffffff", back_color: str = "#000000"
@@ -235,11 +231,11 @@ def add_card(
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     c_exist = False
-    is_card_added = ''
+    is_card_added = ""
     for cn in columns_name:
         if add_to_column_name in cn:
             old_card_table[cn].append(added_card)
-            is_card_added = 'Added'
+            is_card_added = "Added"
             c_exist = True
             break
         else:
@@ -275,8 +271,8 @@ def add_card(
                 else:
                     continue
             writer.writerow(cards_in_row)
-    if is_card_added != 'Added':
-        raise ValueError('Please check of Name of card and Name of Table')
+    if is_card_added != "Added":
+        raise ValueError("Please check of Name of card and Name of Table")
     return is_card_added
 
 
@@ -345,7 +341,9 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
             cards_in_row = {}
             for header_pointer in new_card_table:
                 if row_num in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][row_num]
+                    cards_in_row[header_pointer] = new_card_table[header_pointer][
+                        row_num
+                    ]
                 else:
                     continue
             writer.writerow(cards_in_row)
@@ -401,7 +399,9 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
             cards_in_row = {}
             for header_pointer in new_card_table:
                 if row_num in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][row_num]
+                    cards_in_row[header_pointer] = new_card_table[header_pointer][
+                        row_num
+                    ]
                 else:
                     continue
             writer.writerow(cards_in_row)
@@ -446,7 +446,9 @@ def menu(type_menu: str) -> int:
                 print(" " + str(index + 1) + " => " + option + " ", end="")
             print()
             try:
-                selected_option_menu_edit: int = int(input("Enter the number of option: ")) - 1
+                selected_option_menu_edit: int = (
+                    int(input("Enter the number of option: ")) - 1
+                )
             except ValueError:
                 print("Please re-enter a number of option in right way as integer")
                 time.sleep(2)

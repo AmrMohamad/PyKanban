@@ -169,31 +169,21 @@ def init_header(
     return color + "    " + header + "    " + attr("reset")
 
 
-def init_table(file_table_name: str) -> str:
-    if "." in file_table_name:
-        file_table_name, _ = file_table_name.split(".")
-    if os.path.isfile(f"{DATA_DIR}{file_table_name}.csv"):
-        return f"{file_table_name}"
+def init_table(table_name: str) -> str:
+    if os.path.isdir(f"{DATA_DIR}{table_name}") and os.path.isfile(f"{DATA_DIR}{table_name}/latest.csv"):
+        return f"{table_name}"
     else:
-        clearConsole()
-        """
-        print(
-            "It looks like you have not created that table before\nIt will be created"
-        )
-        """
-        file = open(f"{DATA_DIR}{file_table_name}.csv", "w")
+        os.makedirs(f"{DATA_DIR}{table_name}")
+        file = open(f"{DATA_DIR}{table_name}/latest.csv", "w")
         file.close()
-        f_name = file.name
-        if DATA_DIR in f_name:
-            f_name = f_name.replace(DATA_DIR, "")
-        return init_table(f_name)
+        return init_table(table_name)
 
 
 def view_tables() -> list[str]:
     dir_path = f"{DATA_DIR}"
     tables_list = []
     for path in os.scandir(dir_path):
-        if path.is_file():
+        if path.is_dir():
             if path.name == ".DS_Store":
                 continue
             tables_list.append(path.name)
@@ -203,7 +193,7 @@ def view_tables() -> list[str]:
 
 def open_table(table_name: str) -> dict:
     vt: dict = {}
-    with open(f"{DATA_DIR}{table_name}.csv", "r") as vtable:
+    with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
         reader = csv.DictReader(vtable)
         vt = {h: [] for h in reader.fieldnames}
         for row in reader:
@@ -251,10 +241,10 @@ def add_card(
                 continue
 
     os.rename(
-        f"{DATA_DIR}{table_name_to_edit}.csv",
-        f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/latest.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now()}.csv",
     )
-    with open(f"{DATA_DIR}{table_name_to_edit}.csv", "w") as new_table:
+    with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
         writer.writeheader()
         longest_header_in_cards = 0
@@ -290,7 +280,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     """Adding headers for new table
     """
-    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}.csv", "r"))
+    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
     is_moved_right: str = ""
     break_out_flag = False  # for break nested loops at once
     for row in reader:
@@ -324,10 +314,10 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
             else:
                 continue
     os.rename(
-        f"{DATA_DIR}{table_name_to_edit}.csv",
-        f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/latest.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now()}.csv",
     )
-    with open(f"{DATA_DIR}{table_name_to_edit}.csv", "w") as new_table:
+    with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
         writer.writeheader()
         longest_header_in_cards = 0
@@ -359,7 +349,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
     old_card_table: dict = open_table(table_name_to_edit)
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
-    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}.csv", "r"))
+    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
     is_card_deleted: str = ""
     break_out_flag = False  # for break nested loops at once
     for row in reader:
@@ -383,10 +373,10 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
             else:
                 continue
     os.rename(
-        f"{DATA_DIR}{table_name_to_edit}.csv",
-        f"{DATA_DIR}{table_name_to_edit} {datetime.now()}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/latest.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now()}.csv",
     )
-    with open(f"{DATA_DIR}{table_name_to_edit}.csv", "w") as new_table:
+    with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
         writer.writeheader()
         longest_header_in_cards = 0
@@ -626,18 +616,18 @@ def main():
                 clearConsole()
                 asked_table_name: str = str(input("Name of New Table is: "))
                 with open(
-                    f"{DATA_DIR}{init_table(asked_table_name)}.csv", "a", newline=""
+                    f"{DATA_DIR}{init_table(asked_table_name)}/latest.csv", "a", newline=""
                 ) as table:
                     table_data: dict = {}
                     headers: list[str] = []
                     num_stages: int = 0
                     while True:
                         n_s: int = int(input("Number of stages"))
-                        if 3 <= n_s <= 5:
+                        if 2 <= n_s <= 5:
                             num_stages = n_s
                             break
                         else:
-                            print("The Maximum Stages is 5\nThe Minimum Stages is 3")
+                            print("The Maximum Stages is 5\nThe Minimum Stages is 2")
                             time.sleep(4)
                             continue
                     for _ in range(num_stages):
@@ -707,21 +697,11 @@ def main():
                     writer = csv.DictWriter(table, fieldnames=headers)
                     writer.writeheader()
                     longest_header_in_cards = 0
-                    counter_length = 0
-                    while counter_length != len(headers):
-                        try:
-                            if len(table_data[headers[counter_length]]) <= len(
-                                table_data[headers[counter_length + 1]]
-                            ):
-                                longest_header_in_cards = len(
-                                    table_data[headers[counter_length + 1]]
-                                )
-                                counter_length += 1
-                            else:
-                                counter_length += 1
-                                continue
-                        except IndexError:
-                            break
+                    for h in headers:
+                        if longest_header_in_cards < len(table_data[h]):
+                            longest_header_in_cards = len(table_data[h])
+                        else:
+                          continue
                     for row in range(longest_header_in_cards):
                         cards_in_row = {}
                         for header_pointer in table_data:

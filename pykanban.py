@@ -192,18 +192,50 @@ def view_tables() -> list[str]:
                 continue
             tables_list.append(path.name)
     return tables_list
-    ...
 
 
-def open_table(table_name: str) -> dict:
+def view_history(table_name: str) -> list[str]:
+    dir_path = f"{DATA_DIR}{table_name}"
+    tables_list = []
+    for path in os.scandir(dir_path):
+        if path.is_file():
+            if path.name == ".DS_Store" or path.name in ["latest.csv", "latest"]:
+                continue
+            if matches := re.search(
+                r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
+                path.name,
+            ):
+                tables_list.append(
+                    f"Edited on {matches.group(1)} at {matches.group(6)}"
+                )
+    return tables_list
+
+
+def open_table(table_name: str, table_version: str = None) -> dict:
     vt: dict = {}
-    with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
-        reader = csv.DictReader(vtable)
-        vt = {h: [] for h in reader.fieldnames}
-        for row in reader:
-            for h_p in reader.fieldnames:
-                f_data = row[h_p].replace("\\n", "\n")
-                vt[h_p].append(f_data)
+    if bool(table_version) == False:
+        with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
+            reader = csv.DictReader(vtable)
+            vt = {h: [] for h in reader.fieldnames}
+            for row in reader:
+                for h_p in reader.fieldnames:
+                    f_data = row[h_p].replace("\\n", "\n")
+                    vt[h_p].append(f_data)
+    else:
+        table_file_name = ""
+        if matches := re.search(
+            r"^Edited on (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) at ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))$",
+            table_version,
+        ):
+            table_file_name = f"_ {matches.group(1)} {matches.group(6)}"
+
+        with open(f"{DATA_DIR}{table_name}/{table_file_name}.csv", "r") as vtable:
+            reader = csv.DictReader(vtable)
+            vt = {h: [] for h in reader.fieldnames}
+            for row in reader:
+                for h_p in reader.fieldnames:
+                    f_data = row[h_p].replace("\\n", "\n")
+                    vt[h_p].append(f_data)
     return vt
 
 
@@ -433,6 +465,7 @@ def menu(type_menu: str) -> int:
                 "Add a Card",
                 "Move a Crad",
                 "Delete a Card",
+                "View History",
                 "Back to Main Screen",
             ]
             print("Options:")
@@ -598,8 +631,36 @@ def main():
                                 except ValueError as e:
                                     print(e)
                                     continue
-                        # Back to Main Screen
+                        # View History
                         case 3:
+                            while True:
+                                history_list: list[str] = [
+                                    ht
+                                    for ht in view_history(tables_list[selected_table])
+                                ]
+                                clearConsole()
+                                for index, t_name in enumerate(history_list):
+                                    print(f"{index + 1}: {t_name}")
+                                selected_old_table: int = (
+                                    int(input("Enter Number of Table to View: ")) - 1
+                                )
+                                print(
+                                    tabulate(
+                                        open_table(
+                                            tables_list[selected_table],
+                                            table_version=history_list[
+                                                selected_old_table
+                                            ],
+                                        ),
+                                        headers="keys",
+                                        tablefmt="double_grid",
+                                        stralign="center",
+                                    )
+                                )
+                                input("Press any key to back...")
+                                break
+                        # Back to Main Screen
+                        case 4:
                             clearConsole()
                             break
                     clearConsole()

@@ -1,5 +1,6 @@
 from tabulate import tabulate
 from colored import fg, bg, attr
+import inflect
 import csv
 import os
 import sys
@@ -9,6 +10,7 @@ from datetime import datetime
 
 
 DATA_DIR = "./data/"
+p = inflect.engine()
 
 
 class Card:
@@ -511,9 +513,6 @@ def main():
                         case 0:
                             print("Enter the Title of Card, It's one title only !")
                             title_of_added_card = input("==> ")
-                            print(
-                                "Enter the name of each sub-title, The maximum is 4 sub-titles !"
-                            )
                             while True:
                                 num_of_sub_titles = int(
                                     input(
@@ -626,7 +625,7 @@ def main():
                     headers: list[str] = []
                     num_stages: int = 0
                     while True:
-                        n_s: int = int(input("Number of stages"))
+                        n_s: int = int(input("Number of stages => "))
                         if 2 <= n_s <= 5:
                             num_stages = n_s
                             break
@@ -634,7 +633,10 @@ def main():
                             print("The Maximum Stages is 5\nThe Minimum Stages is 2")
                             time.sleep(4)
                             continue
-                    for _ in range(num_stages):
+                    clearConsole()
+                    for num_s in range(num_stages):
+                        print()
+                        print(f"For {p.ordinal( 1 + num_s )} Stage")
                         while True:
                             header: str = input("Names of column: ")
                             fore_color: str = input("Foreground color of Text in HEX: ")
@@ -646,9 +648,10 @@ def main():
                                 print(e)
                                 continue
                         headers.append(h)
+                    clearConsole()
                     for h in headers:
                         cards = []
-                        print(f"for {h}")
+                        print(f"For {h}")
                         while True:
                             try:
                                 num_of_cards = int(
@@ -657,23 +660,44 @@ def main():
                                 break
                             except ValueError:
                                 print(
-                                    "Please Enter the Number of Cards do you want in the right way\n only numbers like 1 2 3 ... etc"
+                                    "Please Enter the Number of Cards do you want in the right way\n only integer numbers like 0, 1, 2, ... etc"
                                 )
                                 continue
                         for card_num in range(num_of_cards):
+                            print(f"For {p.ordinal( 1 + card_num )} Card")
                             print("Enter the Title of Card, It's one title only !")
                             title_of_card = input("==> ")
-                            print(
-                                "Enter the name of each sub-title, The maximum is 4 sub-titles !"
-                            )
                             added_sub_titles: list[str] = []
-                            n_c = 0
-                            while n_c != 3:
-                                added_sub_titles.append(input("==> "))
-                                n_c += 1
+                            while True:
+                                try:
+                                    num_of_sub_titles_in_card = int(
+                                        input(
+                                            "How many sub-titles do you want to add ? => "
+                                        )
+                                    )
+                                    if 1 <= num_of_sub_titles_in_card <= 5:
+                                        break
+                                    else:
+                                        if num_of_sub_titles_in_card < 2:
+                                            print(
+                                                "It's less than minimum, at least 1 sub-title"
+                                            )
+                                            continue
+                                        if num_of_sub_titles_in_card > 5:
+                                            print(
+                                                "It's more than maximum, the maximum is 5 sub-titles"
+                                            )
+                                            continue
+                                except ValueError:
+                                    print(
+                                        "Please Enter the Number of Sub-Titles do you want in the right way\n only integer numbers like 0, 1, 2, ... etc"
+                                    )
+                            print("Enter the name of each sub-title")
+                            for _ in range(num_of_sub_titles_in_card):
+                                added_sub_titles.append(input(">>> "))
                             added_lines: list[str] = []
                             print(
-                                "Enter the data of each sub-title, The maximum is 244 characters per paragraph !"
+                                "Enter the content of each sub-title, The maximum is 244 characters per paragraph !"
                             )
                             for _, s_title in enumerate(added_sub_titles):
                                 print(

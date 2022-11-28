@@ -170,7 +170,9 @@ def init_header(
 
 
 def init_table(table_name: str) -> str:
-    if os.path.isdir(f"{DATA_DIR}{table_name}") and os.path.isfile(f"{DATA_DIR}{table_name}/latest.csv"):
+    if os.path.isdir(f"{DATA_DIR}{table_name}") and os.path.isfile(
+        f"{DATA_DIR}{table_name}/latest.csv"
+    ):
         return f"{table_name}"
     else:
         os.makedirs(f"{DATA_DIR}{table_name}")
@@ -242,7 +244,7 @@ def add_card(
 
     os.rename(
         f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now()}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I:%M:%S %p')}.csv",
     )
     with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
@@ -315,7 +317,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
                 continue
     os.rename(
         f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now()}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I:%M:%S %p')}.csv",
     )
     with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
@@ -374,7 +376,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 continue
     os.rename(
         f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now()}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I:%M:%S %p')}.csv",
     )
     with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
@@ -616,7 +618,9 @@ def main():
                 clearConsole()
                 asked_table_name: str = str(input("Name of New Table is: "))
                 with open(
-                    f"{DATA_DIR}{init_table(asked_table_name)}/latest.csv", "a", newline=""
+                    f"{DATA_DIR}{init_table(asked_table_name)}/latest.csv",
+                    "a",
+                    newline="",
                 ) as table:
                     table_data: dict = {}
                     headers: list[str] = []
@@ -701,7 +705,7 @@ def main():
                         if longest_header_in_cards < len(table_data[h]):
                             longest_header_in_cards = len(table_data[h])
                         else:
-                          continue
+                            continue
                     for row in range(longest_header_in_cards):
                         cards_in_row = {}
                         for header_pointer in table_data:

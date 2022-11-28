@@ -504,7 +504,7 @@ def main():
                         stralign="center",
                     )
                 )
-                time.sleep(2)
+                time.sleep(1)
                 print()
                 while True:
                     selected_action = menu("edit")

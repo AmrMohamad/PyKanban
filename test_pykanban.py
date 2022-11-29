@@ -1,3 +1,12 @@
+from tabulate import tabulate
+from colored import fg, bg, attr
+import inflect
+import csv
+import os
+import sys
+import re
+import time
+from datetime import datetime
 import pytest
 from pykanban import *
 
@@ -40,9 +49,16 @@ def test_card():
     )
     ...
 
+def test_create_without_set_color():
+    header = 'Test Header'
+    header_without_color = init_header(header)
+    result  = fg('#ffffff') + bg('#000000') + "    " + 'Test Header' + "    " + attr("reset")
+    assert header_without_color == result
+
 
 def main():
     test_card()
+    test_create_without_set_color()
     ...
 
 

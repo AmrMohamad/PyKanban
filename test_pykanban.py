@@ -77,6 +77,9 @@ def test_create_header_with_set_colors():
     header_with_bg = init_header(header,fore_color='#ff0000',back_color='#00ff00')
     result  = fg('#ff0000') + bg('#00ff00') + "    " + 'Test Header with colors' + "    " + attr("reset")
     assert header_with_bg == result
+    #Test colors with invaild Hex value
+    with pytest.raises (TypeError):
+        init_header(header,fore_color='000000',back_color='#9gffff')
 
 def test_init_table():
     assert init_table("test_table") == 'test_table'

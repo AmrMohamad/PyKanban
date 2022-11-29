@@ -3,6 +3,7 @@ from colored import fg, bg, attr
 import inflect
 import csv
 import os
+import shutil
 import sys
 import re
 import time
@@ -113,7 +114,16 @@ def test_init_table():
         init_table()
     ...
 def test_view_tables():
-    
+    destination = './test_data'
+    os.mkdir(destination)
+    #shutil.rmtree(f'{destination}/.DS_Store')
+    for f in os.listdir('./data'):
+        shutil.move(f'./data/{f}',destination)
+    assert view_tables() == 'No Tables Exist'
+    for f in os.listdir(destination):
+        shutil.move(f'{destination}/{f}','./data')
+    assert view_tables() == [nt for nt in os.listdir('./data')]
+    os.rmdir(destination)
     ...
 
 def main():

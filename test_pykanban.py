@@ -72,7 +72,9 @@ def test_create_header_with_set_colors():
     result  = fg('#ff0000') + bg('#00ff00') + "    " + 'Test Header with colors' + "    " + attr("reset")
     assert header_with_bg == result
 
-
+def test_init_table():
+    assert init_table("test_table") == 'test_table'
+    ...
 
 def main():
     test_card()

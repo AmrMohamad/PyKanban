@@ -49,16 +49,35 @@ def test_card():
     )
     ...
 
-def test_create_without_set_color():
+def test_create_header_without_set_color():
     header = 'Test Header'
     header_without_color = init_header(header)
     result  = fg('#ffffff') + bg('#000000') + "    " + 'Test Header' + "    " + attr("reset")
     assert header_without_color == result
 
+def test_create_header_with_set_colors():
+    #Test without Foreground color
+    header = 'Test Header with colors'
+    header_with_bg = init_header(header,back_color='#00ff00')
+    result  = fg('#ffffff') + bg('#00ff00') + "    " + 'Test Header with colors' + "    " + attr("reset")
+    assert header_with_bg == result
+    #Test without Background color
+    header = 'Test Header with colors'
+    header_with_bg = init_header(header,fore_color='#ff0000')
+    result  = fg('#ff0000') + bg('#000000') + "    " + 'Test Header with colors' + "    " + attr("reset")
+    assert header_with_bg == result
+    #Test with Foreground color and Background color
+    header = 'Test Header with colors'
+    header_with_bg = init_header(header,fore_color='#ff0000',back_color='#00ff00')
+    result  = fg('#ff0000') + bg('#00ff00') + "    " + 'Test Header with colors' + "    " + attr("reset")
+    assert header_with_bg == result
+
+
 
 def main():
     test_card()
-    test_create_without_set_color()
+    test_create_header_without_set_color()
+    test_create_header_with_set_colors()
     ...
 
 

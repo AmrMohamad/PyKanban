@@ -50,10 +50,16 @@ def test_card():
     ...
 
 def test_create_header_without_set_color():
+    #Test with set header name
     header = 'Test Header'
     header_without_color = init_header(header)
     result  = fg('#ffffff') + bg('#000000') + "    " + 'Test Header' + "    " + attr("reset")
     assert header_without_color == result
+    #Test without set header name
+    with pytest.raises(ValueError):
+        init_header('')
+    with pytest.raises(TypeError):
+        init_header()
 
 def test_create_header_with_set_colors():
     #Test without Foreground color
@@ -80,6 +86,7 @@ def main():
     test_card()
     test_create_header_without_set_color()
     test_create_header_with_set_colors()
+    test_init_table()
     ...
 
 

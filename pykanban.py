@@ -172,6 +172,8 @@ def init_header(
 
 
 def init_table(table_name: str) -> str:
+    if table_name == None or table_name == '':
+        raise TypeError('There is not Table Name check again please')
     if os.path.isdir(f"{DATA_DIR}{table_name}") and os.path.isfile(
         f"{DATA_DIR}{table_name}/latest.csv"
     ):

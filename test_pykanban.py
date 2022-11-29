@@ -83,6 +83,8 @@ def test_create_header_with_set_colors():
 
 def test_init_table():
     assert init_table("test_table") == 'test_table'
+    with pytest.raises (TypeError):
+        init_table()
     ...
 
 def main():

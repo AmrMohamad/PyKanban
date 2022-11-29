@@ -187,6 +187,8 @@ def init_table(table_name: str) -> str:
 
 def view_tables() -> list[str]:
     dir_path = f"{DATA_DIR}"
+    if len(os.listdir()) == 0:
+        return f'No Tables Exist'
     tables_list = []
     for path in os.scandir(dir_path):
         if path.is_dir():

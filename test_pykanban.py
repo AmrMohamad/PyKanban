@@ -49,42 +49,71 @@ def test_card():
     )
     ...
 
+
 def test_create_header_without_set_color():
-    #Test with set header name
-    header = 'Test Header'
+    # Test with set header name
+    header = "Test Header"
     header_without_color = init_header(header)
-    result  = fg('#ffffff') + bg('#000000') + "    " + 'Test Header' + "    " + attr("reset")
+    result = (
+        fg("#ffffff") + bg("#000000") + "    " + "Test Header" + "    " + attr("reset")
+    )
     assert header_without_color == result
-    #Test without set header name
+    # Test without set header name
     with pytest.raises(ValueError):
-        init_header('')
+        init_header("")
     with pytest.raises(TypeError):
         init_header()
 
+
 def test_create_header_with_set_colors():
-    #Test without Foreground color
-    header = 'Test Header with colors'
-    header_with_bg = init_header(header,back_color='#00ff00')
-    result  = fg('#ffffff') + bg('#00ff00') + "    " + 'Test Header with colors' + "    " + attr("reset")
+    # Test without Foreground color
+    header = "Test Header with colors"
+    header_with_bg = init_header(header, back_color="#00ff00")
+    result = (
+        fg("#ffffff")
+        + bg("#00ff00")
+        + "    "
+        + "Test Header with colors"
+        + "    "
+        + attr("reset")
+    )
     assert header_with_bg == result
-    #Test without Background color
-    header = 'Test Header with colors'
-    header_with_bg = init_header(header,fore_color='#ff0000')
-    result  = fg('#ff0000') + bg('#000000') + "    " + 'Test Header with colors' + "    " + attr("reset")
+    # Test without Background color
+    header = "Test Header with colors"
+    header_with_bg = init_header(header, fore_color="#ff0000")
+    result = (
+        fg("#ff0000")
+        + bg("#000000")
+        + "    "
+        + "Test Header with colors"
+        + "    "
+        + attr("reset")
+    )
     assert header_with_bg == result
-    #Test with Foreground color and Background color
-    header = 'Test Header with colors'
-    header_with_bg = init_header(header,fore_color='#ff0000',back_color='#00ff00')
-    result  = fg('#ff0000') + bg('#00ff00') + "    " + 'Test Header with colors' + "    " + attr("reset")
+    # Test with Foreground color and Background color
+    header = "Test Header with colors"
+    header_with_bg = init_header(header, fore_color="#ff0000", back_color="#00ff00")
+    result = (
+        fg("#ff0000")
+        + bg("#00ff00")
+        + "    "
+        + "Test Header with colors"
+        + "    "
+        + attr("reset")
+    )
     assert header_with_bg == result
-    #Test colors with invaild Hex value
-    with pytest.raises (TypeError):
-        init_header(header,fore_color='000000',back_color='#9gffff')
+    # Test colors with invaild Hex value
+    with pytest.raises(TypeError):
+        init_header(header, fore_color="000000", back_color="#9gffff")
+
 
 def test_init_table():
-    assert init_table("test_table") == 'test_table'
-    with pytest.raises (TypeError):
+    assert init_table("test_table") == "test_table"
+    with pytest.raises(TypeError):
         init_table()
+    ...
+def test_view_tables():
+    
     ...
 
 def main():
@@ -92,7 +121,7 @@ def main():
     test_create_header_without_set_color()
     test_create_header_with_set_colors()
     test_init_table()
-    ...
+    test_view_tables()
 
 
 if __name__ == "__main__":

@@ -135,6 +135,7 @@ def test_view_tables():
 
 
 def test_open_table():
+    #Test open table with only table name to open latest.csv
     table = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
             " #################################################\n"
@@ -258,8 +259,10 @@ def test_open_table():
             writer.writerow(temp_)
     assert open_table(table_name="_test_data") == table
     shutil.rmtree(destination)
+    #Test open table without any parameters
     with pytest.raises(TypeError):
         open_table()
+    # Test open table to open table history
     os.mkdir(destination)
     table = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
@@ -363,7 +366,6 @@ def test_open_table():
             + " ------------------------------------------------",
         ],
     }
-    
     with open(f"{destination}/_ 28-11-2022 03.44.42 PM.csv", "w") as test_table:
         writer = csv.DictWriter(test_table, fieldnames=list(table.keys()))
         writer.writeheader()
@@ -383,10 +385,11 @@ def test_open_table():
             writer.writerow(temp_)
     assert (
         open_table(
-            table_name="_test_data", table_version="_ 28-11-2022 03:44:42 PM.csv"
+            table_name="_test_data", table_version="_ 28-11-2022 03.44.42 PM.csv"
         )
         == table
     )
+    shutil.rmtree(destination)
 
 
 def main():

@@ -173,8 +173,8 @@ def init_header(
 
 
 def init_table(table_name: str) -> str:
-    if table_name == None or table_name == '':
-        raise TypeError('There is not Table Name check again please')
+    if table_name == None or table_name == "":
+        raise TypeError("There is not Table Name check again please")
     if os.path.isdir(f"{DATA_DIR}{table_name}") and os.path.isfile(
         f"{DATA_DIR}{table_name}/latest.csv"
     ):
@@ -189,7 +189,7 @@ def init_table(table_name: str) -> str:
 def view_tables() -> list[str]:
     dir_path = f"{DATA_DIR}"
     if len(os.listdir(dir_path)) == 0:
-        return f'No Tables Exist'
+        return f"No Tables Exist"
     tables_list = []
     for path in os.scandir(dir_path):
         if path.is_dir():
@@ -210,16 +210,16 @@ def view_history(table_name: str) -> list[str]:
                 r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
                 path.name,
             ):
-                tables_list.append(
-                    f"Edited on {matches.group(1)} at {matches.group(6)}"
-                )
+                tables_list.append(matches.string)
     return tables_list
 
 
 def open_table(table_name: str, table_version: str = None) -> dict:
     vt: dict = {}
     if bool(table_name) == False:
-        raise TypeError("There is no table name, please check again there is and it's right")
+        raise TypeError(
+            "There is no table name, please check again there is and it's right"
+        )
     if bool(table_version) == False:
         with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
             reader = csv.DictReader(vtable)
@@ -231,12 +231,12 @@ def open_table(table_name: str, table_version: str = None) -> dict:
     else:
         table_file_name = ""
         if matches := re.search(
-            r"^Edited on (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) at ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))$",
+            r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
             table_version,
         ):
-            table_file_name = f"_ {matches.group(1)} {matches.group(6)}"
+            table_file_name = matches.string
 
-        with open(f"{DATA_DIR}{table_name}/{table_file_name}.csv", "r") as vtable:
+        with open(f"{DATA_DIR}{table_name}/{table_file_name}", "r") as vtable:
             reader = csv.DictReader(vtable)
             vt = {h: [] for h in reader.fieldnames}
             for row in reader:
@@ -537,9 +537,9 @@ def main():
                 selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
                 clearConsole()
                 try:
-                  table_to_view = open_table(tables_list[selected_table])
+                    table_to_view = open_table(tables_list[selected_table])
                 except TypeError as e:
-                  print(e)
+                    print(e)
                 print(
                     tabulate(
                         table_to_view,
@@ -651,9 +651,20 @@ def main():
                                 ]
                                 clearConsole()
                                 for index, t_name in enumerate(history_list):
-                                    print(f"{index + 1}: {t_name}")
+                                    if matches := re.search(
+                                        r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
+                                        t_name,
+                                    ):
+                                        print(
+                                            f"{index + 1}: Edited on {matches.group(1)} at {matches.group(6)}"
+                                        )
                                 selected_old_table: int = (
-                                    int(input("Enter Number of Table to View: ")) - 1
+                                    int(
+                                        input(
+                                            "Enter the Number of the Old Table to View: "
+                                        )
+                                    )
+                                    - 1
                                 )
                                 print(
                                     tabulate(

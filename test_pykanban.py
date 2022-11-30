@@ -133,6 +133,7 @@ def test_view_tables():
     os.rmdir(destination)
     ...
 
+
 def test_open_table():
     table = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
@@ -238,8 +239,8 @@ def test_open_table():
     }
     destination = "./data/_test_data"
     os.mkdir(destination)
-    with open(f'{destination}/latest.csv','w') as test_table:
-        writer = csv.DictWriter(test_table,fieldnames=list(table.keys()))
+    with open(f"{destination}/latest.csv", "w") as test_table:
+        writer = csv.DictWriter(test_table, fieldnames=list(table.keys()))
         writer.writeheader()
         longest_header_in_cards = 0
         for h in list(table.keys()):
@@ -255,11 +256,11 @@ def test_open_table():
                 else:
                     continue
             writer.writerow(temp_)
-    assert open_table(table_name='_test_data') == table
+    assert open_table(table_name="_test_data") == table
     shutil.rmtree(destination)
     with pytest.raises(TypeError):
         open_table()
-    ...
+
 
 def main():
     test_card()

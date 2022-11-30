@@ -1,17 +1,5 @@
 [38;5;15m[48;5;247m    Tasks    [0m,[38;5;214m[48;5;10m    Done    [0m
 " #################################################
-|                 Create Project                  #
-|                                                 #
-| Description :                                   #
-|            Create project in python by using    #
-| VS Code                                         #
-|                                                 #
-| Commnet :                                       #
-|        Don't forget create if__name__=='__mai   #
-| n__'                                            #
-|                                                 #
- ------------------------------------------------",
-" #################################################
 |              Create the Interface               #
 |                                                 #
 | Description :                                   #
@@ -21,5 +9,17 @@
 | Commnet :                                       #
 |        there will be nested match case          #
 |                                                 #
+|                                                 #
+ ------------------------------------------------",
+" #################################################
+|                 Create Project                  #
+|                                                 #
+| Description :                                   #
+|            Create project in python by using    #
+| VS Code                                         #
+|                                                 #
+| Commnet :                                       #
+|        Don't forget create if__name__=='__mai   #
+| n__'                                            #
 |                                                 #
  ------------------------------------------------",

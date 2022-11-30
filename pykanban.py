@@ -207,7 +207,7 @@ def view_history(table_name: str) -> list[str]:
             if path.name == ".DS_Store" or path.name in ["latest.csv", "latest"]:
                 continue
             if matches := re.search(
-                r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
+                r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
                 path.name,
             ):
                 tables_list.append(matches.string)
@@ -231,7 +231,7 @@ def open_table(table_name: str, table_version: str = None) -> dict:
     else:
         table_file_name = ""
         if matches := re.search(
-            r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
+            r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
             table_version,
         ):
             table_file_name = matches.string
@@ -285,7 +285,7 @@ def add_card(
 
     os.rename(
         f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I:%M:%S %p')}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
     )
     with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
@@ -358,7 +358,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
                 continue
     os.rename(
         f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I:%M:%S %p')}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
     )
     with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
@@ -417,7 +417,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 continue
     os.rename(
         f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I:%M:%S %p')}.csv",
+        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
     )
     with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
         writer = csv.DictWriter(new_table, fieldnames=columns_name)
@@ -652,7 +652,7 @@ def main():
                                 clearConsole()
                                 for index, t_name in enumerate(history_list):
                                     if matches := re.search(
-                                        r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9]):[0-5][0-9]:[0-5][0-9] (AM|PM))\.csv$",
+                                        r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
                                         t_name,
                                     ):
                                         print(

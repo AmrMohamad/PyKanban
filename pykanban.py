@@ -681,9 +681,16 @@ def main():
             # Create Table
             case 1:
                 clearConsole()
-                asked_table_name: str = str(input("Name of New Table is: "))
+                ask_table_name: str = str(input("Name of New Table is: "))
+                while True:
+                    try:
+                        asked_table_name: str = init_table(ask_table_name)
+                        break
+                    except TypeError as e:
+                        print(e)
+                        continue
                 with open(
-                    f"{DATA_DIR}{init_table(asked_table_name)}/latest.csv",
+                    f"{DATA_DIR}{asked_table_name}/latest.csv",
                     "a",
                     newline="",
                 ) as table:

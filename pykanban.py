@@ -218,6 +218,8 @@ def view_history(table_name: str) -> list[str]:
 
 def open_table(table_name: str, table_version: str = None) -> dict:
     vt: dict = {}
+    if bool(table_name) == False:
+        raise TypeError("There is no table name, please check again there is and it's right")
     if bool(table_version) == False:
         with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
             reader = csv.DictReader(vtable)
@@ -534,9 +536,13 @@ def main():
                     print(f"{index + 1}: {table_name}")
                 selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
                 clearConsole()
+                try:
+                  table_to_view = open_table(tables_list[selected_table])
+                except TypeError as e:
+                  print(e)
                 print(
                     tabulate(
-                        open_table(tables_list[selected_table]),
+                        table_to_view,
                         headers="keys",
                         tablefmt="double_grid",
                         stralign="center",

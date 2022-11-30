@@ -257,6 +257,8 @@ def test_open_table():
             writer.writerow(temp_)
     assert open_table(table_name='_test_data') == table
     shutil.rmtree(destination)
+    with pytest.raises(TypeError):
+        open_table()
     ...
 
 def main():

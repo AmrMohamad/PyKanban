@@ -390,6 +390,9 @@ def test_open_table():
         == table
     )
     shutil.rmtree(destination)
+    # Test open table with wrong table name or is not exist
+    with pytest.raises(FileNotFoundError):
+        open_table(table_name="_test_data_")
 
 
 def test_add_card():

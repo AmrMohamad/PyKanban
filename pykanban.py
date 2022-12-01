@@ -220,20 +220,16 @@ def open_table(table_name: str, table_version: str = None) -> dict:
         raise TypeError(
             "There is no table name, please check again there is and it's right"
         )
+    if table_name not in os.listdir(DATA_DIR):
+        raise FileNotFoundError("The Table not exist or The Table Name is not right")
     if bool(table_version) == False:
-        try:
-            with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
-                reader = csv.DictReader(vtable)
-                vt = {h: [] for h in reader.fieldnames}
-                for row in reader:
-                    for h_p in reader.fieldnames:
-                        f_data = row[h_p].replace("\\n", "\n")
-                        vt[h_p].append(f_data)
-        except FileNotFoundError:
-            raise FileNotFoundError(
-                "The Table not exist or The Table Name is not right"
-            )
-            
+        with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
+            reader = csv.DictReader(vtable)
+            vt = {h: [] for h in reader.fieldnames}
+            for row in reader:
+                for h_p in reader.fieldnames:
+                    f_data = row[h_p].replace("\\n", "\n")
+                    vt[h_p].append(f_data)
     else:
         table_file_name = ""
         if matches := re.search(
@@ -268,7 +264,7 @@ def add_card(
     )
     try:
         old_card_table: dict = open_table(table_name_to_edit)
-    except FileNotFoundError :
+    except FileNotFoundError:
         is_card_added = "NotAdded"
         raise TypeError("Please check of Name of Table")
     columns_name = list(old_card_table.keys())

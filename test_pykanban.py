@@ -648,10 +648,23 @@ def test_add_card():
     }
     # Checking of the Card is added
     assert open_table(table_name="_test_data") == table
-    #Test if the column name not exist
+    # Test if the column name not exist
     with pytest.raises(ValueError):
         add_card(
             "_test_data",
+            "Card_7",
+            "column4",
+            ["Title", "Description", "Comment"],
+            [
+                "qwertyqwertyqwertyqwertyqwertyqwerty",
+                "qwertyqwertyqwertyqwertyqwertyqwerty",
+                "qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty",
+            ],
+        )
+    # Test if the table name not exist
+    with pytest.raises(TypeError):
+        add_card(
+            "_test_data_",
             "Card_7",
             "column4",
             ["Title", "Description", "Comment"],

@@ -266,7 +266,11 @@ def add_card(
         .add_lines(*lines_per_sub_title)
         .print_here()
     )
-    old_card_table: dict = open_table(table_name_to_edit)
+    try:
+        old_card_table: dict = open_table(table_name_to_edit)
+    except FileNotFoundError :
+        is_card_added = "NotAdded"
+        raise TypeError("Please check of Name of Table")
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     c_exist = False

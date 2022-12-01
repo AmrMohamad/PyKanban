@@ -221,13 +221,19 @@ def open_table(table_name: str, table_version: str = None) -> dict:
             "There is no table name, please check again there is and it's right"
         )
     if bool(table_version) == False:
-        with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
-            reader = csv.DictReader(vtable)
-            vt = {h: [] for h in reader.fieldnames}
-            for row in reader:
-                for h_p in reader.fieldnames:
-                    f_data = row[h_p].replace("\\n", "\n")
-                    vt[h_p].append(f_data)
+        try:
+            with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
+                reader = csv.DictReader(vtable)
+                vt = {h: [] for h in reader.fieldnames}
+                for row in reader:
+                    for h_p in reader.fieldnames:
+                        f_data = row[h_p].replace("\\n", "\n")
+                        vt[h_p].append(f_data)
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                "The Table not exist or The Table Name is not right"
+            )
+            
     else:
         table_file_name = ""
         if matches := re.search(

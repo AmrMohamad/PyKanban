@@ -305,7 +305,7 @@ def add_card(
                     continue
             writer.writerow(cards_in_row)
     if is_card_added != "Added":
-        raise ValueError("Please check of Name of card and Name of Table")
+        raise TypeError("Please check of Name of card and Name of Table")
     return is_card_added
 
 

@@ -648,6 +648,19 @@ def test_add_card():
     }
     # Checking of the Card is added
     assert open_table(table_name="_test_data") == table
+    #Test if the column name not exist
+    with pytest.raises(ValueError):
+        add_card(
+            "_test_data",
+            "Card_7",
+            "column4",
+            ["Title", "Description", "Comment"],
+            [
+                "qwertyqwertyqwertyqwertyqwertyqwerty",
+                "qwertyqwertyqwertyqwertyqwertyqwerty",
+                "qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty",
+            ],
+        )
     shutil.rmtree(destination)
     ...
 

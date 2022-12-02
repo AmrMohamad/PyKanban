@@ -315,7 +315,7 @@ def add_card(
     return is_card_added
 
 
-def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
+def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
     is_moved_right: str = ""
     try:
         old_card_table: dict = open_table(table_name_to_edit)
@@ -351,15 +351,18 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
                 continue
         if break_out_flag:  # for break nested loops at once
             break
-
+    c_exist = False
     for col_name in columns_name:
         """Searching about header we want to move the card to him"""
         if move_to in col_name:
             old_card_table[col_name].append(card)
             is_moved_right = "Moved"
+            c_exist = True
             break
         else:
             continue
+    if c_exist == False:
+        raise ValueError("The Column name does not exist")
     for h_n in columns_name:
         for c in old_card_table[h_n]:
             if c != "":

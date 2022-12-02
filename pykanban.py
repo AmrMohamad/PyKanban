@@ -336,6 +336,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
     """
     reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
     break_out_flag = False  # for break nested loops at once
+    cd_exist = False
     for row in reader:
         """for reading each row in file"""
         for column in row:
@@ -344,6 +345,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
                 """Searching about the Card that we want to move to other column"""
                 column_index_card += row.index(column)
                 card = column
+                cd_exist = True
                 old_card_table[columns_name[column_index_card]].remove(column)
                 break_out_flag = True
                 break
@@ -351,6 +353,8 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
                 continue
         if break_out_flag:  # for break nested loops at once
             break
+    if cd_exist == False and card == '':
+        raise ValueError("The Card name is not exist, Please check again")
     c_exist = False
     for col_name in columns_name:
         """Searching about header we want to move the card to him"""

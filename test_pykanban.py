@@ -914,7 +914,16 @@ def test_move_card():
     }
     # Checking of the Card is moved
     assert open_table(table_name="_test_data") == table
-    ...
+    # Test if the table name not exist
+    with pytest.raises(TypeError):
+        move_card(table_name_to_edit="_test_data_",card_name="Card_6",move_to="column1")
+    # Test if the card name not exist
+    with pytest.raises(ValueError):
+        move_card(table_name_to_edit="_test_data",card_name="Card_7",move_to="column1")
+    # Test if the column name not exist
+    with pytest.raises(ValueError):
+        move_card(table_name_to_edit="_test_data",card_name="Card_6",move_to="column4")
+    shutil.rmtree(destination)
 
 
 def main():

@@ -803,7 +803,7 @@ def test_move_card():
                 else:
                     continue
             writer.writerow(temp_)
-    #Test moving card
+    # Test moving card
     assert (
         move_card(
             table_name_to_edit="_test_data", card_name="Card_2", move_to="column1"
@@ -916,14 +916,25 @@ def test_move_card():
     assert open_table(table_name="_test_data") == table
     # Test if the table name not exist
     with pytest.raises(TypeError):
-        move_card(table_name_to_edit="_test_data_",card_name="Card_6",move_to="column1")
+        move_card(
+            table_name_to_edit="_test_data_", card_name="Card_6", move_to="column1"
+        )
     # Test if the card name not exist
     with pytest.raises(ValueError):
-        move_card(table_name_to_edit="_test_data",card_name="Card_7",move_to="column1")
+        move_card(
+            table_name_to_edit="_test_data", card_name="Card_7", move_to="column1"
+        )
     # Test if the column name not exist
     with pytest.raises(ValueError):
-        move_card(table_name_to_edit="_test_data",card_name="Card_6",move_to="column4")
+        move_card(
+            table_name_to_edit="_test_data", card_name="Card_6", move_to="column4"
+        )
     shutil.rmtree(destination)
+
+
+def test_delete_card():
+
+    ...
 
 
 def main():
@@ -935,6 +946,7 @@ def main():
     test_open_table()
     test_add_card()
     test_move_card()
+    test_delete_card()
 
 
 if __name__ == "__main__":

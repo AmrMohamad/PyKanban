@@ -353,7 +353,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
                 continue
         if break_out_flag:  # for break nested loops at once
             break
-    if cd_exist == False and card == '':
+    if cd_exist == False and card == "":
         raise ValueError("The Card name is not exist, Please check again")
     c_exist = False
     for col_name in columns_name:
@@ -405,12 +405,17 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
 
 
 def delete_card(table_name_to_edit: str, card_name: str) -> str:
-    old_card_table: dict = open_table(table_name_to_edit)
+    is_card_deleted: str = ""
+    try:
+        old_card_table: dict = open_table(table_name_to_edit)
+    except FileNotFoundError:
+        is_card_deleted = "NotDeleted"
+        raise TypeError("Please check of Name of Table")
     columns_name = list(old_card_table.keys())
     new_card_table: dict = {header_name: [] for header_name in columns_name}
     reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
-    is_card_deleted: str = ""
     break_out_flag = False  # for break nested loops at once
+    cd_exist = False
     for row in reader:
         """for reading each row in file"""
         for column in row:
@@ -419,12 +424,15 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 """Searching about the Card that we want to move to other column"""
                 old_card_table[columns_name[row.index(column)]].remove(column)
                 break_out_flag = True
+                cd_exist = True
                 is_card_deleted = "Deleted"
                 break
             else:
                 continue
         if break_out_flag:  # for break nested loops at once
             break
+    if cd_exist == False:
+        raise ValueError("The Card name is not exist, Please check again")
     for h_n in columns_name:
         for c in old_card_table[h_n]:
             if c != "":

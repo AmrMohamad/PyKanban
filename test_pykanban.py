@@ -803,8 +803,119 @@ def test_move_card():
                 else:
                     continue
             writer.writerow(temp_)
-    assert move_card()
+    #Test moving card
+    assert (
+        move_card(
+            table_name_to_edit="_test_data", card_name="Card_2", move_to="column1"
+        )
+        == "Moved"
+    )
+    table = {
+        "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
+            " #################################################\n"
+            + "|                     Card_1                      #\n"
+            + "|                                                 #\n"
+            + "| descriptoin :                                   #\n"
+            + "|            qwertyqwertyqwerty                   #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + "| Commnet :                                       #\n"
+            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + "| Notes :                                         #\n"
+            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + " ------------------------------------------------",
+            " #################################################\n"
+            + "|                     Card_2                      #\n"
+            + "|                                                 #\n"
+            + "| Title :                                         #\n"
+            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + "| Description :                                   #\n"
+            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
+            + "| ty                                              #\n"
+            + "|                                                 #\n"
+            + "| Comment :                                       #\n"
+            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
+            + "| ertyqwertyqwerty                                #\n"
+            + "|                                                 #\n"
+            + " ------------------------------------------------",
+            "",
+        ],
+        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
+            " #################################################\n"
+            + "|                     Card_3                      #\n"
+            + "|                                                 #\n"
+            + "| Description :                                   #\n"
+            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
+            + "| ty                                              #\n"
+            + "|                                                 #\n"
+            + "| Comment :                                       #\n"
+            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + "| Notes :                                         #\n"
+            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + " ------------------------------------------------",
+            "",
+            "",
+        ],
+        "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
+            " #################################################\n"
+            + "|                     Card_4                      #\n"
+            + "|                                                 #\n"
+            + "| des :                                           #\n"
+            + "|    qwertyqwertyqwerty                           #\n"
+            + "|                                                 #\n"
+            + "| comment :                                       #\n"
+            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + "| notes :                                         #\n"
+            + "|      qwertyqwertyqwerty                         #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + " ------------------------------------------------",
+            " #################################################\n"
+            + "|                     Card_5                      #\n"
+            + "|                                                 #\n"
+            + "| des :                                           #\n"
+            + "|    qwertyqwertyqwerty                           #\n"
+            + "|                                                 #\n"
+            + "| comment :                                       #\n"
+            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + "| notes :                                         #\n"
+            + "|      qwertyqwertyqwerty                         #\n"
+            + "|                                                 #\n"
+            + "|                                                 #\n"
+            + " ------------------------------------------------",
+            " #################################################\n"
+            + "|                     Card_6                      #\n"
+            + "|                                                 #\n"
+            + "| tit :                                           #\n"
+            + "|    qwertyqwertyqwerty                           #\n"
+            + "|                                                 #\n"
+            + "| des :                                           #\n"
+            + "|    qwertyqwertyqwerty                           #\n"
+            + "|                                                 #\n"
+            + "| com :                                           #\n"
+            + "|    qwertyqwertyqwerty                           #\n"
+            + "|                                                 #\n"
+            + " ------------------------------------------------",
+        ],
+    }
+    # Checking of the Card is moved
+    assert open_table(table_name="_test_data") == table
     ...
+
 
 def main():
     test_card()
@@ -814,6 +925,7 @@ def main():
     test_view_tables()
     test_open_table()
     test_add_card()
+    test_move_card()
 
 
 if __name__ == "__main__":

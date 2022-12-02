@@ -1145,6 +1145,12 @@ def test_delete_card():
     }
     # Checking of the Card is deleted
     assert open_table(table_name="_test_data") == table
+    # Test if the table name not exist
+    with pytest.raises(TypeError):
+        delete_card(table_name_to_edit="",card_name="Card_6")
+    # Test if the card name not exist
+    with pytest.raises(ValueError):
+        delete_card(table_name_to_edit="_test_data",card_name="Card_10")
     shutil.rmtree(destination)
     ...
 

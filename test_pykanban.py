@@ -12,6 +12,133 @@ import pytest
 from pykanban import *
 
 
+DESTINATION = "./data/_test_data"
+TABLE = {
+    "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
+        " #################################################\n"
+        + "|                     Card_1                      #\n"
+        + "|                                                 #\n"
+        + "| descriptoin :                                   #\n"
+        + "|            qwertyqwertyqwerty                   #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + "| Commnet :                                       #\n"
+        + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + "| Notes :                                         #\n"
+        + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + " ------------------------------------------------",
+        "",
+        "",
+    ],
+    "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
+        " #################################################\n"
+        + "|                     Card_2                      #\n"
+        + "|                                                 #\n"
+        + "| Title :                                         #\n"
+        + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + "| Description :                                   #\n"
+        + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
+        + "| ty                                              #\n"
+        + "|                                                 #\n"
+        + "| Comment :                                       #\n"
+        + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
+        + "| ertyqwertyqwerty                                #\n"
+        + "|                                                 #\n"
+        + " ------------------------------------------------",
+        " #################################################\n"
+        + "|                     Card_3                      #\n"
+        + "|                                                 #\n"
+        + "| Description :                                   #\n"
+        + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
+        + "| ty                                              #\n"
+        + "|                                                 #\n"
+        + "| Comment :                                       #\n"
+        + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + "| Notes :                                         #\n"
+        + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + " ------------------------------------------------",
+        "",
+    ],
+    "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
+        " #################################################\n"
+        + "|                     Card_4                      #\n"
+        + "|                                                 #\n"
+        + "| des :                                           #\n"
+        + "|    qwertyqwertyqwerty                           #\n"
+        + "|                                                 #\n"
+        + "| comment :                                       #\n"
+        + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + "| notes :                                         #\n"
+        + "|      qwertyqwertyqwerty                         #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + " ------------------------------------------------",
+        " #################################################\n"
+        + "|                     Card_5                      #\n"
+        + "|                                                 #\n"
+        + "| des :                                           #\n"
+        + "|    qwertyqwertyqwerty                           #\n"
+        + "|                                                 #\n"
+        + "| comment :                                       #\n"
+        + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + "| notes :                                         #\n"
+        + "|      qwertyqwertyqwerty                         #\n"
+        + "|                                                 #\n"
+        + "|                                                 #\n"
+        + " ------------------------------------------------",
+        " #################################################\n"
+        + "|                     Card_6                      #\n"
+        + "|                                                 #\n"
+        + "| tit :                                           #\n"
+        + "|    qwertyqwertyqwerty                           #\n"
+        + "|                                                 #\n"
+        + "| des :                                           #\n"
+        + "|    qwertyqwertyqwerty                           #\n"
+        + "|                                                 #\n"
+        + "| com :                                           #\n"
+        + "|    qwertyqwertyqwerty                           #\n"
+        + "|                                                 #\n"
+        + " ------------------------------------------------",
+    ],
+}
+
+
+def generate_table():
+    os.mkdir(DESTINATION)
+    with open(f"{DESTINATION}/latest.csv", "w") as test_table:
+        writer = csv.DictWriter(test_table, fieldnames=list(TABLE.keys()))
+        writer.writeheader()
+        longest_header_in_cards = 0
+        for h in list(TABLE.keys()):
+            if longest_header_in_cards < len(TABLE[h]):
+                longest_header_in_cards = len(TABLE[h])
+            else:
+                continue
+        for row in range(longest_header_in_cards):
+            temp_ = {}
+            for h_pointer in TABLE:
+                if row in range(len(TABLE[h_pointer])):
+                    temp_[h_pointer] = TABLE[h_pointer][row]
+                else:
+                    continue
+            writer.writerow(temp_)
+    ...
+
+
 def test_card():
     title = "Test Card"
     sub_titles = ["Test Sub-Title 1", "Test Sub-Title 2", "Test Sub-Title 3"]
@@ -109,7 +236,8 @@ def test_create_header_with_set_colors():
 
 
 def test_init_table():
-    assert init_table("test_table") == "test_table"
+    assert init_table("_test_data") == "_test_data"
+    shutil.rmtree(DESTINATION)
     with pytest.raises(TypeError):
         init_table()
     ...
@@ -136,268 +264,14 @@ def test_view_tables():
 
 def test_open_table():
     # Test open table with only table name to open latest.csv
-    table = {
-        "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_1                      #\n"
-            + "|                                                 #\n"
-            + "| descriptoin :                                   #\n"
-            + "|            qwertyqwertyqwerty                   #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Commnet :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-            "",
-        ],
-        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_2                      #\n"
-            + "|                                                 #\n"
-            + "| Title :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
-            + "| ertyqwertyqwerty                                #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_3                      #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-        ],
-        "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_4                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_5                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_6                      #\n"
-            + "|                                                 #\n"
-            + "| tit :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| com :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-        ],
-    }
-    destination = "./data/_test_data"
-    os.mkdir(destination)
-    with open(f"{destination}/latest.csv", "w") as test_table:
-        writer = csv.DictWriter(test_table, fieldnames=list(table.keys()))
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for h in list(table.keys()):
-            if longest_header_in_cards < len(table[h]):
-                longest_header_in_cards = len(table[h])
-            else:
-                continue
-        for row in range(longest_header_in_cards):
-            temp_ = {}
-            for h_pointer in table:
-                if row in range(len(table[h_pointer])):
-                    temp_[h_pointer] = table[h_pointer][row]
-                else:
-                    continue
-            writer.writerow(temp_)
-    assert open_table(table_name="_test_data") == table
-    shutil.rmtree(destination)
+    generate_table()
+    assert open_table(table_name="_test_data") == TABLE
+    shutil.rmtree(DESTINATION)
     # Test open table without any parameters
     with pytest.raises(TypeError):
         open_table()
     # Test open table to open table history
-    os.mkdir(destination)
-    table = {
-        "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_1                      #\n"
-            + "|                                                 #\n"
-            + "| descriptoin :                                   #\n"
-            + "|            qwertyqwertyqwerty                   #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Commnet :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_2                      #\n"
-            + "|                                                 #\n"
-            + "| Title :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
-            + "| ertyqwertyqwerty                                #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-        ],
-        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_3                      #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-            "",
-        ],
-        "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_4                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_5                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_6                      #\n"
-            + "|                                                 #\n"
-            + "| tit :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| com :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-        ],
-    }
-    with open(f"{destination}/_ 28-11-2022 03.44.42 PM.csv", "w") as test_table:
-        writer = csv.DictWriter(test_table, fieldnames=list(table.keys()))
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for h in list(table.keys()):
-            if longest_header_in_cards < len(table[h]):
-                longest_header_in_cards = len(table[h])
-            else:
-                continue
-        for row in range(longest_header_in_cards):
-            temp_ = {}
-            for h_pointer in table:
-                if row in range(len(table[h_pointer])):
-                    temp_[h_pointer] = table[h_pointer][row]
-                else:
-                    continue
-            writer.writerow(temp_)
-    assert (
-        open_table(
-            table_name="_test_data", table_version="_ 28-11-2022 03.44.42 PM.csv"
-        )
-        == table
-    )
-    shutil.rmtree(destination)
-    # Test open table with wrong table name or is not exist
-    with pytest.raises(FileNotFoundError):
-        open_table(table_name="_test_data_")
-
-
-def test_add_card():
-    destination = "./data/_test_data"
-    os.mkdir(destination)
+    os.mkdir(DESTINATION)
     table_e = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
             " #################################################\n"
@@ -416,10 +290,6 @@ def test_add_card():
             + "|                                                 #\n"
             + "|                                                 #\n"
             + " ------------------------------------------------",
-            "",
-            "",
-        ],
-        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
             " #################################################\n"
             + "|                     Card_2                      #\n"
             + "|                                                 #\n"
@@ -436,6 +306,9 @@ def test_add_card():
             + "| ertyqwertyqwerty                                #\n"
             + "|                                                 #\n"
             + " ------------------------------------------------",
+            "",
+        ],
+        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
             " #################################################\n"
             + "|                     Card_3                      #\n"
             + "|                                                 #\n"
@@ -452,6 +325,7 @@ def test_add_card():
             + "|                                                 #\n"
             + "|                                                 #\n"
             + " ------------------------------------------------",
+            "",
             "",
         ],
         "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
@@ -500,7 +374,7 @@ def test_add_card():
             + " ------------------------------------------------",
         ],
     }
-    with open(f"{destination}/latest.csv", "w") as test_table:
+    with open(f"{DESTINATION}/_ 28-11-2022 03.44.42 PM.csv", "w") as test_table:
         writer = csv.DictWriter(test_table, fieldnames=list(table_e.keys()))
         writer.writeheader()
         longest_header_in_cards = 0
@@ -517,6 +391,20 @@ def test_add_card():
                 else:
                     continue
             writer.writerow(temp_)
+    assert (
+        open_table(
+            table_name="_test_data", table_version="_ 28-11-2022 03.44.42 PM.csv"
+        )
+        == table_e
+    )
+    shutil.rmtree(DESTINATION)
+    # Test open table with wrong table name or is not exist
+    with pytest.raises(FileNotFoundError):
+        open_table(table_name="_test_data_")
+
+
+def test_add_card():
+    generate_table()
     # Test adding a card
     assert (
         add_card(
@@ -532,7 +420,7 @@ def test_add_card():
         )
         == "Added"
     )
-    table = {
+    table_e = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
             " #################################################\n"
             + "|                     Card_1                      #\n"
@@ -650,7 +538,7 @@ def test_add_card():
         ],
     }
     # Checking of the Card is added
-    assert open_table(table_name="_test_data") == table
+    assert open_table(table_name="_test_data") == table_e
     # Test if the column name not exist
     with pytest.raises(ValueError):
         add_card(
@@ -677,132 +565,12 @@ def test_add_card():
                 "qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty",
             ],
         )
-    shutil.rmtree(destination)
+    shutil.rmtree(DESTINATION)
     ...
 
 
 def test_move_card():
-    destination = "./data/_test_data"
-    os.mkdir(destination)
-    table_e = {
-        "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_1                      #\n"
-            + "|                                                 #\n"
-            + "| descriptoin :                                   #\n"
-            + "|            qwertyqwertyqwerty                   #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Commnet :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-            "",
-        ],
-        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_2                      #\n"
-            + "|                                                 #\n"
-            + "| Title :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
-            + "| ertyqwertyqwerty                                #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_3                      #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-        ],
-        "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_4                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_5                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_6                      #\n"
-            + "|                                                 #\n"
-            + "| tit :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| com :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-        ],
-    }
-    with open(f"{destination}/latest.csv", "w") as test_table:
-        writer = csv.DictWriter(test_table, fieldnames=list(table_e.keys()))
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for h in list(table_e.keys()):
-            if longest_header_in_cards < len(table_e[h]):
-                longest_header_in_cards = len(table_e[h])
-            else:
-                continue
-        for row in range(longest_header_in_cards):
-            temp_ = {}
-            for h_pointer in table_e:
-                if row in range(len(table_e[h_pointer])):
-                    temp_[h_pointer] = table_e[h_pointer][row]
-                else:
-                    continue
-            writer.writerow(temp_)
+    generate_table()
     # Test moving card
     assert (
         move_card(
@@ -810,7 +578,7 @@ def test_move_card():
         )
         == "Moved"
     )
-    table = {
+    table_e = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
             " #################################################\n"
             + "|                     Card_1                      #\n"
@@ -913,7 +681,7 @@ def test_move_card():
         ],
     }
     # Checking of the Card is moved
-    assert open_table(table_name="_test_data") == table
+    assert open_table(table_name="_test_data") == table_e
     # Test if the table name not exist
     with pytest.raises(TypeError):
         move_card(
@@ -929,134 +697,14 @@ def test_move_card():
         move_card(
             table_name_to_edit="_test_data", card_name="Card_6", move_to="column4"
         )
-    shutil.rmtree(destination)
+    shutil.rmtree(DESTINATION)
 
 
 def test_delete_card():
-    destination = "./data/_test_data"
-    os.mkdir(destination)
-    table_e = {
-        "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_1                      #\n"
-            + "|                                                 #\n"
-            + "| descriptoin :                                   #\n"
-            + "|            qwertyqwertyqwerty                   #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Commnet :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-            "",
-        ],
-        "\x1b[38;5;9m\x1b[48;5;12m    column2    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_2                      #\n"
-            + "|                                                 #\n"
-            + "| Title :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
-            + "| ertyqwertyqwerty                                #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_3                      #\n"
-            + "|                                                 #\n"
-            + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            "",
-        ],
-        "\x1b[38;5;10m\x1b[48;5;13m    column3    \x1b[0m": [
-            " #################################################\n"
-            + "|                     Card_4                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_5                      #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-            " #################################################\n"
-            + "|                     Card_6                      #\n"
-            + "|                                                 #\n"
-            + "| tit :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| com :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + " ------------------------------------------------",
-        ],
-    }
-    with open(f"{destination}/latest.csv", "w") as test_table:
-        writer = csv.DictWriter(test_table, fieldnames=list(table_e.keys()))
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for h in list(table_e.keys()):
-            if longest_header_in_cards < len(table_e[h]):
-                longest_header_in_cards = len(table_e[h])
-            else:
-                continue
-        for row in range(longest_header_in_cards):
-            temp_ = {}
-            for h_pointer in table_e:
-                if row in range(len(table_e[h_pointer])):
-                    temp_[h_pointer] = table_e[h_pointer][row]
-                else:
-                    continue
-            writer.writerow(temp_)
+    generate_table()
     # Test deleting a card
     assert delete_card(table_name_to_edit="_test_data", card_name="Card_2") == "Deleted"
-    table = {
+    table_e = {
         "\x1b[38;5;15m\x1b[48;5;0m    column1    \x1b[0m": [
             " #################################################\n"
             + "|                     Card_1                      #\n"
@@ -1144,14 +792,14 @@ def test_delete_card():
         ],
     }
     # Checking of the Card is deleted
-    assert open_table(table_name="_test_data") == table
+    assert open_table(table_name="_test_data") == table_e
     # Test if the table name not exist
     with pytest.raises(TypeError):
-        delete_card(table_name_to_edit="",card_name="Card_6")
+        delete_card(table_name_to_edit="", card_name="Card_6")
     # Test if the card name not exist
     with pytest.raises(ValueError):
-        delete_card(table_name_to_edit="_test_data",card_name="Card_10")
-    shutil.rmtree(destination)
+        delete_card(table_name_to_edit="_test_data", card_name="Card_10")
+    shutil.rmtree(DESTINATION)
     ...
 
 

@@ -316,7 +316,12 @@ def add_card(
 
 
 def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
-    old_card_table: dict = open_table(table_name_to_edit)
+    is_moved_right: str = ""
+    try:
+        old_card_table: dict = open_table(table_name_to_edit)
+    except FileNotFoundError:
+        is_moved_right = "NotMoved"
+        raise TypeError("Please check of Name of Table")
     card: str = ""
     """for holding the Card that will change his place
     """
@@ -330,7 +335,6 @@ def move_card(table_name_to_edit: str, card_name: str, move_to) -> str:
     """Adding headers for new table
     """
     reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
-    is_moved_right: str = ""
     break_out_flag = False  # for break nested loops at once
     for row in reader:
         """for reading each row in file"""

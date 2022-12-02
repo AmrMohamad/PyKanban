@@ -463,12 +463,11 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                     continue
             writer.writerow(cards_in_row)
 
-    if is_card_deleted == "Deleted":
-        return is_card_deleted
-    else:
+    if is_card_deleted != "Deleted":
         raise ValueError(
             "the card is not deleted, please check if the card name is right"
         )
+    return is_card_deleted
 
 
 def menu(type_menu: str) -> int:

@@ -393,12 +393,11 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
                 else:
                     continue
             writer.writerow(cards_in_row)
-    if is_moved_right == "Moved":
-        return is_moved_right
-    else:
-        raise ValueError(
-            "the card is not moved, please check if the card of column is right name"
+    if is_moved_right != "Moved":
+        raise TypeError(
+            "the card is not moved, please check of card name, column name and table name"
         )
+    return is_moved_right
 
 
 def delete_card(table_name_to_edit: str, card_name: str) -> str:

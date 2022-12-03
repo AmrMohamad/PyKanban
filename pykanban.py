@@ -511,7 +511,14 @@ def main():
             # View Tables
             case 0:
                 clearConsole()
-                tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
+                #tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
+                if view_tables() == "No Tables Exist":
+                    print("No Tables Exist")
+                    time.sleep(4)
+                    clearConsole()
+                    main()
+                else:
+                    tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
                 for index, table_name in enumerate(tables_list):
                     print(f"{index + 1}: {table_name}")
                 selected_table: int = int(input("Enter Number of Table to Open: ")) - 1

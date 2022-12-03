@@ -248,6 +248,30 @@ def open_table(table_name: str, table_version: str = None) -> dict:
     return vt
 
 
+def save_table(table_name:str,table_data:dict):
+    os.rename(
+        f"{DATA_DIR}{table_name}/latest.csv",
+        f"{DATA_DIR}{table_name}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
+    )
+    with open(f"{DATA_DIR}{table_name}/latest.csv", "w") as new_table:
+        writer = csv.DictWriter(new_table, fieldnames=list(table_data.keys()))
+        writer.writeheader()
+        longest_header_in_cards = 0
+        for c in list(table_data.keys()):
+            if longest_header_in_cards < len(table_data[c]):
+                longest_header_in_cards = len(table_data[c])
+            else:
+                continue
+        for row in range(longest_header_in_cards):
+            cards_in_row = {}
+            for header_pointer in table_data:
+                if row in range(len(table_data[header_pointer])):
+                    cards_in_row[header_pointer] = table_data[header_pointer][row]
+                else:
+                    continue
+            writer.writerow(cards_in_row)
+
+
 def add_card(
     table_name_to_edit: str = "",
     name_of_card: str = "",
@@ -288,28 +312,7 @@ def add_card(
                 new_card_table[h_n].append(c)
             else:
                 continue
-
-    os.rename(
-        f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
-    )
-    with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
-        writer = csv.DictWriter(new_table, fieldnames=columns_name)
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for c in columns_name:
-            if longest_header_in_cards < len(new_card_table[c]):
-                longest_header_in_cards = len(new_card_table[c])
-            else:
-                continue
-        for row in range(longest_header_in_cards):
-            cards_in_row = {}
-            for header_pointer in new_card_table:
-                if row in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][row]
-                else:
-                    continue
-            writer.writerow(cards_in_row)
+    save_table(table_name_to_edit,new_card_table)
     if is_card_added != "Added":
         raise TypeError("Please check of Name of card and Name of Table")
     return is_card_added
@@ -373,30 +376,7 @@ def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
                 new_card_table[h_n].append(c)
             else:
                 continue
-    os.rename(
-        f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
-    )
-    with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
-        writer = csv.DictWriter(new_table, fieldnames=columns_name)
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for c in columns_name:
-            if longest_header_in_cards < len(new_card_table[c]):
-                longest_header_in_cards = len(new_card_table[c])
-            else:
-                continue
-
-        for row_num in range(longest_header_in_cards):
-            cards_in_row = {}
-            for header_pointer in new_card_table:
-                if row_num in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][
-                        row_num
-                    ]
-                else:
-                    continue
-            writer.writerow(cards_in_row)
+    save_table(table_name_to_edit,new_card_table)
     if is_moved_right != "Moved":
         raise TypeError(
             "the card is not moved, please check of card name, column name and table name"
@@ -439,30 +419,7 @@ def delete_card(table_name_to_edit: str, card_name: str) -> str:
                 new_card_table[h_n].append(c)
             else:
                 continue
-    os.rename(
-        f"{DATA_DIR}{table_name_to_edit}/latest.csv",
-        f"{DATA_DIR}{table_name_to_edit}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
-    )
-    with open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "w") as new_table:
-        writer = csv.DictWriter(new_table, fieldnames=columns_name)
-        writer.writeheader()
-        longest_header_in_cards = 0
-        for c in columns_name:
-            if longest_header_in_cards < len(new_card_table[c]):
-                longest_header_in_cards = len(new_card_table[c])
-            else:
-                continue
-        for row_num in range(longest_header_in_cards):
-            cards_in_row = {}
-            for header_pointer in new_card_table:
-                if row_num in range(len(new_card_table[header_pointer])):
-                    cards_in_row[header_pointer] = new_card_table[header_pointer][
-                        row_num
-                    ]
-                else:
-                    continue
-            writer.writerow(cards_in_row)
-
+    save_table(table_name_to_edit,new_card_table)
     if is_card_deleted != "Deleted":
         raise ValueError(
             "the card is not deleted, please check if the card name is right"

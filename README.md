@@ -70,3 +70,46 @@ ___
 ___
 
 ## How to use
+
+### Installation
+
+#### Step 1
+
+```bash
+git clone https://github.com/AmrMohamad/PyKanban.git
+```
+
+#### Step 2
+
+```bash
+python3 -m venv <type-virtual-environment-name-you-want>
+```
+
+#### Step 3
+
+  To activate virtual environment
+
+```bash
+source env/bin/activate
+```
+
+#### Step 4
+
+The following command will install the packages according to the configuration file <code>requirements.txt</code>
+
+```bash
+pip install -r requirements.txt
+```
+
+#### Step 5 
+
+To Run PyKanban
+
+```bash
+python3 pykanban.py
+```
+
+Or press Run button in VS Code
+
+![run-button-vscode](./docs/run-button-vscode.png)
+

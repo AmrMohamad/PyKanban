@@ -7,7 +7,6 @@
          style="display: block; margin: 0 auto"/><br>
          Easy way to create kanban table in terminal
 </p>
-<canter><p>Easy way to create kanban table in terminal</p></canter>
 
 ___
 

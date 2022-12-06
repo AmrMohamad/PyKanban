@@ -41,3 +41,21 @@ First, as is common among developers, it's awesome for using terminal applicatio
 ___
 
 ## Features
+
+- Allows you create a table with customized headers by coloring text and text background in the terminal.
+
+  <p align="center">
+    <img src="./docs/header-table.png"
+         alt="PyKanban-Program-Intro"
+         width="70%"
+         style="display: block; margin: 0 auto"/>
+  </p>
+
+- Creates Cards in a terminal. (the best feature)
+
+  <p align="center">
+      <img src="./docs/card-image.png"
+          alt="PyKanban-Program-Intro"
+          width="60%"
+          style="display: block; margin: 0 auto"/>
+  </p>

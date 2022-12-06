@@ -42,7 +42,7 @@ ___
 
 ## Features
 
-- Allows you create a table with customized headers by coloring text and text background in the terminal.
+- Allow you create a table with customized headers by coloring text and text background in the terminal.
 
   <p align="center">
     <img src="./docs/header-table.png"
@@ -51,7 +51,7 @@ ___
          style="display: block; margin: 0 auto"/>
   </p>
 
-- Creates Cards in a terminal. (the best feature)
+- Create Cards in a terminal. (the best feature)
 
   <p align="center">
       <img src="./docs/card-image.png"
@@ -59,3 +59,7 @@ ___
           width="60%"
           style="display: block; margin: 0 auto"/>
   </p>
+
+- Easy move a card and put on any column of the table
+
+- Viewing the history of edited table

@@ -3,8 +3,9 @@
 <p align="center">
     <img src="./docs/pykanban-logo.png"
          alt="PyKanban-logo"
-         width="40%"
+         width="195px"
          style="display: block; margin: 0 auto"/>
+         Easy way to create kanban table in terminal
 </p>
 
 ___

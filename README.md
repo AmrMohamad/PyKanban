@@ -5,8 +5,8 @@
          alt="PyKanban-logo"
          width="195px"
          style="display: block; margin: 0 auto"/>
-         Easy way to create kanban table in terminal
 </p>
+<p align="canter">Easy way to create kanban table in terminal</p>
 
 ___
 

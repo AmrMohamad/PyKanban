@@ -14,7 +14,7 @@ ___
 - [Description](#description)
 - [Motivation](#motivation)
 - [Features](#features)
-- [How to use]()
+- [How to use](#how-to-use)
 - [Fundamentals and Technologies are used]()
   - [Fundamentals]()
   - [Technologies]()
@@ -62,4 +62,10 @@ ___
 
 - Easy move a card and put on any column of the table
 
+- Add a card or delete it after creating the table
+
 - Viewing the history of edited table
+
+___
+
+## How to use 

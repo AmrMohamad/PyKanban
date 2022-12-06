@@ -4,9 +4,10 @@
     <img src="./docs/pykanban-logo.png"
          alt="PyKanban-logo"
          width="195px"
-         style="display: block; margin: 0 auto"/>
+         style="display: block; margin: 0 auto"/><br>
+         Easy way to create kanban table in terminal
 </p>
-<p align="canter">Easy way to create kanban table in terminal</p>
+<canter><p>Easy way to create kanban table in terminal</p></canter>
 
 ___
 
@@ -69,4 +70,4 @@ ___
 
 ___
 
-## How to use 
+## How to use

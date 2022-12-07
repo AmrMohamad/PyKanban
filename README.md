@@ -139,3 +139,17 @@ If you have created a table before, a list of saved tables will appear
 #### For Create Table
 
 It will ask you the name of new table to create a new folder in <code>./pykanban/data/</code> folder contains all new table data and the table be saved in csv file like this <code>latest.csv</code>.<br> After that, it starts asking you for the details of the table
+
+Input:
+
+```bash
+Number of stages => 4
+```
+
+It will ask about Name of each stage or header and their colors. When come to choose the colors they must be in Hex values like that:
+
+<img src="./docs/naming-stage.png" width="50%" alt="naming-stage">
+
+If you enter color values correctly, it continues in the same way until the last (4th) stage because we the enter <code> Number of stages => 4 </code><br> But, If you enter a hex value in a wrong way, it will ask you again about the values of the stage like that: 
+
+<img src="./docs/hex-value-error.png" width="50%" alt="hex-value-error">

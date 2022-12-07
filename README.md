@@ -103,7 +103,7 @@ The following command will install the packages according to the configuration f
 pip install -r requirements.txt
 ```
 
-#### Step 5 
+#### Step 5
 
 To Run PyKanban
 
@@ -128,10 +128,14 @@ After running , the first screen appear is :
 
 we have here 3 options: View Tables, Create Table, Exit
 
-Enter the option number 
+Enter the option number
 
-For View Tables:
+#### For View Tables
+
 If you have created a table before, a list of saved tables will appear
 
-![list-of-tables](./docs/view-tables.png)
+<img src="./docs/view-tables.png" width="50%" alt="list-of-tables">
 
+#### For Create Table
+
+It will ask you the name of new table to create a new folder in <code>./pykanban/data/</code> folder contains all new table data and the table be saved in csv file like this <code>latest.csv</code>.<br> After that, it starts asking you for the details of the table

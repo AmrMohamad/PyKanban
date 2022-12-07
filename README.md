@@ -16,6 +16,8 @@ ___
 - [Motivation](#motivation)
 - [Features](#features)
 - [How to use](#how-to-use)
+  - [Installation](#installation)
+  - [Usage](#usage)
 - [Fundamentals and Technologies are used]()
   - [Fundamentals]()
   - [Technologies]()
@@ -112,4 +114,24 @@ python3 pykanban.py
 Or press Run button in VS Code
 
 ![run-button-vscode](./docs/run-button-vscode.png)
+
+### Usage
+
+After running , the first screen appear is :
+
+<p align="center">
+    <img src="./docs/program-intro.png"
+         alt="PyKanban-Program-Intro"
+         width="90%"
+         style="display: block; margin: 0 auto"/>
+</p>
+
+we have here 3 options: View Tables, Create Table, Exit
+
+Enter the option number 
+
+For View Tables:
+If you have created a table before, a list of saved tables will appear
+
+![list-of-tables](./docs/view-tables.png)
 

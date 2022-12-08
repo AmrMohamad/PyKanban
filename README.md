@@ -210,7 +210,7 @@ In VS Code terminal (depending on your settings)
 
 In macOS terminal
 
-<p align="center"><img src="./docs/macOS-terminal.png" width="85%" alt="table-in-macOS-terminal"></p>
+<p align="center"><img src="./docs/macOS-terminal.png" width="88%" alt="table-in-macOS-terminal"></p>
 
 The limitations are:
 

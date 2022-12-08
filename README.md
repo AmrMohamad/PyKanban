@@ -150,6 +150,14 @@ It will ask about Name of each stage or header and their colors. When come to ch
 
 <img src="./docs/naming-stage.png" width="50%" alt="naming-stage">
 
-If you enter color values correctly, it continues in the same way until the last (4th) stage because we the enter <code> Number of stages => 4 </code><br> But, If you enter a hex value in a wrong way, it will ask you again about the values of the stage like that: 
+If you enter color values correctly, it continues in the same way until the last (4th) stage because we the enter <code> Number of stages => 4 </code>
+
+<img src="./docs/set-columns.png" width="42%" alt="set-columns">
+
+ But, If you enter a hex value in a wrong way, it will ask you again about the values of the stage like that: 
 
 <img src="./docs/hex-value-error.png" width="50%" alt="hex-value-error">
+
+After setting headers/columns/stages name of the table, you can add cards to Stages by asking about number of cards per stage
+
+<img src="./docs/ask-about-num-of-cards.png" width="50%" alt="ask-about-num-of-cards">

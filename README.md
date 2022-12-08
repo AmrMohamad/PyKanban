@@ -229,3 +229,10 @@ The limitations are:
 - the content of each sub-title is limited to 244 characters
 
 Now you have created a Kanban board in the terminal with PyKanban 😄
+
+#### For Exit
+
+It takes 5 seconds to exit from PyKanban to make sure everything its saved
+
+<img src="./docs/count-to-exit.png" width="50%" alt="count-to-exit">
+

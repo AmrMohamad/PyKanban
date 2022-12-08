@@ -19,7 +19,7 @@ class Card:
     _width_of_card: int = 46
     _top_line: str = " " + ("#" * (_width_of_card + 2)) + "#" + "\n"
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
-    _buttom_line: str = " " + ("-" * (_width_of_card + 2))
+    _bottom_line: str = " " + ("-" * (_width_of_card + 2))
     text_line: str = ""
     title: str = ""
     sub_titles: dict = {}
@@ -53,8 +53,8 @@ class Card:
         return cls._blank_line
 
     @property
-    def buttom_line(cls):
-        return cls._buttom_line
+    def bottom_line(cls):
+        return cls._bottom_line
 
     @classmethod
     def add_title(cls, added_title: str) -> any:
@@ -144,7 +144,7 @@ class Card:
 
     @classmethod
     def print_here(cls) -> str:
-        return f"{cls._top_line}{cls.title}{cls._blank_line}{cls.text_line}{cls._buttom_line}"
+        return f"{cls._top_line}{cls.title}{cls._blank_line}{cls.text_line}{cls._bottom_line}"
 
 
 def init_header(
@@ -450,7 +450,7 @@ def menu(type_menu: str) -> int:
         case "edit":
             option_menu_edit: list = [
                 "Add a Card",
-                "Move a Crad",
+                "Move a Card",
                 "Delete a Card",
                 "View History",
                 "Back to Main Screen",
@@ -540,7 +540,7 @@ def main():
                 while True:
                     selected_action = menu("edit")
                     match selected_action:
-                        # Add a Crad
+                        # Add a Card
                         case 0:
                             print("Enter the Title of Card, It's one title only !")
                             title_of_added_card = input("==> ")
@@ -587,7 +587,7 @@ def main():
                                 add_to_column_name=add_to_column,
                                 **data_of_added_card,
                             )
-                        # Move a Crad
+                        # Move a Card
                         case 1:
                             while True:
                                 try:

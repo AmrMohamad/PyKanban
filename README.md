@@ -154,10 +154,58 @@ If you enter color values correctly, it continues in the same way until the last
 
 <img src="./docs/set-columns.png" width="42%" alt="set-columns">
 
- But, If you enter a hex value in a wrong way, it will ask you again about the values of the stage like that: 
+ But, If you enter a hex value in a wrong way, it will ask you again about the values of the stage like that:
 
 <img src="./docs/hex-value-error.png" width="50%" alt="hex-value-error">
 
 After setting headers/columns/stages name of the table, you can add cards to Stages by asking about number of cards per stage
 
 <img src="./docs/ask-about-num-of-cards.png" width="50%" alt="ask-about-num-of-cards">
+
+Input:
+
+```terminal
+How many cards do you want? 2
+```
+
+And depend on how many cards you choose to add, it will start ask you about each card details like that:
+
+```terminal
+For 1st Card                    <====== First card start here
+Enter the Title of Card, It's one title only !
+==> Task 1
+How many sub-titles do you want to add ? => 2
+Enter the name of each sub-title
+>>> Description
+>>> Comment
+Enter the content of each sub-title, The maximum is 244 characters per paragraph !
+Do not hit enter for new line,
+We handle it automatically
+For Description :
+>>> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Do not hit enter for new line,
+We handle it automatically
+For Comment :
+>>> It should be ended on 7 Dec 2022         <====== First card end here
+For 2nd Card                    <====== Second card start here
+Enter the Title of Card, It's one title only !
+==> 
+```
+
+And so on, the way with the second card.
+
+The limitations are:
+
+- The limited Number per Table of Stages is:
+
+  - The Maximum Stages is 5
+  - The Minimum Stages is 2
+
+- No limit to Cards to Stage
+
+- Sub-titles per card:
+
+  - At least 1 sub-title
+  - the maximum is 5 sub-titles
+
+- the content of each sub-title is limited to 244 characters

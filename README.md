@@ -206,7 +206,7 @@ The Final result:
 
 In VS Code terminal (depending on your settings)
 
-<p align="center"><img src="./docs/table-in-terminal.png" width="85%" alt="table-in-terminal"></p>
+<p align="center"><img src="./docs/table-in-terminal.png" width="95%" alt="table-in-terminal"></p>
 
 In macOS terminal
 

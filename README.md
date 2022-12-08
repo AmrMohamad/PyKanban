@@ -227,3 +227,5 @@ The limitations are:
   - the maximum is 5 sub-titles
 
 - the content of each sub-title is limited to 244 characters
+
+Now you have created Kanban board in terminal with PyKanban 😄

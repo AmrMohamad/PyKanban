@@ -15,7 +15,18 @@ p = inflect.engine()
 
 
 class Card:
-
+    """
+    This class represents a card with a title and multiple lines of text.
+    
+    Attributes:
+        _width_of_card (int): The width of the card in characters.
+        _top_line (str): The top border of the card.
+        _blank_line (str): A blank line in the card.
+        _bottom_line (str): The bottom border of the card.
+        text_line (str): The text in the body of the card.
+        title (str): The title of the card.
+        sub_titles (dict): A dictionary of sub-titles and their corresponding text.
+    """
     _width_of_card: int = 46
     _top_line: str = " " + ("#" * (_width_of_card + 2)) + "#" + "\n"
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
@@ -26,16 +37,21 @@ class Card:
 
     @property
     def width_of_card(cls):
-        """Getter of width_of_card"""
+        """
+        Getter for the width_of_card attribute.
+        
+        Returns:
+            int: The width of the card in characters.
+        """
         return cls._width_of_card
 
     @width_of_card.setter
     def width_of_card(cls, width_of_card):
-        """Setter of width_of_card
+        """Setter for the width_of_card attribute.
         Args:
-            width_of_card (_int_): _setting the value of width_of_card_
+            width_of_card (_int_): The new width of the card.
         Raises:
-            ValueError: _The value of card width is out of range,The range is between 28 and 44_
+            ValueError: If the given width is not between 28 and 44, inclusive.
         """
         if 28 <= width_of_card <= 48:
             cls._width_of_card = width_of_card

@@ -77,13 +77,13 @@ ___
 
 #### Step 1
 
-```bash
+```terminal
 git clone https://github.com/AmrMohamad/PyKanban.git
 ```
 
 #### Step 2
 
-```bash
+```terminal
 python3 -m venv <type-virtual-environment-name-you-want>
 ```
 
@@ -91,7 +91,7 @@ python3 -m venv <type-virtual-environment-name-you-want>
 
   To activate virtual environment
 
-```bash
+```terminal
 source env/bin/activate
 ```
 
@@ -99,7 +99,7 @@ source env/bin/activate
 
 The following command will install the packages according to the configuration file <code>requirements.txt</code>
 
-```bash
+```terminal
 pip install -r requirements.txt
 ```
 
@@ -107,7 +107,7 @@ pip install -r requirements.txt
 
 To Run PyKanban
 
-```bash
+```terminal
 python3 pykanban.py
 ```
 
@@ -142,7 +142,7 @@ It will ask you for the name of the new table to create a new folder in <code>./
 
 Input:
 
-```bash
+```terminal
 Number of stages => 4
 ```
 

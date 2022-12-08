@@ -194,6 +194,14 @@ Enter the Title of Card, It's one title only !
 
 And so on, the same way with the second card.
 
+After you finished 1st Stage, it will ask about other stages, and it's up to you, you can add cards now or later
+
+<img src="./docs/set-0-for-stages.png" width="50%" alt="set-0-for-stages">
+
+The Final result:
+
+<p align="center"><img src="./docs/table-in-terminal.png" width="85%" alt="table-in-terminal"></p>
+
 The limitations are:
 
 - The limited Number per Table of Stages is:

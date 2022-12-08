@@ -1,3 +1,4 @@
+import textwrap
 from tabulate import tabulate
 from colored import fg, bg, attr
 import inflect
@@ -74,6 +75,17 @@ class Card:
 
     @classmethod
     def add_title(cls, added_title: str) -> any:
+        """Add a title to the card.
+
+        Args:
+            added_title (str): The title to add to the card.
+
+        Raises:
+            ValueError: If the title is not provided or if it is longer than 34 characters.
+
+        Returns:
+            Card: The updated `Card` object.
+        """
         e = ValueError(
             "It should be there title\nWithout entering empty title (like just hit enter)"
         )
@@ -119,14 +131,31 @@ class Card:
 
     @classmethod
     def add_lines(cls, *e_sentences) -> any:
+        """Add sentences to the card, corresponding to the sub-titles.
+
+        Args:
+            *e_sentences (str): One or more sentences to add to the card, corresponding to the sub-titles.
+
+        Raises:
+            ValueError: If the number of sentences does not match the number of sub-titles, or if the total number of characters in all sentences exceeds 192 per line.
+
+        Returns:
+            Card: The updated `Card` object.
+        """
+        # Initialize the text_line attribute to be empty
         cls.text_line = ""
+        # Loop through each sub-title and add the corresponding sentence
+        # from the e_sentences input
         i = 0
         for t in cls.sub_titles:
             cls.sub_titles[t] = e_sentences[i]
             i += 1
+        # Loop through each sub-title and sentence in the sub_titles dictionary
         sentences = cls.sub_titles
-        for key_sentence in sentences:
+        for key_sentence in cls.sub_titles:
+            # Initialize a list to store the lines for the current sub-title
             lines_per_sentence = []
+            # Add a space after the sub-title to indent the sentence
             sentences[key_sentence] = (" " * len(key_sentence)) + sentences[
                 key_sentence
             ]
@@ -137,6 +166,10 @@ class Card:
                 num_of_lines = int(round(num_of_sentence_chars / 45))
                 lines_per_sentence.append((key_sentence + " :"))
                 lines_per_sentence.append("")
+                wrapped_text = textwrap.wrap(sentences[key_sentence], width=46)
+                for line in wrapped_text:
+                    lines_per_sentence.append(line)
+                """
                 for index_line in range(num_of_lines + 1):
                     lines_per_sentence[index_line + 1] = sentences[key_sentence][
                         start_line:end_line
@@ -144,6 +177,7 @@ class Card:
                     lines_per_sentence.append("")
                     start_line = end_line
                     end_line += 45
+                """
             else:
                 raise ValueError("Maximum number of characters is 192 per line")
             for i in range(len(lines_per_sentence)):

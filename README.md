@@ -202,6 +202,8 @@ The Final result:
 
 <p align="center"><img src="./docs/table-in-terminal.png" width="85%" alt="table-in-terminal"></p>
 
+⚠️
+
 The limitations are:
 
 - The limited Number per Table of Stages is:

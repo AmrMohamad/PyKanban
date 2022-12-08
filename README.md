@@ -45,7 +45,7 @@ ___
 
 ## Features
 
-- Allow you create a table with customized headers by coloring text and text background in the terminal.
+- Allow you to create a table with customized headers by coloring text and text backgrounds in the terminal.
 
   <p align="center">
     <img src="./docs/header-table.png"
@@ -63,7 +63,7 @@ ___
           style="display: block; margin: 0 auto"/>
   </p>
 
-- Easy move a card and put on any column of the table
+- Easy move a card and put it on any column of the table
 
 - Add a card or delete it after creating the table
 
@@ -117,7 +117,7 @@ Or press Run button in VS Code
 
 ### Usage
 
-After running , the first screen appear is :
+After running, the first screen that appears is :
 
 <p align="center">
     <img src="./docs/program-intro.png"
@@ -138,7 +138,7 @@ If you have created a table before, a list of saved tables will appear
 
 #### For Create Table
 
-It will ask you the name of new table to create a new folder in <code>./pykanban/data/</code> folder contains all new table data and the table be saved in csv file like this <code>latest.csv</code>.<br> After that, it starts asking you for the details of the table
+It will ask you for the name of the new table to create a new folder in <code>./pykanban/data/</code> folder containing all new table data and the table be saved in a CSV file like this <code>latest.csv</code>.<br> After that, it starts asking you for the details of the table
 
 Input:
 
@@ -146,7 +146,7 @@ Input:
 Number of stages => 4
 ```
 
-It will ask about Name of each stage or header and their colors. When come to choose the colors they must be in Hex values like that:
+It will ask about the Name of each stage or header and their colors. When come to choosing the colors they must be in Hex values like that:
 
 <img src="./docs/naming-stage.png" width="50%" alt="naming-stage">
 
@@ -154,11 +154,11 @@ If you enter color values correctly, it continues in the same way until the last
 
 <img src="./docs/set-columns.png" width="42%" alt="set-columns">
 
- But, If you enter a hex value in a wrong way, it will ask you again about the values of the stage like that:
+But, If you enter a hex value in the wrong way, it will ask you again about the values of the stage like that:
 
 <img src="./docs/hex-value-error.png" width="50%" alt="hex-value-error">
 
-After setting headers/columns/stages name of the table, you can add cards to Stages by asking about number of cards per stage
+After setting the headers/columns/stages name of the table, you can add cards to Stages by asking about the number of cards per stage
 
 <img src="./docs/ask-about-num-of-cards.png" width="50%" alt="ask-about-num-of-cards">
 
@@ -168,7 +168,7 @@ Input:
 How many cards do you want? 2
 ```
 
-And depend on how many cards you choose to add, it will start ask you about each card details like that:
+And depending on how many cards you choose to add, it will start asking you about each card's details like that:
 
 ```terminal
 For 1st Card                    <====== First card start here
@@ -192,7 +192,7 @@ Enter the Title of Card, It's one title only !
 ==> 
 ```
 
-And so on, the way with the second card.
+And so on, the same way with the second card.
 
 The limitations are:
 

@@ -202,7 +202,7 @@ The Final result:
 
 <p align="center"><img src="./docs/table-in-terminal.png" width="85%" alt="table-in-terminal"></p>
 
-⚠️
+⚠️ The Colors of the header showing/rendering in the terminal depend on the type of terminal ⚠️
 
 The limitations are:
 

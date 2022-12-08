@@ -204,6 +204,14 @@ The Final result:
 
 ⚠️ The Colors of the header showing/rendering in the terminal depend on the type of terminal ⚠️
 
+In VS Code terminal (depending on your settings)
+
+<p align="center"><img src="./docs/table-in-terminal.png" width="85%" alt="table-in-terminal"></p>
+
+In macOS terminal
+
+<p align="center"><img src="./docs/macOS-terminal.png" width="85%" alt="table-in-macOS-terminal"></p>
+
 The limitations are:
 
 - The limited Number per Table of Stages is:

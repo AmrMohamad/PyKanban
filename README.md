@@ -290,9 +290,45 @@ Input:
 Which Column do you want to put the Card in? => Done!
 ```
 
-<img src="./docs/table-after-added-a-card.png" width="85%" alt="table-after-added-a-card.png">
+<img src="./docs/table-after-added-a-card.png" width="85%" alt="table-after-added-a-card">
 
 ##### Move a Card
+
+For moving a card, just type 2 and press enter
+
+<img src="./docs/move-a-card.png" width="80%" alt="move-a-card">
+
+  Then type the Title of Card that you want to move
+
+Input:
+
+```terminal
+Enter the Title of Card => Task 1
+```
+
+  <p align="center">
+    <img src="./docs/title-of-card.png"
+         alt="PyKanban-logo"
+         width="50%"
+         style="display: block; margin: 0 auto"/>
+         <pr>The title of card</pr>
+  </p>
+
+Then Enter the column name where you want to put the card
+
+⚠️ Enter the name of the column as is it in the table
+
+Input:
+
+```terminal
+Which Column do you want to put the Card in? => InActive
+```
+
+<img src="./docs/move-a-card-steps.png" width="80%" alt="move-a-card-steps">
+
+Then it's moved
+
+<img src="./docs/card-moved.png" width="100%" alt="card-moved">
 
 ##### Delete a Card
 

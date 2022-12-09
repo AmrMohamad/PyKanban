@@ -240,4 +240,38 @@ It takes 5 seconds to exit from PyKanban to make sure everything its saved
 
 #### Back to View Tables option
 
+<img src="./docs/demo-in-view-table-list.png" width="50%" alt="demo-in-view-table-list">
 
+now after backing to main screen of PyKanban and choosing View Tables we can see <code>1: Dome</code> table
+
+Enter the number of table in list. for example,
+
+Input:
+
+```terminal
+Enter Number of Table to Open: 1
+```
+
+Now we can re-open the table that we created before
+
+<p align="center"><img src="./docs/demo-table-with-options.png" width="95%" alt="demo-table-with-options"></p>
+
+and as we can see there is options:
+
+<p align="center"><img src="./docs/view-table-options.png" width="100%" alt="view-table-options"></p>
+
+- [Add a Card](#add-a-card)
+- [Move a Card](#move-a-card)
+- [Delete a Card](#delete-a-card)
+- [View History](#view-history)
+- [Back to Main Screen](#back-to-main-screen)
+
+##### Add a Card
+
+##### Move a Card
+
+##### Delete a Card
+
+##### View History
+
+##### Back to Main Screen

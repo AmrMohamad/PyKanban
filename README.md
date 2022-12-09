@@ -272,6 +272,11 @@ and as we can see there is options:
 
 ##### Add a Card
 
+For adding a new card, just type 1 and press enter then its starting create the new card
+
+<img src="./docs/choose-add-a-card.gif" width="95%" alt="choose-add-a-card">
+
+
 ##### Move a Card
 
 ##### Delete a Card

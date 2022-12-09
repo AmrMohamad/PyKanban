@@ -29,6 +29,9 @@ ___
 ## Description
 
 PyKanban is a terminal application for creating a simple kanban board or any table for any purpose uses cards in an awesome terminal view
+
+### Screenshot
+
 <p align="center">
     <img src="./docs/program-intro.png"
          alt="PyKanban-Program-Intro"

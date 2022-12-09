@@ -311,7 +311,7 @@ Enter the Title of Card => Task 1
          alt="PyKanban-logo"
          width="50%"
          style="display: block; margin: 0 auto"/>
-         <pr>The title of card</pr>
+         <pr align="center">The title of card</pr>
   </p>
 
 Then Enter the column name where you want to put the card

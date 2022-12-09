@@ -19,6 +19,14 @@ ___
 - [How to use](#how-to-use)
   - [Installation](#installation)
   - [Usage](#usage)
+    - [View Tables](#for-view-tables)
+      - [Add a Card](#add-a-card)
+      - [Move a Card](#move-a-card)
+      - [Delete a Card](#delete-a-card)
+      - [View History](#view-history)
+      - [Back to Main Screen](#back-to-main-screen)
+    - [Create Table](#for-create-table)
+    - [Exit](#for-exit)
 - [Fundamentals and Technologies are used]()
   - [Fundamentals]()
   - [Technologies]()
@@ -363,3 +371,5 @@ Then :
 <img src="./docs/view-history-result.png" width="1000%" alt="view-history-result">
 
 ##### Back to Main Screen
+
+For select 'Back to Main Screen' turns you back to the main screen just typing 5 and pressing enter

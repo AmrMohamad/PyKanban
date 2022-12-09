@@ -1,6 +1,6 @@
 # PyKanban
 
-Easy way to create kanban table in terminal
+Easy way to create kanban board in terminal
 
 <p align="center">
     <img src="./docs/pykanban-logo.png"

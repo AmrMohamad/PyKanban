@@ -136,7 +136,7 @@ If you have created a table before, a list of saved tables will appear
 
 <img src="./docs/view-tables.png" width="50%" alt="list-of-tables">
 
-explaining the 'Create Table' and turn back to 'View Tables' [^1]
+explaining the 'Create Table' and turn back to ['View Tables'](#back-to-view-tables-option)
 
 #### For Create Table
 
@@ -238,6 +238,6 @@ It takes 5 seconds to exit from PyKanban to make sure everything its saved
 
 <img src="./docs/count-to-exit.png" width="50%" alt="count-to-exit">
 
-[^1]: Back to View Tables option
+#### Back to View Tables option
 
 

@@ -169,15 +169,6 @@ class Card:
                 wrapped_text = textwrap.wrap(sentences[key_sentence], width=46)
                 for line in wrapped_text:
                     lines_per_sentence.append(line)
-                """
-                for index_line in range(num_of_lines + 1):
-                    lines_per_sentence[index_line + 1] = sentences[key_sentence][
-                        start_line:end_line
-                    ]
-                    lines_per_sentence.append("")
-                    start_line = end_line
-                    end_line += 45
-                """
             else:
                 raise ValueError("Maximum number of characters is 192 per line")
             for i in range(len(lines_per_sentence)):

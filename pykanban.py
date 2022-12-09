@@ -620,7 +620,7 @@ def main():
                                 "lines_per_sub_title": added_lines_of_added_card,
                             }
                             add_to_column = input(
-                                "Which Column do you want to put the Card in? =>"
+                                "Which Column do you want to put the Card in? => "
                             )
                             add_card(
                                 table_name_to_edit=tables_list[selected_table],

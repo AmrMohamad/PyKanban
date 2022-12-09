@@ -276,6 +276,21 @@ For adding a new card, just type 1 and press enter then its starting create the 
 
 <img src="./docs/choose-add-a-card.gif" width="95%" alt="choose-add-a-card">
 
+and continue as the same before when add cards during creating the table
+
+<img src="./docs/adding-card-steps.png" width="85%" alt="choose-add-a-card">
+
+after adding the card information you want to add, it wll ask you where you want to add the card. lets the task is done but you forget to create a card for it then we need to put the card in <code>Done!</code> column.
+
+⚠️ Enter the name of the column as is it in the table
+
+Input:
+
+```terminal
+Which Column do you want to put the Card in? => Done!
+```
+
+<img src="./docs/table-after-added-a-card.png" width="85%" alt="table-after-added-a-card.png">
 
 ##### Move a Card
 

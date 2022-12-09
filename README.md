@@ -310,8 +310,8 @@ Enter the Title of Card => Task 1
     <img src="./docs/title-of-card.png"
          alt="PyKanban-logo"
          width="50%"
-         style="display: block; margin: 0 auto"/>
-         <pr align="center">The title of card</pr>
+         style="display: block; margin: 0 auto"/> <br>
+         <pr>The title of card</pr>
   </p>
 
 Then Enter the column name where you want to put the card

@@ -356,7 +356,7 @@ Select 'View History' by just typing 4 and pressing enter
 
 It will view to you the history list and you will select which date you want to view by typing the number from the list
 
-<img src="./docs/history-list.png" width="75%" alt="history-list">
+<img src="./docs/history-list.png" width="55%" alt="history-list">
 
 Then :
 

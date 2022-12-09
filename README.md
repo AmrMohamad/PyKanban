@@ -350,4 +350,16 @@ Enter the Title of Card => Task 2
 
 ##### View History
 
+For some reasons you need to remember or view old version/copy of the table
+
+Select 'View History' by just typing 4 and pressing enter
+
+It will view to you the history list and you will select which date you want to view by typing the number from the list
+
+<img src="./docs/history-list.png" width="75%" alt="history-list">
+
+Then :
+
+<img src="./docs/view-history-result.png" width="1000%" alt="view-history-result">
+
 ##### Back to Main Screen

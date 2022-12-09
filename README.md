@@ -280,7 +280,7 @@ and continue as the same before when add cards during creating the table
 
 <img src="./docs/adding-card-steps.png" width="85%" alt="choose-add-a-card">
 
-after adding the card information you want to add, it wll ask you where you want to add the card. lets the task is done but you forget to create a card for it then we need to put the card in <code>Done!</code> column.
+after adding the card information you want to add, it wll ask you where you want to add the card. let's say the task is done but if you forget to create a card for it, then we need to put the card in the <code>Done!</code> column.
 
 ⚠️ Enter the name of the column as is it in the table
 
@@ -331,6 +331,22 @@ Then it's moved
 <img src="./docs/card-moved.png" width="100%" alt="card-moved">
 
 ##### Delete a Card
+
+let's say some modifications happened to the project so you do not need the 'Task 2' Card and want to delete it
+
+Select 'Delete a Card' by just typing 3 and pressing enter
+
+Then enter the Card name
+
+Input:
+
+```terminal
+Enter the Title of Card => Task 2
+```
+
+<img src="./docs/card-deleted.png" width="95%" alt="card-deleted">
+
+<img src="./docs/card-deleted-table.png" width="95%" alt="card-deleted-table">
 
 ##### View History
 

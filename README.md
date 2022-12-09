@@ -1,11 +1,12 @@
 # PyKanban
 
+Easy way to create kanban table in terminal
+
 <p align="center">
     <img src="./docs/pykanban-logo.png"
          alt="PyKanban-logo"
          width="195px"
-         style="display: block; margin: 0 auto"/><br>
-         Easy way to create kanban table in terminal
+         style="display: block; margin: 0 auto"/>
 </p>
 
 ___

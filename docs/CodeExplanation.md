@@ -327,3 +327,51 @@ The add_title method allows the user to set the title of the card by passing a s
 The add_sub_titles method allows the user to set the sub-titles of the card by passing a list of strings to the method. The method first checks if the list is empty, and if it is, it raises a ValueError with a message prompting the user to enter at least non-empty sub-title. The method then checks if the list contains between 1 and 5 strings, and if it does not, it raises a ValueError with a message indicating that the number of sub-titles must be between 1 and 5. If the list is not empty and contains between 1 and 5 strings, the method adds each string in the list as a key in the sub_titles dictionary, with an empty string as the corresponding value.
 
 #### add_lines method
+
+```py
+@classmethod
+    def add_lines(cls, *e_sentences) -> any:
+        cls.text_line = ""
+
+        i = 0
+        for t in cls.sub_titles:
+            cls.sub_titles[t] = e_sentences[i]
+            i += 1
+
+        sentences = cls.sub_titles
+        for key_sentence in cls.sub_titles:
+            lines_per_sentence = []
+
+            sentences[key_sentence] = (" " * len(key_sentence)) + sentences[
+                key_sentence
+            ]
+            num_of_sentence_chars = len(sentences[key_sentence])
+            start_line = 0
+            end_line = 45
+            if 0 < num_of_sentence_chars <= 244:
+                num_of_lines = int(round(num_of_sentence_chars / 45))
+                lines_per_sentence.append((key_sentence + " :"))
+                lines_per_sentence.append("")
+                wrapped_text = textwrap.wrap(sentences[key_sentence], width=46)
+                for line in wrapped_text:
+                    lines_per_sentence.append(line)
+            else:
+                raise ValueError("Maximum number of characters is 192 per line")
+            for i in range(len(lines_per_sentence)):
+                cls.text_line += (
+                    "| "
+                    + (
+                        lines_per_sentence[i]
+                        + " " * (cls._width_of_card - len(lines_per_sentence[i]))
+                    )
+                    + "  #"
+                    + "\n"
+                )
+        return cls
+```
+
+The add_lines method allows the user to add sentences to the card by passing a variable number of arguments to the method. Each argument corresponds to a sentence for a specific sub-title. The method first initializes the text_line attribute to be empty. It then loops through each sub-title in the sub_titles dictionary and adds the corresponding sentence from the e_sentences input.
+
+Next, the method loops through each sub-title and sentence in the sub_titles dictionary. For each sub-title and sentence, it initializes a list to store the lines of text for the current sub-title. It then adds a space after the sub-title to indent the sentence. The method then uses the textwrap.wrap method to split the sentence into a list of lines that are no longer than 45 characters long. These lines are added to the lines_per_sentence list.
+
+Once all of the lines for the current sub-title have been added to the lines_per_sentence list, the method loops through the list and formats each line with the correct indentation and padding. The resulting lines are added to the text_line attribute, which stores all of the lines of text that make up the card.

@@ -397,3 +397,26 @@ The Fundamentals are used to build PyKanban :
 - Unpacking
 - List Comprehensions and Dictionary Comprehensions
 - <code>enumerate</code>
+
+### Technologies
+
+The Technologies are used to build PyKanban :
+
+- <a href="https://docs.python.org/3.10/">Python v3.10</a>
+- Modules are used:
+  - <a href="https://docs.python.org/3.10/library/textwrap.html?highlight=textwrap#module-textwrap">textwrap</a> - This library is used to format text by wrapping it according to specified line widths.
+  - <a href="https://pypi.org/project/tabulate/">tabulate 0.9.0</a> - This library is used to convert data into formatted tables.
+    - The tabulate package is used to display tables on the terminal screen.
+  - <a href="https://pypi.org/project/colored/">colored 1.4.4</a> - This library is used to add colors to the text output in the terminal.
+    - The colored package is used to add color to the text on the screen.
+  - <a href="https://pypi.org/project/inflect/">inflect 6.0.2 </a> - This library is used to perform various operations on words and numbers, such as pluralization and singularization.
+    - The inflect package is used to convert numbers to their text representation (e.g. "1" to "one").
+  - <a href="https://docs.python.org/3.10/library/csv.html?highlight=csv#module-csv">csv</a> - This library is used to read and write CSV (Comma Separated Values) files.
+  - <a href="https://docs.python.org/3.10/library/os.html?highlight=os#module-os">os</a> - This library is used to perform various operations on files and directories, such as renaming and deleting files.
+  - <a href="https://docs.python.org/3.10/library/shutil.html?highlight=shutil#module-shutil">shutil</a> - This library is used to perform high-level operations on files and directories, such as copying and moving files.
+  - <a href="https://docs.python.org/3.10/library/sys.html?highlight=sys#module-sys">sys</a> - This library is used to access system-specific parameters and functions, such as command line arguments and exit codes.
+  - <a href="https://docs.python.org/3.10/library/re.html?highlight=re#module-re">re</a> - This library is used to work with regular expressions, which are patterns used to match and manipulate strings.
+  - <a href="https://docs.python.org/3.10/library/time.html?highlight=time#module-time">time</a> - This library is used to perform time-related operations, such as measuring time intervals and sleeping.
+  - <a href="https://docs.python.org/3.10/library/datetime.html?highlight=datetime#module-datetime">datetime</a> - This library is used to perform operations on dates and times, such as calculating the difference between two dates.
+  - ### For Units Test
+    - <a href="https://pypi.org/project/pytest/">pytest 7.2.0</a> - is a unit testing framework for Python. It is used to write and run tests for Python code. Pytest makes it easy to write and run tests for your Python code, and it has a number of useful features that make it a powerful tool for testing. Pytest is particularly useful for ensuring that your code is working as expected, and it can be used to catch and diagnose bugs and other issues in your code. Overall, pytest is a valuable tool for ensuring the quality and reliability of your Python code.

@@ -385,3 +385,45 @@ Once all of the lines for the current sub-title have been added to the lines_per
 ```
 
 The print_here method is used to display the card on the screen by returning a string containing the top_line, title, blank_line, text_line, and bottom_line attributes. This string can be printed to the screen to show the card.
+
+## init_header function
+
+```py
+def init_header(
+    header: str, fore_color: str = "#ffffff", back_color: str = "#000000"
+) -> str:
+    """Checking for column names it should be set"""
+    if bool(header) == False:
+        raise ValueError("Please check, re-enter name of header maybe you missed one")
+
+    """ add colors to header and check if they correct in hex value or not"""
+    if f_color := re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", fore_color):
+        color = fg(f_color.group(0))
+    else:
+        raise TypeError(
+            "Please Enter a Right Value !!\nOR Not a valid value in hex code of color"
+        )
+
+    if b_color := re.search(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", back_color):
+        color += bg(b_color.group(0))
+    else:
+        raise TypeError(
+            "Please Enter a Right Value !!\nOR Not a valid value in hex code of color"
+        )
+
+    return color + "    " + header + "    " + attr("reset")
+```
+
+header (str): The header string to be checked and colored.
+
+fore_color (str, optional): The foreground color of the header in hex code. The default value is #ffffff (white).
+
+back_color (str, optional): The background color of the header in hex code. The default value is #000000 (black).
+
+The init_header function is used to add color to a string that is used as a header in a table or kanban board. The function takes a string (header) as a required argument, and two optional arguments: fore_color and back_color. These arguments are used to specify the foreground (text) color and background color, respectively.
+
+The function first checks if the header argument is empty. If it is, it raises a ValueError with an appropriate message. If the header is not empty, the function then uses a regular expression to check if the fore_color and back_color arguments are valid hexadecimal color codes. If either of them is not a valid hexadecimal color code, a TypeError is raised with an appropriate message.
+
+If both the header and color arguments are valid, the function uses the fg and bg functions from the colored library to apply the specified colors to the header string. Finally, the function returns the colored header string.
+
+## init_table function

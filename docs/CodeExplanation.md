@@ -446,6 +446,107 @@ def init_table(table_name: str) -> str:
 The init_table function in the given code checks if a table with the given name exists in the DATA_DIR directory. If the table does not exist, the function creates the table and its corresponding latest.csv file in the DATA_DIR directory.
 
  The function takes the following argument:
- 
+
 table_name (str): The name of the table to be checked or created.
 The function raises a TypeError if the table_name string is empty or None. If the table_name is valid, the function checks if a directory with the same name exists in the DATA_DIR directory. If the directory exists and contains a latest.csv file, the function returns the table_name string. Otherwise, the function creates the directory and latest.csv file, and then calls itself recursively to check if the table was created successfully. This way, the function guarantees that the table and its latest.csv file are created before returning the table_name string.
+
+## view_tables function
+
+```py
+def view_tables() -> list[str]:
+    dir_path = f"{DATA_DIR}"
+    if len(os.listdir(dir_path)) == 0:
+        return f"No Tables Exist"
+    tables_list = []
+    for path in os.scandir(dir_path):
+        if path.is_dir():
+            if path.name == ".DS_Store":
+                continue
+            tables_list.append(path.name)
+    return tables_list
+
+```
+
+The view_tables function is used in the PyKanban program to list the names of all tables that are currently stored in the DATA_DIR directory. The function takes no arguments and returns a list of strings, where each string is the name of a table.
+
+The function first checks if the DATA_DIR directory is empty by using the os.listdir method. If the directory is empty, the function returns a string message saying that "No Tables Exist". If the directory is not empty, the function uses the os.scandir method to iterate through the contents of the DATA_DIR directory and identify any directories that are present. The function then adds the name of each directory (i.e., the name of each table) to the tables_list list, which is then returned by the function.
+
+## open_table function
+
+```py
+
+def open_table(table_name: str, table_version: str = None) -> dict:
+    vt: dict = {}
+    if bool(table_name) == False:
+        raise TypeError(
+            "There is no table name, please check again there is and it's right"
+        )
+    if table_name not in os.listdir(DATA_DIR):
+        raise FileNotFoundError("The Table not exist or The Table Name is not right")
+    if bool(table_version) == False:
+        with open(f"{DATA_DIR}{table_name}/latest.csv", "r") as vtable:
+            reader = csv.DictReader(vtable)
+            vt = {h: [] for h in reader.fieldnames}
+            for row in reader:
+                for h_p in reader.fieldnames:
+                    f_data = row[h_p].replace("\\n", "\n")
+                    vt[h_p].append(f_data)
+    else:
+        table_file_name = ""
+        if matches := re.search(
+            r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
+            table_version,
+        ):
+            table_file_name = matches.string
+
+        with open(f"{DATA_DIR}{table_name}/{table_file_name}", "r") as vtable:
+            reader = csv.DictReader(vtable)
+            vt = {h: [] for h in reader.fieldnames}
+            for row in reader:
+                for h_p in reader.fieldnames:
+                    f_data = row[h_p].replace("\\n", "\n")
+                    vt[h_p].append(f_data)
+    return vt
+```
+
+The open_table function is used in the PyKanban program to open an existing table. The function takes two arguments:
+
+table_name (str): The name of the table to open.
+table_version (str): The version of the table to open. If no version is specified, the function opens the latest version of the table.
+
+The function first checks if the table_name argument is valid (i.e. not empty or None) and if the table exists in the DATA_DIR directory. If either of these conditions is not met, the function raises an appropriate error.
+
+Next, the function checks if a table_version was specified. If no table_version was specified, the function opens the latest.csv file in the table's directory and reads the data from the file using the csv module's DictReader. The data is then stored in a dictionary with the column names as keys and the corresponding column data as values.
+
+If a table_version was specified, the function checks if the table_version string is in the correct format using a regular expression. If the table_version is valid, the function opens the corresponding .csv file and reads the data from the file in the same way as when no table_version is specified. If the table_version is invalid, the function raises a ValueError.
+
+Finally, the function replaces any "\n" escape sequences in the data with actual newline characters and returns the data as a dictionary.
+
+### Regular Expression at open_table function
+
+The regular expression in the open_table function is used to validate the table_version argument. The table_version argument is an optional parameter that specifies the version of the table to open. If table_version is not provided, the function opens the latest version of the table.
+
+The regular expression is defined as follows:
+
+```py
+r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$"
+```
+
+This regular expression is used to match the file name of a table version. The file name has the following format:
+
+```py
+_ dd-mm-yyyy hh.mm.ss AM/PM.csv
+```
+
+where dd, mm, yyyy, hh, mm, ss, AM/PM represent the day, month, year, hour, minute, second and AM/PM, respectively.
+
+The regular expression matches the following parts of the file name:
+
+- The underscore character (_) at the beginning of the file name
+- The date in the format dd-mm-yyyy
+- The time in the format hh.mm.ss AM/PM
+- The .csv extension at the end of the file name
+
+If the table_version argument matches the regular expression, the function extracts the file name from the table_version string using the .string attribute of the re.Match object. The extracted file name is used to open the corresponding table version.
+
+If the table_version argument does not match the regular expression or is not provided, the function opens the latest version of the table by default.

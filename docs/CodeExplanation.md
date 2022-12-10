@@ -1619,3 +1619,11 @@ The Create Table process involves the following steps:
                 clearConsole()
                 sys.exit()
 ```
+
+The Exit option in the main menu allows the user to terminate the program and exit the command line interface. When the user selects the Exit option, the program will stop running and return control back to the command line interface. This allows the user to end their interaction with the program and perform other tasks on the command line.
+
+The code of Exit first clears the console screen to remove any previous output. It then prints a message saying that PyKanban will exit in 5 seconds.
+
+Next, a timer is set to count down from 5 seconds. The timer is displayed on the screen using the print function with the end parameter set to \r. This causes the timer to be displayed on the same line, overwriting the previous timer value on each iteration of the loop.
+
+After the timer counts down to 0, the console is cleared again using clearConsole() and the program is terminated using sys.exit().

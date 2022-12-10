@@ -1,7 +1,5 @@
 # PyKanban - Code Explanation
 
-- []()
-
 - [Constants](#constants)
 - [inflect engine](#inflect-engine)
 - [Card class](#card-class)
@@ -27,9 +25,6 @@
   - [selecting View Tables](#selecting-view-tables)
   - [selecting Create Table](#selecting-create-table)
   - [selecting Exit](#selecting-exit)
-
-
-- []()
 
 ## Constants
 

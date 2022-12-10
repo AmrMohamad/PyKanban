@@ -112,7 +112,7 @@ class Card:
     @classmethod
     def add_sub_titles(cls, sub_title: list[str]) -> None:
         e = ValueError(
-            "It should be there at lest 3 sub-titles and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)"
+            "It should be there at least 1 sub-title and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)"
         )
         if bool(sub_title) == False:
             raise e

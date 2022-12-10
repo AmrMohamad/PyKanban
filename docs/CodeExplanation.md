@@ -875,3 +875,10 @@ def menu(type_menu: str) -> int:
 
 ```
 
+The menu function is a helper function used to display a menu of options to the user and prompt them to select an option. It takes a single argument type_menu which is a string representing the type of menu to display. There are two possible values for type_menu: "main" and "edit".
+
+If type_menu is "main", the function displays the main menu with the following options: "View Tables", "Create Table", and "Exit". The function then prompts the user to enter the number corresponding to the option they want to select, and returns the zero-based index of the selected option.
+
+If type_menu is "edit", the function displays the edit menu with the following options: "Add a Card", "Move a Card", "Delete a Card", "View History", and "Back to Main Screen". The function then prompts the user to enter the number corresponding to the option they want to select, and returns the zero-based index of the selected option.
+
+If the user enters an invalid value, the function displays an error message and prompts the user to try again. The function continues to do this until the user enters a valid value.

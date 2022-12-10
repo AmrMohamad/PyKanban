@@ -1,5 +1,36 @@
 # PyKanban - Code Explanation
 
+- []()
+
+- [Constants](#constants)
+- [inflect engine](#inflect-engine)
+- [Card class](#card-class)
+  - [Attributes](#attributes)
+  - [The classmethods of Card class](#the-classmethods-of-card-class)
+    - [add_title method](#add_title-method)
+    - [add_sub_titles method](#add_sub_titles-method)
+    - [add_lines method](#add_lines-method)
+    - [print_here method](#print_here-method)
+- [init_header function](#init_header-function)
+- [init_table function](#init_table-function)
+- [view_tables function](#view_tables-function)
+- [open_table function](#open_table-function)
+  - [Regular Expression at open_table function](#regular-expression-at-open_table-function)
+- [save_table function](#save_table-function)
+- [add_card function](#add_card-function)
+- [move_card function](#move_card-function)
+- [delete_card function](#delete_card-function)
+- [view_history function](#view_history-function)
+- [menu function](#menu-function)
+- [clearConsole function](#clearconsole-function)
+- [main function](#main-function)
+  - [selecting View Tables](#selecting-view-tables)
+  - [selecting Create Table](#selecting-create-table)
+  - [selecting Exit](#selecting-exit)
+
+
+- []()
+
 ## Constants
 
 ```py
@@ -176,7 +207,7 @@ sub_titles (dict): A dictionary of sub-titles and their corresponding text.
 
 <br>
 
-### The classmethods of Card class:
+### The classmethods of Card class
 
 ```py
 @classmethod
@@ -586,7 +617,6 @@ table_data (dict): A dictionary containing the data to be saved in the table. Th
 The function first renames the latest.csv file in the table's directory by appending the current date and time to its name. This is done to create a backup of the previous version of the table. Then, the function opens the latest.csv file again in write mode and creates a new DictWriter object using the fieldnames from the table_data dictionary as the column names for the table. The function then writes the column names to the file using the writeheader() method of the DictWriter object.
 
 Next, the function loops through the values in the table_data dictionary and finds the longest list of strings. This is done to determine the number of rows in the table. The function then loops through the rows and creates a new dictionary containing the data for each row. The keys of the dictionary are the column names, and the values are the strings in the corresponding column at the current row. The function then writes the row data to the file using the writerow() method of the DictWriter object. This process is repeated for all rows in the table, saving the changes made to the table in the latest.csv file.
-
 
 ## add_card function
 

@@ -27,8 +27,8 @@ ___
       - [Back to Main Screen](#back-to-main-screen)
     - [Create Table](#for-create-table)
     - [Exit](#for-exit)
-- [Fundamentals and Technologies are used]()
-  - [Fundamentals]()
+- [Fundamentals and Technologies are used](#fundamentals-and-technologies-are-used)
+  - [Fundamentals](#programming-fundamentals)
   - [Technologies]()
 - [Code]()
 
@@ -373,3 +373,27 @@ Then :
 ##### Back to Main Screen
 
 For select 'Back to Main Screen' turns you back to the main screen just typing 5 and pressing enter
+
+___
+
+## Fundamentals and Technologies are used
+
+### Programming Fundamentals
+
+The Fundamentals are used to build PyKanban :
+
+- Libraries & modules
+- Constants
+- Class Methods
+- Decorators
+- raise error message
+- <code>def</code> for functions
+- match statements
+- Exceptions
+- Unit Tests
+- File I/O using <code>open</code>, <code>with</code> and <code>CSV</code> 
+- Regular Expressions
+- Type Hints
+- Unpacking
+- List Comprehensions and Dictionary Comprehensions
+- <code>enumerate</code>

@@ -894,3 +894,553 @@ def clearConsole():
 ```
 
 The clearConsole() function is used to clear the console screen. It does this by running the clear command on Unix-based systems (such as Linux and macOS) and the cls command on Windows systems. This allows the user to see a fresh, clean console screen, which can be useful when working with a program that outputs a lot of text to the console.
+
+___
+**The following shows how all of the previous functions are used**
+
+## main function
+
+```py
+
+def main():
+    clearConsole()
+
+    print(
+        fg("#fcdb03")
+        + """
+    
+                    
+        $$$$$$$\            $$\   $$\                     $$\                           
+        $$  __$$\           $$ | $$  |                    $$ |                          
+        $$ |  $$ |$$\   $$\ $$ |$$  /  $$$$$$\  $$$$$$$\  $$$$$$$\   $$$$$$\  $$$$$$$\  
+        $$$$$$$  |$$ |  $$ |$$$$$  /   \____$$\ $$  __$$\ $$  __$$\  \____$$\ $$  __$$\ 
+        $$  ____/ $$ |  $$ |$$  $$<    $$$$$$$ |$$ |  $$ |$$ |  $$ | $$$$$$$ |$$ |  $$ |
+        $$ |      $$ |  $$ |$$ |\$$\  $$  __$$ |$$ |  $$ |$$ |  $$ |$$  __$$ |$$ |  $$ |
+        $$ |      \$$$$$$$ |$$ | \$$\ \$$$$$$$ |$$ |  $$ |$$$$$$$  |\$$$$$$$ |$$ |  $$ |
+        \__|       \____$$ |\__|  \__| \_______|\__|  \__|\_______/  \_______|\__|  \__|
+                  $$\   $$ |                                                            
+                  \$$$$$$  |                                                            
+                   \______/                                                             
+
+    """
+        + attr("reset")
+    )
+
+    while True:
+        selected_option = menu("main")
+        match selected_option:
+            # View Tables
+            case 0:
+                clearConsole()
+                #tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
+                if view_tables() == "No Tables Exist":
+                    print("No Tables Exist")
+                    time.sleep(4)
+                    clearConsole()
+                    main()
+                else:
+                    tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
+                for index, table_name in enumerate(tables_list):
+                    print(f"{index + 1}: {table_name}")
+                selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
+                clearConsole()
+                try:
+                    table_to_view = open_table(tables_list[selected_table])
+                except TypeError as e:
+                    print(e)
+                print(
+                    tabulate(
+                        table_to_view,
+                        headers="keys",
+                        tablefmt="double_grid",
+                        stralign="center",
+                    )
+                )
+                time.sleep(1)
+                print()
+                while True:
+                    selected_action = menu("edit")
+                    match selected_action:
+                        # Add a Card
+                        case 0:
+                            print("Enter the Title of Card, It's one title only !")
+                            title_of_added_card = input("==> ")
+                            while True:
+                                num_of_sub_titles = int(
+                                    input(
+                                        "How many sub-titles do you want to add ? => "
+                                    )
+                                )
+                                if 1 <= num_of_sub_titles <= 5:
+                                    break
+                                else:
+                                    if num_of_sub_titles < 2:
+                                        print(
+                                            "It's less than minimum, at least 1 sub-title"
+                                        )
+                                        continue
+                                    if num_of_sub_titles > 5:
+                                        print(
+                                            "It's more than maximum, the maximum is 5 sub-titles"
+                                        )
+                                        continue
+                            print("Enter the name of each sub-title")
+                            sub_titles_of_added_card: list[str] = []
+                            for _ in range(num_of_sub_titles):
+                                sub_titles_of_added_card.append(input(" => "))
+                            print(
+                                "Enter the data of each sub-title, The maximum is 244 characters per paragraph !"
+                            )
+                            added_lines_of_added_card: list[str] = []
+                            for st in sub_titles_of_added_card:
+                                print(f"For {st} :")
+                                added_lines_of_added_card.append(input(">>> "))
+                            data_of_added_card: dict = {
+                                "sub_titles": sub_titles_of_added_card,
+                                "lines_per_sub_title": added_lines_of_added_card,
+                            }
+                            add_to_column = input(
+                                "Which Column do you want to put the Card in? => "
+                            )
+                            add_card(
+                                table_name_to_edit=tables_list[selected_table],
+                                name_of_card=title_of_added_card,
+                                add_to_column_name=add_to_column,
+                                **data_of_added_card,
+                            )
+                        # Move a Card
+                        case 1:
+                            while True:
+                                try:
+                                    name_of_card_to_move = input(
+                                        "Enter the Title of Card => "
+                                    )
+                                    column_move_to = input(
+                                        "Which Column do you want to put the Card in? => "
+                                    )
+                                    state = move_card(
+                                        tables_list[selected_table],
+                                        name_of_card_to_move,
+                                        column_move_to,
+                                    )
+                                    if state == "Moved":
+                                        print(
+                                            f"{name_of_card_to_move} moved to {column_move_to} successfully"
+                                        )
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        # Delete a Card
+                        case 2:
+                            while True:
+                                try:
+                                    name_of_card_to_delete = input(
+                                        "Enter the Title of Card => "
+                                    )
+                                    state = delete_card(
+                                        tables_list[selected_table],
+                                        name_of_card_to_delete,
+                                    )
+                                    if state == "Deleted":
+                                        print(
+                                            f"{name_of_card_to_delete} Deleted Successfully"
+                                        )
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        # View History
+                        case 3:
+                            while True:
+                                history_list: list[str] = [
+                                    ht
+                                    for ht in view_history(tables_list[selected_table])
+                                ]
+                                clearConsole()
+                                for index, t_name in enumerate(history_list):
+                                    if matches := re.search(
+                                        r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
+                                        t_name,
+                                    ):
+                                        print(
+                                            f"{index + 1}: Edited on {matches.group(1)} at {matches.group(6)}"
+                                        )
+                                selected_old_table: int = (
+                                    int(
+                                        input(
+                                            "Enter the Number of the Old Table to View: "
+                                        )
+                                    )
+                                    - 1
+                                )
+                                print(
+                                    tabulate(
+                                        open_table(
+                                            tables_list[selected_table],
+                                            table_version=history_list[
+                                                selected_old_table
+                                            ],
+                                        ),
+                                        headers="keys",
+                                        tablefmt="double_grid",
+                                        stralign="center",
+                                    )
+                                )
+                                input("Press any key to back...")
+                                break
+                        # Back to Main Screen
+                        case 4:
+                            clearConsole()
+                            break
+                    clearConsole()
+                    print(
+                        tabulate(
+                            open_table(tables_list[selected_table]),
+                            headers="keys",
+                            tablefmt="double_grid",
+                            stralign="center",
+                        )
+                    )
+                main()
+            # Create Table
+            case 1:
+                clearConsole()
+                ask_table_name: str = str(input("Name of New Table is: "))
+                while True:
+                    try:
+                        asked_table_name: str = init_table(ask_table_name)
+                        break
+                    except TypeError as e:
+                        print(e)
+                        continue
+                with open(
+                    f"{DATA_DIR}{asked_table_name}/latest.csv",
+                    "a",
+                    newline="",
+                ) as table:
+                    table_data: dict = {}
+                    headers: list[str] = []
+                    num_stages: int = 0
+                    while True:
+                        n_s: int = int(input("Number of stages => "))
+                        if 2 <= n_s <= 5:
+                            num_stages = n_s
+                            break
+                        else:
+                            print("The Maximum Stages is 5\nThe Minimum Stages is 2")
+                            time.sleep(4)
+                            continue
+                    clearConsole()
+                    for num_s in range(num_stages):
+                        print()
+                        print(f"For {p.ordinal( 1 + num_s )} Stage")
+                        while True:
+                            header: str = input("Names of column: ")
+                            fore_color: str = input("Foreground color of Text in HEX: ")
+                            back_color: str = input("Background color of Text in HEX: ")
+                            try:
+                                h = init_header(header, fore_color, back_color)
+                                break
+                            except (ValueError, TypeError) as e:
+                                print(e)
+                                continue
+                        headers.append(h)
+                    clearConsole()
+                    for h in headers:
+                        cards = []
+                        print(f"For {h}")
+                        while True:
+                            try:
+                                num_of_cards = int(
+                                    input("How many cards do you want?  ")
+                                )
+                                break
+                            except ValueError:
+                                print(
+                                    "Please Enter the Number of Cards do you want in the right way\n only integer numbers like 0, 1, 2, ... etc"
+                                )
+                                continue
+                        for card_num in range(num_of_cards):
+                            print(f"For {p.ordinal( 1 + card_num )} Card")
+                            print("Enter the Title of Card, It's one title only !")
+                            title_of_card = input("==> ")
+                            added_sub_titles: list[str] = []
+                            while True:
+                                try:
+                                    num_of_sub_titles_in_card = int(
+                                        input(
+                                            "How many sub-titles do you want to add ? => "
+                                        )
+                                    )
+                                    if 1 <= num_of_sub_titles_in_card <= 5:
+                                        break
+                                    else:
+                                        if num_of_sub_titles_in_card < 2:
+                                            print(
+                                                "It's less than minimum, at least 1 sub-title"
+                                            )
+                                            continue
+                                        if num_of_sub_titles_in_card > 5:
+                                            print(
+                                                "It's more than maximum, the maximum is 5 sub-titles"
+                                            )
+                                            continue
+                                except ValueError:
+                                    print(
+                                        "Please Enter the Number of Sub-Titles do you want in the right way\n only integer numbers like 0, 1, 2, ... etc"
+                                    )
+                            print("Enter the name of each sub-title")
+                            for _ in range(num_of_sub_titles_in_card):
+                                added_sub_titles.append(input(">>> "))
+                            added_lines: list[str] = []
+                            print(
+                                "Enter the content of each sub-title, The maximum is 244 characters per paragraph !"
+                            )
+                            for _, s_title in enumerate(added_sub_titles):
+                                print(
+                                    "Do not hit enter for new line,\nWe handle it automatically"
+                                )
+                                print(f"For {s_title} :")
+                                added_lines.append(input(">>> "))
+
+                            cards.append(
+                                Card.add_title(title_of_card)
+                                .add_sub_titles(added_sub_titles)
+                                .add_lines(*added_lines)
+                                .print_here()
+                            )
+                        table_data[h] = cards
+                    print(
+                        tabulate(
+                            table_data,
+                            headers="keys",
+                            tablefmt="double_grid",
+                            stralign="center",
+                        )
+                    )
+                    time.sleep(5)
+                    writer = csv.DictWriter(table, fieldnames=headers)
+                    writer.writeheader()
+                    longest_header_in_cards = 0
+                    for h in headers:
+                        if longest_header_in_cards < len(table_data[h]):
+                            longest_header_in_cards = len(table_data[h])
+                        else:
+                            continue
+                    for row in range(longest_header_in_cards):
+                        cards_in_row = {}
+                        for header_pointer in table_data:
+                            if row in range(len(table_data[header_pointer])):
+                                cards_in_row[header_pointer] = table_data[
+                                    header_pointer
+                                ][row]
+                            else:
+                                continue
+                        writer.writerow(cards_in_row)
+                # clearConsole()
+                continue
+            # Exit
+            case _:
+                clearConsole()
+                print("PyKanban will exit in")
+                t = 5
+                while t:
+                    mins, secs = divmod(t, 60)
+                    timer = "{:02d}:{:02d}".format(mins, secs)
+                    print(timer, end="\r")
+                    time.sleep(1)
+                    t -= 1
+                clearConsole()
+                sys.exit()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+### selecting View Tables
+
+```py
+
+            # View Tables
+            case 0:
+                clearConsole()
+                #tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
+                if view_tables() == "No Tables Exist":
+                    print("No Tables Exist")
+                    time.sleep(4)
+                    clearConsole()
+                    main()
+                else:
+                    tables_list: list[str] = [t.replace(".csv", "") for t in view_tables()]
+                for index, table_name in enumerate(tables_list):
+                    print(f"{index + 1}: {table_name}")
+                selected_table: int = int(input("Enter Number of Table to Open: ")) - 1
+                clearConsole()
+                try:
+                    table_to_view = open_table(tables_list[selected_table])
+                except TypeError as e:
+                    print(e)
+                print(
+                    tabulate(
+                        table_to_view,
+                        headers="keys",
+                        tablefmt="double_grid",
+                        stralign="center",
+                    )
+                )
+                time.sleep(1)
+                print()
+                while True:
+                    selected_action = menu("edit")
+                    match selected_action:
+                        # Add a Card
+                        case 0:
+                            print("Enter the Title of Card, It's one title only !")
+                            title_of_added_card = input("==> ")
+                            while True:
+                                num_of_sub_titles = int(
+                                    input(
+                                        "How many sub-titles do you want to add ? => "
+                                    )
+                                )
+                                if 1 <= num_of_sub_titles <= 5:
+                                    break
+                                else:
+                                    if num_of_sub_titles < 2:
+                                        print(
+                                            "It's less than minimum, at least 1 sub-title"
+                                        )
+                                        continue
+                                    if num_of_sub_titles > 5:
+                                        print(
+                                            "It's more than maximum, the maximum is 5 sub-titles"
+                                        )
+                                        continue
+                            print("Enter the name of each sub-title")
+                            sub_titles_of_added_card: list[str] = []
+                            for _ in range(num_of_sub_titles):
+                                sub_titles_of_added_card.append(input(" => "))
+                            print(
+                                "Enter the data of each sub-title, The maximum is 244 characters per paragraph !"
+                            )
+                            added_lines_of_added_card: list[str] = []
+                            for st in sub_titles_of_added_card:
+                                print(f"For {st} :")
+                                added_lines_of_added_card.append(input(">>> "))
+                            data_of_added_card: dict = {
+                                "sub_titles": sub_titles_of_added_card,
+                                "lines_per_sub_title": added_lines_of_added_card,
+                            }
+                            add_to_column = input(
+                                "Which Column do you want to put the Card in? => "
+                            )
+                            add_card(
+                                table_name_to_edit=tables_list[selected_table],
+                                name_of_card=title_of_added_card,
+                                add_to_column_name=add_to_column,
+                                **data_of_added_card,
+                            )
+                        # Move a Card
+                        case 1:
+                            while True:
+                                try:
+                                    name_of_card_to_move = input(
+                                        "Enter the Title of Card => "
+                                    )
+                                    column_move_to = input(
+                                        "Which Column do you want to put the Card in? => "
+                                    )
+                                    state = move_card(
+                                        tables_list[selected_table],
+                                        name_of_card_to_move,
+                                        column_move_to,
+                                    )
+                                    if state == "Moved":
+                                        print(
+                                            f"{name_of_card_to_move} moved to {column_move_to} successfully"
+                                        )
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        # Delete a Card
+                        case 2:
+                            while True:
+                                try:
+                                    name_of_card_to_delete = input(
+                                        "Enter the Title of Card => "
+                                    )
+                                    state = delete_card(
+                                        tables_list[selected_table],
+                                        name_of_card_to_delete,
+                                    )
+                                    if state == "Deleted":
+                                        print(
+                                            f"{name_of_card_to_delete} Deleted Successfully"
+                                        )
+                                    break
+                                except ValueError as e:
+                                    print(e)
+                                    continue
+                        # View History
+                        case 3:
+                            while True:
+                                history_list: list[str] = [
+                                    ht
+                                    for ht in view_history(tables_list[selected_table])
+                                ]
+                                clearConsole()
+                                for index, t_name in enumerate(history_list):
+                                    if matches := re.search(
+                                        r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
+                                        t_name,
+                                    ):
+                                        print(
+                                            f"{index + 1}: Edited on {matches.group(1)} at {matches.group(6)}"
+                                        )
+                                selected_old_table: int = (
+                                    int(
+                                        input(
+                                            "Enter the Number of the Old Table to View: "
+                                        )
+                                    )
+                                    - 1
+                                )
+                                print(
+                                    tabulate(
+                                        open_table(
+                                            tables_list[selected_table],
+                                            table_version=history_list[
+                                                selected_old_table
+                                            ],
+                                        ),
+                                        headers="keys",
+                                        tablefmt="double_grid",
+                                        stralign="center",
+                                    )
+                                )
+                                input("Press any key to back...")
+                                break
+                        # Back to Main Screen
+                        case 4:
+                            clearConsole()
+                            break
+                    clearConsole()
+                    print(
+                        tabulate(
+                            open_table(tables_list[selected_table]),
+                            headers="keys",
+                            tablefmt="double_grid",
+                            stralign="center",
+                        )
+                    )
+                main()
+```
+
+When the user selects the "View Tables" option from the main menu, the main function will call the view_tables function, which will return a list of the names of all the tables that exist in the tables directory. If there are no tables, the view_tables function will return the string "No Tables Exist".
+
+Next, the main function will iterate over the list of table names, printing each table name with a corresponding number. The user will then be prompted to enter the number of the table they want to view. The main function will then call the open_table function, passing in the name of the selected table, which will return a dictionary containing the data from the selected table.
+
+The main function will then use the tabulate function to print the contents of the table in a nicely formatted table. The user can then choose to perform one of several actions on the table, such as adding a card, moving a card, or viewing the history of the table. These actions are handled by additional functions, which are called by the main function based on the user's input.

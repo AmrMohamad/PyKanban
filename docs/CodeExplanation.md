@@ -797,3 +797,28 @@ Next, the function reads the latest.csv file for the table and searches for the 
 
 Finally, the function saves the updated table data using the save_table() function and returns a message indicating whether the card was deleted or not. If the card was not found in the table, a ValueError is raised.
 
+## view_history function
+
+```py
+def view_history(table_name: str) -> list[str]:
+    dir_path = f"{DATA_DIR}{table_name}"
+    tables_list = []
+    for path in os.scandir(dir_path):
+        if path.is_file():
+            if path.name == ".DS_Store" or path.name in ["latest.csv", "latest"]:
+                continue
+            if matches := re.search(
+                r"^_ (([0-2][0-9]|[3][0-1])-([0][1-9]|[1][1-2])-((19|20)\d\d)) ((1[0-2]|0?[1-9])\.[0-5][0-9]\.[0-5][0-9] (AM|PM))\.csv$",
+                path.name,
+            ):
+                tables_list.append(matches.string)
+    return tables_list
+```
+
+The view_history function returns a list of all the saved versions of a table in the PyKanban program. It takes a single argument:
+
+table_name (str): The name of the table whose history is to be viewed.
+
+The function first gets the path to the directory containing the table files. It then loops through all the files in the directory and checks if the file name matches a specific pattern using a regular expression. This pattern is used to identify the saved versions of the table, which are the files with names starting with an underscore, followed by the date and time the table was saved, and ending with the .csv extension.
+
+If a file name matches the pattern, the function adds it to the list of tables. The function then returns the list of tables, which can be used to view the history of the table.

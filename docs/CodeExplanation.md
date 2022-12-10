@@ -882,3 +882,15 @@ If type_menu is "main", the function displays the main menu with the following o
 If type_menu is "edit", the function displays the edit menu with the following options: "Add a Card", "Move a Card", "Delete a Card", "View History", and "Back to Main Screen". The function then prompts the user to enter the number corresponding to the option they want to select, and returns the zero-based index of the selected option.
 
 If the user enters an invalid value, the function displays an error message and prompts the user to try again. The function continues to do this until the user enters a valid value.
+
+## clearConsole function
+
+```py
+def clearConsole():
+    command = "clear"
+    if os.name in ("nt", "dos"):  # If computer is running windows use cls
+        command = "cls"
+    os.system(command)
+```
+
+The clearConsole() function is used to clear the console screen. It does this by running the clear command on Unix-based systems (such as Linux and macOS) and the cls command on Windows systems. This allows the user to see a fresh, clean console screen, which can be useful when working with a program that outputs a lot of text to the console.

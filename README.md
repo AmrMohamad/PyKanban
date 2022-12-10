@@ -30,7 +30,8 @@ ___
 - [Fundamentals and Technologies are used](#fundamentals-and-technologies-are-used)
   - [Fundamentals](#programming-fundamentals)
   - [Technologies](#technologies)
-- [Code]()
+- [Code](#code-explanation)
+- [License](#license)
 
 ___
 
@@ -426,3 +427,12 @@ ____
 ## Code Explanation
 
 For not making the README file long than that this is the <a href="./docs/CodeExplanation.md">Code Explanation</a> click here
+
+___
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Copyright © 2022, [Amr Mohamad](https://github.com/AmrMohamad).
+Released under the [MIT License](LICENSE).

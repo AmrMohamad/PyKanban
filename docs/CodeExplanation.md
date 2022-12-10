@@ -822,3 +822,56 @@ table_name (str): The name of the table whose history is to be viewed.
 The function first gets the path to the directory containing the table files. It then loops through all the files in the directory and checks if the file name matches a specific pattern using a regular expression. This pattern is used to identify the saved versions of the table, which are the files with names starting with an underscore, followed by the date and time the table was saved, and ending with the .csv extension.
 
 If a file name matches the pattern, the function adds it to the list of tables. The function then returns the list of tables, which can be used to view the history of the table.
+
+## menu function
+
+```py
+
+def menu(type_menu: str) -> int:
+    match type_menu:
+        case "main":
+            option_menu_main: list = ["View Tables", "Create Table", "Exit"]
+            print("Menu:")
+            for index, option in enumerate(option_menu_main):
+                print(" " + str(index + 1) + " => " + option)
+            try:
+                selected_option_menu_main: int = (
+                    int(input("Enter the number of option in menu: ")) - 1
+                )
+            except ValueError:
+                print("Please re-enter a number of menu list in right way as integer")
+                time.sleep(2)
+                clearConsole()
+            if selected_option_menu_main in range(len(option_menu_main)):
+                return selected_option_menu_main
+            else:
+                clearConsole()
+                menu("main")
+        case "edit":
+            option_menu_edit: list = [
+                "Add a Card",
+                "Move a Card",
+                "Delete a Card",
+                "View History",
+                "Back to Main Screen",
+            ]
+            print("Options:")
+            for index, option in enumerate(option_menu_edit):
+                print(" " + str(index + 1) + " => " + option + " ", end="")
+            print()
+            try:
+                selected_option_menu_edit: int = (
+                    int(input("Enter the number of option: ")) - 1
+                )
+            except ValueError:
+                print("Please re-enter a number of option in right way as integer")
+                time.sleep(2)
+                # clearConsole()
+            if selected_option_menu_edit in range(len(option_menu_edit)):
+                return selected_option_menu_edit
+            else:
+                clearConsole()
+                menu("edit")
+
+```
+

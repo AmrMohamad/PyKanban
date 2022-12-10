@@ -738,3 +738,62 @@ The function first opens the table using the open_table function and checks if t
 If the card is not found, the function raises a ValueError. The function then loops through the columns again and finds the column with the name specified in the move_to argument. If the column is not found, the function raises a ValueError. Otherwise, the function adds the card to the new column.
 
 Finally, the function saves the updated table using the save_table function and returns a string indicating whether the card was moved successfully. If the card was not moved, the function raises a TypeError.
+
+## delete_card function
+
+```py
+
+def delete_card(table_name_to_edit: str, card_name: str) -> str:
+    is_card_deleted: str = ""
+    try:
+        old_card_table: dict = open_table(table_name_to_edit)
+    except FileNotFoundError:
+        is_card_deleted = "NotDeleted"
+        raise TypeError("Please check of Name of Table")
+    columns_name = list(old_card_table.keys())
+    new_card_table: dict = {header_name: [] for header_name in columns_name}
+    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
+    break_out_flag = False  # for break nested loops at once
+    cd_exist = False
+    for row in reader:
+        """for reading each row in file"""
+        for column in row:
+            """for read each column in the row"""
+            if card_name in column:
+                """Searching about the Card that we want to move to other column"""
+                old_card_table[columns_name[row.index(column)]].remove(column)
+                break_out_flag = True
+                cd_exist = True
+                is_card_deleted = "Deleted"
+                break
+            else:
+                continue
+        if break_out_flag:  # for break nested loops at once
+            break
+    if cd_exist == False:
+        raise ValueError("The Card name is not exist, Please check again")
+    for h_n in columns_name:
+        for c in old_card_table[h_n]:
+            if c != "":
+                new_card_table[h_n].append(c)
+            else:
+                continue
+    save_table(table_name_to_edit,new_card_table)
+    if is_card_deleted != "Deleted":
+        raise ValueError(
+            "the card is not deleted, please check if the card name is right"
+        )
+    return is_card_deleted
+```
+
+The delete_card function is used to delete a card from a table in the PyKanban program. It takes two arguments:
+
+table_name_to_edit (str): The name of the table where the card to be deleted is located.
+card_name (str): The name of the card to be deleted.
+
+The function first tries to open the table with the given name using the open_table() function. If the table does not exist, a FileNotFoundError is raised.
+
+Next, the function reads the latest.csv file for the table and searches for the card with the given name. If the card is found, the function removes it from the table data and sets a flag to indicate that the card was deleted.
+
+Finally, the function saves the updated table data using the save_table() function and returns a message indicating whether the card was deleted or not. If the card was not found in the table, a ValueError is raised.
+

@@ -427,3 +427,25 @@ The function first checks if the header argument is empty. If it is, it raises a
 If both the header and color arguments are valid, the function uses the fg and bg functions from the colored library to apply the specified colors to the header string. Finally, the function returns the colored header string.
 
 ## init_table function
+
+```py
+def init_table(table_name: str) -> str:
+    if table_name == None or table_name == "":
+        raise TypeError("There is not Table Name check again please")
+    if os.path.isdir(f"{DATA_DIR}{table_name}") and os.path.isfile(
+        f"{DATA_DIR}{table_name}/latest.csv"
+    ):
+        return f"{table_name}"
+    else:
+        os.makedirs(f"{DATA_DIR}{table_name}")
+        file = open(f"{DATA_DIR}{table_name}/latest.csv", "w")
+        file.close()
+        return init_table(table_name)
+```
+
+The init_table function in the given code checks if a table with the given name exists in the DATA_DIR directory. If the table does not exist, the function creates the table and its corresponding latest.csv file in the DATA_DIR directory.
+
+ The function takes the following argument:
+ 
+table_name (str): The name of the table to be checked or created.
+The function raises a TypeError if the table_name string is empty or None. If the table_name is valid, the function checks if a directory with the same name exists in the DATA_DIR directory. If the directory exists and contains a latest.csv file, the function returns the table_name string. Otherwise, the function creates the directory and latest.csv file, and then calls itself recursively to check if the table was created successfully. This way, the function guarantees that the table and its latest.csv file are created before returning the table_name string.

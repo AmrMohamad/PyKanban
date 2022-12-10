@@ -550,3 +550,191 @@ The regular expression matches the following parts of the file name:
 If the table_version argument matches the regular expression, the function extracts the file name from the table_version string using the .string attribute of the re.Match object. The extracted file name is used to open the corresponding table version.
 
 If the table_version argument does not match the regular expression or is not provided, the function opens the latest version of the table by default.
+
+## save_table function
+
+```py
+def save_table(table_name:str,table_data:dict):
+    os.rename(
+        f"{DATA_DIR}{table_name}/latest.csv",
+        f"{DATA_DIR}{table_name}/_ {datetime.now().strftime('%d-%m-%Y %I.%M.%S %p')}.csv",
+    )
+    with open(f"{DATA_DIR}{table_name}/latest.csv", "w") as new_table:
+        writer = csv.DictWriter(new_table, fieldnames=list(table_data.keys()))
+        writer.writeheader()
+        longest_header_in_cards = 0
+        for c in list(table_data.keys()):
+            if longest_header_in_cards < len(table_data[c]):
+                longest_header_in_cards = len(table_data[c])
+            else:
+                continue
+        for row in range(longest_header_in_cards):
+            cards_in_row = {}
+            for header_pointer in table_data:
+                if row in range(len(table_data[header_pointer])):
+                    cards_in_row[header_pointer] = table_data[header_pointer][row]
+                else:
+                    continue
+            writer.writerow(cards_in_row)
+```
+
+The save_table function is used to save changes made to a table in the PyKanban program. It takes two arguments:
+
+table_name (str): The name of the table to save.
+table_data (dict): A dictionary containing the data to be saved in the table. The keys of the dictionary represent the column names of the table, and the values are lists of strings containing the data in each column.
+
+The function first renames the latest.csv file in the table's directory by appending the current date and time to its name. This is done to create a backup of the previous version of the table. Then, the function opens the latest.csv file again in write mode and creates a new DictWriter object using the fieldnames from the table_data dictionary as the column names for the table. The function then writes the column names to the file using the writeheader() method of the DictWriter object.
+
+Next, the function loops through the values in the table_data dictionary and finds the longest list of strings. This is done to determine the number of rows in the table. The function then loops through the rows and creates a new dictionary containing the data for each row. The keys of the dictionary are the column names, and the values are the strings in the corresponding column at the current row. The function then writes the row data to the file using the writerow() method of the DictWriter object. This process is repeated for all rows in the table, saving the changes made to the table in the latest.csv file.
+
+
+## add_card function
+
+```py
+
+def add_card(
+    table_name_to_edit: str = "",
+    name_of_card: str = "",
+    add_to_column_name: str = "",
+    sub_titles: list[str] = [],
+    lines_per_sub_title: list[str] = [],
+) -> str:
+
+    added_card = (
+        Card.add_title(name_of_card)
+        .add_sub_titles(sub_titles)
+        .add_lines(*lines_per_sub_title)
+        .print_here()
+    )
+    try:
+        old_card_table: dict = open_table(table_name_to_edit)
+    except FileNotFoundError:
+        is_card_added = "NotAdded"
+        raise TypeError("Please check of Name of Table")
+    columns_name = list(old_card_table.keys())
+    new_card_table: dict = {header_name: [] for header_name in columns_name}
+    c_exist = False
+    is_card_added = ""
+    for cn in columns_name:
+        if add_to_column_name in cn:
+            old_card_table[cn].append(added_card)
+            is_card_added = "Added"
+            c_exist = True
+            break
+        else:
+            continue
+    if c_exist == False:
+        raise ValueError("The Column name does not exist")
+
+    for h_n in columns_name:
+        for c in old_card_table[h_n]:
+            if c != "":
+                new_card_table[h_n].append(c)
+            else:
+                continue
+    save_table(table_name_to_edit,new_card_table)
+    if is_card_added != "Added":
+        raise TypeError("Please check of Name of card and Name of Table")
+    return is_card_added
+```
+
+The add_card function is used to add a card to a table in the PyKanban program. It takes several arguments:
+
+table_name_to_edit (str): The name of the table to which the card will be added.
+
+name_of_card (str): The name of the card to be added.
+
+add_to_column_name (str): The name of the column in the table where the card will be added.
+
+sub_titles (list[str]): A list of strings containing the sub-titles for the card.
+
+lines_per_sub_title (list[str]): A list of strings containing the lines of text for each sub-title in the card.
+
+The function first creates a new card using the Card class, passing the name_of_card, sub_titles, and lines_per_sub_title arguments to the add_title, add_sub_titles, and add_lines methods of the Card class, respectively. The function then uses the print_here method of the Card class to get the string representation of the card, which is stored in the added_card variable.
+
+Next, the function tries to open the table with the given name using the open_table function. If the table does not exist, a FileNotFoundError is raised and a TypeError is thrown with an error message.
+
+If the table exists, the function gets the column names of the table from the dictionary returned by the open_table function and creates a new dictionary named new_card_table to store the updated table data. The function then loops through the columns in the old table and checks if the add_to_column_name argument matches the name of any of the columns. If a match is found, the added_card is appended to the list of cards in that column and the c_exist variable is set to True. If no match is found, the c_exist variable remains False.
+
+If the c_exist variable is False, the function raises a ValueError with an error message indicating that the given column name does not exist in the table. If the c_exist variable is True, the function loops through the old table data and adds the non-empty cards to the new_card_table dictionary. Finally, the function saves the updated table data using the save_table function and returns the string "Added" if the card was added successfully. If the card was not added, the function returns the string "NotAdded".
+
+## move_card function
+
+```py
+def move_card(table_name_to_edit: str, card_name: str, move_to: str) -> str:
+    is_moved_right: str = ""
+    try:
+        old_card_table: dict = open_table(table_name_to_edit)
+    except FileNotFoundError:
+        is_moved_right = "NotMoved"
+        raise TypeError("Please check of Name of Table")
+    card: str = ""
+    """for holding the Card that will change his place
+    """
+    column_index_card: int = 0
+    """for know the old place of card to delete it 
+    """
+    columns_name = list(old_card_table.keys())
+    """headers names
+    """
+    new_card_table: dict = {header_name: [] for header_name in columns_name}
+    """Adding headers for new table
+    """
+    reader = csv.reader(open(f"{DATA_DIR}{table_name_to_edit}/latest.csv", "r"))
+    break_out_flag = False  # for break nested loops at once
+    cd_exist = False
+    for row in reader:
+        """for reading each row in file"""
+        for column in row:
+            """for read each column in the row"""
+            if card_name in column:
+                """Searching about the Card that we want to move to other column"""
+                column_index_card += row.index(column)
+                card = column
+                cd_exist = True
+                old_card_table[columns_name[column_index_card]].remove(column)
+                break_out_flag = True
+                break
+            else:
+                continue
+        if break_out_flag:  # for break nested loops at once
+            break
+    if cd_exist == False and card == "":
+        raise ValueError("The Card name is not exist, Please check again")
+    c_exist = False
+    for col_name in columns_name:
+        """Searching about header we want to move the card to him"""
+        if move_to in col_name:
+            old_card_table[col_name].append(card)
+            is_moved_right = "Moved"
+            c_exist = True
+            break
+        else:
+            continue
+    if c_exist == False:
+        raise ValueError("The Column name does not exist")
+    for h_n in columns_name:
+        for c in old_card_table[h_n]:
+            if c != "":
+                new_card_table[h_n].append(c)
+            else:
+                continue
+    save_table(table_name_to_edit,new_card_table)
+    if is_moved_right != "Moved":
+        raise TypeError(
+            "the card is not moved, please check of card name, column name and table name"
+        )
+    return is_moved_right
+```
+
+The move_card function is used to move a card from one column to another in the PyKanban program. It takes three arguments:
+
+table_name_to_edit (str): The name of the table containing the card to be moved.
+card_name (str): The name of the card to be moved.
+move_to (str): The name of the column to move the card to.
+
+The function first opens the table using the open_table function and checks if the table exists. If the table does not exist, the function raises a TypeError. Next, the function loops through the rows and columns of the table using the csv module and finds the column containing the card to be moved. It saves the card's name and the column index and removes the card from the old column.
+
+If the card is not found, the function raises a ValueError. The function then loops through the columns again and finds the column with the name specified in the move_to argument. If the column is not found, the function raises a ValueError. Otherwise, the function adds the card to the new column.
+
+Finally, the function saves the updated table using the save_table function and returns a string indicating whether the card was moved successfully. If the card was not moved, the function raises a TypeError.

@@ -1602,3 +1602,20 @@ The Create Table process involves the following steps:
 
 1. Once the user is finished editing the table, they can return to the main menu and view or edit other tables, or they can exit the program.
 
+### selecting Exit
+
+```py
+            # Exit
+            case _:
+                clearConsole()
+                print("PyKanban will exit in")
+                t = 5
+                while t:
+                    mins, secs = divmod(t, 60)
+                    timer = "{:02d}:{:02d}".format(mins, secs)
+                    print(timer, end="\r")
+                    time.sleep(1)
+                    t -= 1
+                clearConsole()
+                sys.exit()
+```

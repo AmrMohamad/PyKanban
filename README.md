@@ -392,7 +392,7 @@ The Fundamentals are used to build PyKanban :
 - match statements
 - Exceptions
 - Unit Tests
-- File I/O using <code>open</code>, <code>with</code> and <code>CSV</code> 
+- File I/O using <code>open</code>, <code>with</code> and <code>CSV</code>
 - Regular Expressions
 - Type Hints
 - Unpacking
@@ -419,7 +419,9 @@ The Technologies are used to build PyKanban :
   - <a href="https://docs.python.org/3.10/library/re.html?highlight=re#module-re">re</a> - This library is used to work with regular expressions, which are patterns used to match and manipulate strings.
   - <a href="https://docs.python.org/3.10/library/time.html?highlight=time#module-time">time</a> - This library is used to perform time-related operations, such as measuring time intervals and sleeping.
   - <a href="https://docs.python.org/3.10/library/datetime.html?highlight=datetime#module-datetime">datetime</a> - This library is used to perform operations on dates and times, such as calculating the difference between two dates.
-  - ### For Units Test
+
+- ### For Units Test
+
     - <a href="https://pypi.org/project/pytest/">pytest 7.2.0</a> - is a unit testing framework for Python. It is used to write and run tests for Python code. Pytest makes it easy to write and run tests for your Python code, and it has a number of useful features that make it a powerful tool for testing. Pytest is particularly useful for ensuring that your code is working as expected, and it can be used to catch and diagnose bugs and other issues in your code. Overall, pytest is a valuable tool for ensuring the quality and reliability of your Python code.
 
 ____

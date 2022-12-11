@@ -18,7 +18,7 @@ p = inflect.engine()
 class Card:
     """
     This class represents a card with a title and multiple lines of text.
-    
+
     Attributes:
         _width_of_card (int): The width of the card in characters.
         _top_line (str): The top border of the card.
@@ -28,6 +28,7 @@ class Card:
         title (str): The title of the card.
         sub_titles (dict): A dictionary of sub-titles and their corresponding text.
     """
+
     _width_of_card: int = 46
     _top_line: str = " " + ("#" * (_width_of_card + 2)) + "#" + "\n"
     _blank_line: str = "| " + (" " * (_width_of_card + 2)) + "#" + "\n"
@@ -40,7 +41,7 @@ class Card:
     def width_of_card(cls):
         """
         Getter for the width_of_card attribute.
-        
+
         Returns:
             int: The width of the card in characters.
         """
@@ -112,7 +113,7 @@ class Card:
     @classmethod
     def add_sub_titles(cls, sub_title: list[str]) -> None:
         e = ValueError(
-            "It should be there at least 1 sub-title and maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)"
+            "It should be there at least 1 sub-title or maximum 5 sub-titles\nWithout entering empty sub-title (like just hit enter)"
         )
         if bool(sub_title) == False:
             raise e
@@ -156,21 +157,17 @@ class Card:
             # Initialize a list to store the lines for the current sub-title
             lines_per_sentence = []
             # Add a space after the sub-title to indent the sentence
-            sentences[key_sentence] = (" " * len(key_sentence)) + sentences[
-                key_sentence
-            ]
+            sentences[key_sentence] = (
+                " " * int(round(len(key_sentence) / 2))
+            ) + sentences[key_sentence]
             num_of_sentence_chars = len(sentences[key_sentence])
-            start_line = 0
-            end_line = 45
             if 0 < num_of_sentence_chars <= 244:
-                num_of_lines = int(round(num_of_sentence_chars / 45))
                 lines_per_sentence.append((key_sentence + " :"))
-                lines_per_sentence.append("")
-                wrapped_text = textwrap.wrap(sentences[key_sentence], width=46)
+                wrapped_text = textwrap.wrap(sentences[key_sentence], width=45)
                 for line in wrapped_text:
                     lines_per_sentence.append(line)
             else:
-                raise ValueError("Maximum number of characters is 192 per line")
+                raise ValueError("Maximum number of characters is 244 per sub-title")
             for i in range(len(lines_per_sentence)):
                 cls.text_line += (
                     "| "

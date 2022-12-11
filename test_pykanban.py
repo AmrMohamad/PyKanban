@@ -450,11 +450,13 @@ def test_add_card():
             "_test_data",
             "Card_7",
             "column1",
-            ["Title", "Description", "Comment"],
+            ["Description", "Task Type", "Status", "Estimated Time", "Notes"],
             [
-                "qwertyqwertyqwertyqwertyqwertyqwerty",
-                "qwertyqwertyqwertyqwertyqwertyqwerty",
-                "qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty",
+                "Implement the user profile page, which will display information about the logged-in user.",
+                "Feature Implementation",
+                "In Progress",
+                "4 hours",
+                "This task may involve using a template engine such as Jinja or Mustache to create the user profile page.",
             ],
         )
         == "Added"
@@ -464,34 +466,42 @@ def test_add_card():
             " #################################################\n"
             + "|                     Card_1                      #\n"
             + "|                                                 #\n"
-            + "| descriptoin :                                   #\n"
-            + "|            qwertyqwertyqwerty                   #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| Commnet :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
+            + "| Description :                                   #\n"
+            + "|       This task involves creating wireframes    #\n"
+            + "| and mockups for the different pages and         #\n"
+            + "| screens of the software application. This may   #\n"
+            + "| include designing the layout, buttons, input    #\n"
+            + "| fields, and other visual elements of the user   #\n"
+            + "| interface.                                      #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Feature Implementation                      #\n"
+            + "| Status :                                        #\n"
+            + "|    In Progress                                  #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        8 hours                                  #\n"
             + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
+            + "|   This task should be completed before the      #\n"
+            + "| code for the user interface is written, as it   #\n"
+            + "| will provide a clear visual guide for the       #\n"
+            + "| developers.                                     #\n"
             + " ------------------------------------------------",
             " #################################################\n"
             + "|                     Card_7                      #\n"
             + "|                                                 #\n"
-            + "| Title :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
             + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
-            + "| ertyqwertyqwerty                                #\n"
-            + "|                                                 #\n"
+            + "|       Implement the user profile page, which    #\n"
+            + "| will display information about the logged-in    #\n"
+            + "| user.                                           #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Feature Implementation                      #\n"
+            + "| Status :                                        #\n"
+            + "|    In Progress                                  #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        4 hours                                  #\n"
+            + "| Notes :                                         #\n"
+            + "|   This task may involve using a template        #\n"
+            + "| engine such as Jinja or Mustache to create      #\n"
+            + "| the user profile page.                          #\n"
             + " ------------------------------------------------",
             "",
         ],
@@ -499,34 +509,41 @@ def test_add_card():
             " #################################################\n"
             + "|                     Card_2                      #\n"
             + "|                                                 #\n"
-            + "| Title :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
             + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwertyqw   #\n"
-            + "| ertyqwertyqwerty                                #\n"
-            + "|                                                 #\n"
+            + "|       This task involves writing the code       #\n"
+            + "| that will handle user authentication in the     #\n"
+            + "| software application.                           #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Bug Fix                                     #\n"
+            + "| Status :                                        #\n"
+            + "|    Completed                                    #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        16 hours                                 #\n"
+            + "| Notes :                                         #\n"
+            + "|   This task should be completed before the      #\n"
+            + "| login functionality is implemented, as it       #\n"
+            + "| will provide the necessary code for handling    #\n"
+            + "| user authentication.                            #\n"
             + " ------------------------------------------------",
             " #################################################\n"
             + "|                     Card_3                      #\n"
             + "|                                                 #\n"
             + "| Description :                                   #\n"
-            + "|            qwertyqwertyqwertyqwertyqwertyqwer   #\n"
-            + "| ty                                              #\n"
-            + "|                                                 #\n"
-            + "| Comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
+            + "|       This task involves writing tests that     #\n"
+            + "| will verify that the authentication module is   #\n"
+            + "| working correctly. This may include testing     #\n"
+            + "| different scenarios.                            #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Refactoring                                 #\n"
+            + "| Status :                                        #\n"
+            + "|    In Progress                                  #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        4 hours                                  #\n"
             + "| Notes :                                         #\n"
-            + "|      qwertyqwertyqwertyqwertyqwertyqwerty       #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
+            + "|   This task should be completed after the       #\n"
+            + "| code for the authentication module has been     #\n"
+            + "| written, and should be run regularly to         #\n"
+            + "| ensure the module is functioning properly.      #\n"
             + " ------------------------------------------------",
             "",
         ],
@@ -534,45 +551,66 @@ def test_add_card():
             " #################################################\n"
             + "|                     Card_4                      #\n"
             + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
+            + "| Description :                                   #\n"
+            + "|       This task involves integrating the        #\n"
+            + "| authentication module into the software         #\n"
+            + "| application, and implementing the               #\n"
+            + "| functionality for logging in and out.           #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Testing                                     #\n"
+            + "| Status :                                        #\n"
+            + "|    In Progress                                  #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        12 hours                                 #\n"
+            + "| Notes :                                         #\n"
+            + "|   This task should be completed after the       #\n"
+            + "| code for the authentication module and the      #\n"
+            + "| user interface have been written, and should    #\n"
+            + "| be tested thoroughly to ensure the login        #\n"
+            + "| process is working correctly.                   #\n"
             + " ------------------------------------------------",
             " #################################################\n"
             + "|                     Card_5                      #\n"
             + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| comment :                                       #\n"
-            + "|        qwertyqwertyqwertyqwertyqwertyqwerty     #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
-            + "| notes :                                         #\n"
-            + "|      qwertyqwertyqwerty                         #\n"
-            + "|                                                 #\n"
-            + "|                                                 #\n"
+            + "| Description :                                   #\n"
+            + "|       This task involves writing the code       #\n"
+            + "| that will handle the connection to the          #\n"
+            + "| database used by the software application.      #\n"
+            + "| This may include implementing functions for     #\n"
+            + "| executing SQL queries                           #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Documentation                               #\n"
+            + "| Status :                                        #\n"
+            + "|    Completed                                    #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        6 hours                                  #\n"
+            + "| Notes :                                         #\n"
+            + "|   This task should be completed before the      #\n"
+            + "| code for accessing the database is written,     #\n"
+            + "| as it will provide the necessary functions      #\n"
+            + "| for connecting to the database.                 #\n"
             + " ------------------------------------------------",
             " #################################################\n"
             + "|                     Card_6                      #\n"
             + "|                                                 #\n"
-            + "| tit :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| des :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
-            + "| com :                                           #\n"
-            + "|    qwertyqwertyqwerty                           #\n"
-            + "|                                                 #\n"
+            + "| Description :                                   #\n"
+            + "|       This task involves writing the code for   #\n"
+            + "| the user profile page, which will display       #\n"
+            + "| information about the logged-in user, such as   #\n"
+            + "| their username, email address, and other        #\n"
+            + "| profile details.                                #\n"
+            + "| Task Type :                                     #\n"
+            + "|     Deployment                                  #\n"
+            + "| Status :                                        #\n"
+            + "|    Blocked                                      #\n"
+            + "| Estimated Time :                                #\n"
+            + "|        2 hours                                  #\n"
+            + "| Notes :                                         #\n"
+            + "|   This task should be completed after the       #\n"
+            + "| code for the authentication module and the      #\n"
+            + "| database connection have been written, as it    #\n"
+            + "| will require accessing the user's data from     #\n"
+            + "| the database.                                   #\n"
             + " ------------------------------------------------",
         ],
     }
@@ -584,11 +622,13 @@ def test_add_card():
             "_test_data",
             "Card_7",
             "column4",
-            ["Title", "Description", "Comment"],
+            ["Description", "Task Type", "Status", "Estimated Time", "Notes"],
             [
-                "qwertyqwertyqwertyqwertyqwertyqwerty",
-                "qwertyqwertyqwertyqwertyqwertyqwerty",
-                "qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty",
+                "Implement the user profile page, which will display information about the logged-in user.",
+                "Feature Implementation",
+                "In Progress",
+                "4 hours",
+                "This task may involve using a template engine such as Jinja or Mustache to create the user profile page.",
             ],
         )
     # Test if the table name not exist
@@ -596,12 +636,14 @@ def test_add_card():
         add_card(
             "_test_data_",
             "Card_7",
-            "column4",
-            ["Title", "Description", "Comment"],
+            "column1",
+            ["Description", "Task Type", "Status", "Estimated Time", "Notes"],
             [
-                "qwertyqwertyqwertyqwertyqwertyqwerty",
-                "qwertyqwertyqwertyqwertyqwertyqwerty",
-                "qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty",
+                "Implement the user profile page, which will display information about the logged-in user.",
+                "Feature Implementation",
+                "In Progress",
+                "4 hours",
+                "This task may involve using a template engine such as Jinja or Mustache to create the user profile page.",
             ],
         )
     shutil.rmtree(DESTINATION)

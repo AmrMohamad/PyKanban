@@ -226,7 +226,8 @@ def init_table(table_name: str) -> str:
 
 def view_tables() -> list[str]:
     dir_path = f"{DATA_DIR}"
-    if len(os.listdir(dir_path)) == 0 or '.DS_Store' in os.listdir(dir_path):
+    c = os.listdir(dir_path)
+    if os.listdir(dir_path) == ['.DS_Store'] or len(os.listdir(dir_path)) == 0:
         return f"No Tables Exist"
     tables_list = []
     for path in os.scandir(dir_path):

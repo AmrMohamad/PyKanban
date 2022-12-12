@@ -284,6 +284,9 @@ def test_init_table():
 
 def test_view_tables():
     destination = "./test_data"
+    os.mkdir("./data/_temp/")
+    temp = open("./data/_temp/latest.csv","w")
+    temp.close()
     os.mkdir(destination)
     # shutil.rmtree(f'{destination}/.DS_Store')
     for f in os.listdir("./data"):
@@ -298,6 +301,7 @@ def test_view_tables():
         name_tables.append(nt)
     assert view_tables() == name_tables
     os.rmdir(destination)
+    shutil.rmtree("./data/_temp/")
     ...
 
 

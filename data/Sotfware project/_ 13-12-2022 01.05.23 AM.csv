@@ -1,0 +1,36 @@
+[38;5;0m[48;5;12m    Tasks    [0m,[38;5;10m[48;5;14m    In Process    [0m,[38;5;9m[48;5;11m    Done    [0m,[38;5;9m[48;5;0m    Cancelled    [0m
+" #################################################
+|             authentication module              #
+|                                                 #
+| Description :                                   #
+|       This task involves writing the code       #
+| that will handle user authentication in the     #
+| software application.                           #
+| Notes :                                         #
+|   This task should be completed before the      #
+| login functionality is implemented              #
+ ------------------------------------------------"," #################################################
+|                   Design UI                    #
+|                                                 #
+| Description :                                   #
+|       This task involves creating wireframes    #
+| and mockups for the different pages and         #
+| screens of the software application.            #
+| Notes :                                         #
+|   This task should be completed before the      #
+| code for the user interface is written, as it   #
+| will provide a clear visual guide for the       #
+| developers.                                     #
+ ------------------------------------------------",,
+" #################################################
+|              login functionality               #
+|                                                 #
+| Description :                                   #
+|       This task involves integrating the        #
+| authentication module into the software         #
+| application                                     #
+| Notes :                                         #
+|   This task should be completed after the       #
+| code for the authentication module and the      #
+| user interface have been written                #
+ ------------------------------------------------",,,

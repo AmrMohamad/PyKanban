@@ -14,6 +14,7 @@ ___
 ## Table of Contents
 
 - [Description](#description)
+- [What's New](#whats-new)
 - [Motivation](#motivation)
 - [Features](#features)
 - [How to use](#how-to-use)
@@ -38,6 +39,13 @@ ___
 ## Description
 
 PyKanban is a terminal application for creating a simple kanban board or any table for any purpose containing cards and viewing the table on the awesome black screen of the terminal that most developers like it
+
+___
+
+## What's New
+
+Working on making the app faster and refactoring the code to be more maintainable
+___
 
 ### Screenshot
 
